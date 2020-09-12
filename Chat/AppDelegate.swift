@@ -28,9 +28,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentState = newState
     }
 
+    
+    // MARK: - Lifecycle
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setApplicationState(.Inactive, by: #function)
         return true
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        setApplicationState(.Active, by: #function)
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        setApplicationState(.Inactive, by: #function)
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        setApplicationState(.Background, by: #function)
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        setApplicationState(.Inactive, by: #function)
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        setApplicationState(.NotRunning, by: #function)
+    }
+    
+    
 }
 
