@@ -11,22 +11,21 @@ import UIKit
 enum ViewControllerState {
     case NotLoad
     case Disappear
+    case Disappearing
     case Appear
+    case Appearing
 }
 
 class ViewController: UIViewController {
     var currentState: ViewControllerState = .NotLoad
 
-    private func setViewControllerState(_ newState: ViewControllerState?, by method: String) {
-        guard let newState = newState else {
-            #if DEBUG
-            print("ViewController is in \(currentState) and call method: \(method)")
-            #endif
-            return
-        }
-        
+    private func setViewControllerState(_ newState: ViewControllerState, by method: String) {
         #if DEBUG
-        print("ViewController moved from \(currentState) to \(newState): \(method)")
+        if newState != currentState {
+            print("ViewController moved from \(currentState) to \(newState): \(method)")
+        } else {
+            print("ViewController is in \(currentState) and call method: \(method)")
+        }
         #endif
         
         currentState = newState
@@ -40,7 +39,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setViewControllerState(nil, by: #function)
+        setViewControllerState(.Appearing, by: #function)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,7 +49,7 @@ class ViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        setViewControllerState(nil, by: #function)
+        setViewControllerState(.Disappearing, by: #function)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -60,12 +59,12 @@ class ViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setViewControllerState(nil, by: #function)
+        setViewControllerState(currentState, by: #function)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        setViewControllerState(nil, by: #function)
+        setViewControllerState(currentState, by: #function)
     }
 }
 
