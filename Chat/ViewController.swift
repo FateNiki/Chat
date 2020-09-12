@@ -57,7 +57,15 @@ class ViewController: UIViewController {
         super.viewDidDisappear(animated)
         setViewControllerState(.Disappear, by: #function)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setViewControllerState(nil, by: #function)
+    }
 
-
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        setViewControllerState(nil, by: #function)
+    }
 }
 
