@@ -8,12 +8,28 @@
 
 import UIKit
 
+enum ApplicationState {
+    case NotRunning
+    case Inactive
+    case Active
+    case Background
+    case Suspended
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    var currentState: ApplicationState = .NotRunning
+    
+    private func setApplicationState(_ newState: ApplicationState, by method: String) {
+        #if DEBUG
+            print("Application moved from \(currentState) to \(newState): \(method)")
+        #endif
+        currentState = newState
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        setApplicationState(.Inactive, by: #function)
         return true
     }
 }
