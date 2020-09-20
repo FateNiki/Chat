@@ -9,9 +9,22 @@
 import UIKit
 
 class ViewController: UIViewController {
+    // MARK: Outlets
+    @IBOutlet weak var avatarImageView: UIImageView!
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configAvatarImageView()
     }
+    
+    // MARK: - Interface configuring
+    private func configAvatarImageView() -> Void {
+        let minSize = min(avatarImageView.layer.frame.width, avatarImageView.layer.frame.height)
+        avatarImageView.layer.cornerRadius = minSize / 2
+        avatarImageView.backgroundColor = .lightGray
+    }
+
 }
 
