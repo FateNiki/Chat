@@ -9,7 +9,7 @@
 import Foundation
 
 struct User: Codable, Identifiable {
-    let id: String
+    let id: UUID
     
     var firstName: String
     var lastName: String
