@@ -48,6 +48,29 @@ class ViewController: UIViewController {
             avatarImageView.image = UIImage(data: avatarImageData)
         }
     }
+    
+    // MARK: - Inteface Actions
+    @IBAction func editAvatarButtonDidTap(_ sender: UIButton) {
+        let editAvatarDialog = UIAlertController(title: "Выбрать аватар", message: nil, preferredStyle: .actionSheet)
+        
+        let galaryAction = UIAlertAction(title: "Установить из галлереи", style: .default) { (action:UIAlertAction) in
+            print("Установить из галлереи");
+        }
+
+        let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { (action:UIAlertAction) in
+            print("Сделать фото");
+        }
+
+        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        
+        editAvatarDialog.addAction(galaryAction)
+        editAvatarDialog.addAction(takePhotoAction)
+        editAvatarDialog.addAction(cancelAction)
+        present(editAvatarDialog, animated: true)        
+    }
+    
+    // MARK: - Change avatar methods
+    
 
 }
 

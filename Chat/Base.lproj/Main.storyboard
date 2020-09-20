@@ -50,6 +50,9 @@
                                 <rect key="frame" x="297" y="285" width="30" height="32"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editAvatarButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bGG-iS-9kb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
