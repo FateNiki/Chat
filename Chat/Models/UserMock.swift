@@ -6,8 +6,9 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-let description = "Frontend developer, iOS Developer, Izhevsk, Russia"
+private let description = "Frontend developer, iOS Developer, Izhevsk, Russia"
+private let avatar = UIImage(named: "mockAvatar")
 
-let mockUser = User(id: UUID(), firstName: "Aleksey", lastName: "Nikitin", description: description, avatar: nil)
+let mockUser = User(id: UUID(), firstName: "Aleksey", lastName: "Nikitin", description: description, avatar: avatar?.pngData())
