@@ -44,6 +44,9 @@ class ViewController: UIViewController {
     private func initUserFields() -> Void {
         fullNameLabel.text = currentUser.fullName
         descriptionLabel.text = currentUser.description
+        if let avatarImageData = currentUser.avatar {
+            avatarImageView.image = UIImage(data: avatarImageData)
+        }
     }
 
 }
