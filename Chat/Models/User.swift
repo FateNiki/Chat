@@ -15,4 +15,8 @@ struct User: Codable, Identifiable {
     var lastName: String
     var description: String?
     var avatar: Data?
+    
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
 }
