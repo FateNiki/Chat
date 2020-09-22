@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */; };
 		5B6C091A2517A3A2007F58E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09192517A3A2007F58E3 /* User.swift */; };
 		5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09232517B25F007F58E3 /* UserMock.swift */; };
 		5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B73F250D4D770062C724 /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
 		5B6C09192517A3A2007F58E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5B6C09232517B25F007F58E3 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
 		5BC2B73C250D4D770062C724 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B5A8CEB251A5224000A541A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		5B6C09182517A389007F58E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				5B6C09182517A389007F58E3 /* Models */,
+				5B5A8CEB251A5224000A541A /* Extensions */,
 				5BC2B73F250D4D770062C724 /* AppDelegate.swift */,
 				5BC2B743250D4D770062C724 /* UserViewController.swift */,
 				5BC2B745250D4D770062C724 /* Main.storyboard */,
@@ -150,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BC2B744250D4D770062C724 /* UserViewController.swift in Sources */,
+				5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */,
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,

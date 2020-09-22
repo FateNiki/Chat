@@ -106,13 +106,6 @@ class UserViewController: UIViewController {
         editAvatarDialog.addAction(UIAlertAction(title: "Отменить", style: .cancel))
         present(editAvatarDialog, animated: true)        
     }
-    
-    // MARK: - Helpers
-    private func openErrorAlert(title: String, message: String) {
-        let errorAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        errorAlertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
-        present(errorAlertController, animated: true)
-    }
 }
 
 // MARK: - Work with ImagePicker
