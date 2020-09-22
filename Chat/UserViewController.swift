@@ -45,6 +45,7 @@ class UserViewController: UIViewController {
     private func configSaveButton() -> Void {
         saveButton.backgroundColor = lightGray
         saveButton.layer.cornerRadius = saveButtonCornerRadius
+        saveButton.clipsToBounds = true
     }
     
     private func initUserFields() -> Void {
