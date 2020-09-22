@@ -19,4 +19,11 @@ struct User: Codable, Identifiable {
     var fullName: String {
         return "\(firstName) \(lastName)"
     }
+    
+    var initials: String {
+        let nameArray: [String] = [firstName, lastName].filter { !$0.isEmpty }
+        guard nameArray.count > 0 else { return "?" }
+        
+        return String(nameArray.map { $0[$0.startIndex] })
+    }
 }
