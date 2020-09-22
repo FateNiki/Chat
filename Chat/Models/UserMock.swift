@@ -9,6 +9,5 @@
 import UIKit
 
 private let description = "Frontend developer, iOS Developer, Izhevsk, Russia"
-private let avatar = UIImage(named: "mockAvatar")
 
-let mockUser = User(id: UUID(), firstName: "Aleksey", lastName: "Nikitin", description: description, avatar: avatar?.pngData())
+let mockUser = User(id: UUID(), firstName: "Aleksey", lastName: "Nikitin", description: description)
