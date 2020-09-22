@@ -11,7 +11,8 @@ import AVFoundation
 
 class UserViewController: UIViewController {
     // MARK: - Interface constants
-    private let lightGray = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
+    private let saveButtonBackground = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
+    private let avatarBackground = UIColor(red: 0.89, green: 0.91, blue: 0.17, alpha: 1.00)
     private let saveButtonCornerRadius: CGFloat = 14
     
     // MARK: - Variables
@@ -39,11 +40,11 @@ class UserViewController: UIViewController {
     private func configAvatarImageView() -> Void {
         let minSize = min(avatarImageView.layer.frame.width, avatarImageView.layer.frame.height)
         avatarImageView.layer.cornerRadius = minSize / 2
-        avatarImageView.backgroundColor = lightGray
+        avatarImageView.backgroundColor = avatarBackground
     }
     
     private func configSaveButton() -> Void {
-        saveButton.backgroundColor = lightGray
+        saveButton.backgroundColor = saveButtonBackground
         saveButton.layer.cornerRadius = saveButtonCornerRadius
         saveButton.clipsToBounds = true
     }
