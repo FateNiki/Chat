@@ -142,7 +142,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
         imagePicker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[.originalImage] as? UIImage else {
-            print("Image not found!")
+            openErrorAlert(title: "Изображение", message: "Image not found!")
             return
         }
         currentUser.avatar = selectedImage.jpegData(compressionQuality: 1)
