@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class UserViewController: UIViewController {
     // MARK: - Interface constants
@@ -79,6 +80,13 @@ class UserViewController: UIViewController {
         editAvatarDialog.addAction(UIAlertAction(title: "Отменить", style: .cancel))
         present(editAvatarDialog, animated: true)        
     }
+    
+    // MARK: - Helpers
+    private func openErrorAlert(title: String, message: String) {
+        let errorAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        errorAlertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+        present(errorAlertController, animated: true)
+    }
 }
 
 // MARK: - Work with ImagePicker
@@ -93,12 +101,15 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         switch source {
-        case .camera:
-            imagePicker.sourceType = .camera
-        case .photoLibrary:
-            imagePicker.sourceType = .photoLibrary
+            case .camera:
+                imagePicker.sourceType = .camera
+                takePhoto {
+                    self.present(self.imagePicker, animated: true)
+                }
+            case .photoLibrary:
+                imagePicker.sourceType = .photoLibrary
+                present(imagePicker, animated: true)
         }
-        present(imagePicker, animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
@@ -109,6 +120,28 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
         }
         currentUser.avatar = selectedImage.pngData()
         initUserFields()
+    }
+        
+    private func takePhoto(_ openImagePicker: @escaping () -> Void) {
+        let permission = AVCaptureDevice.authorizationStatus(for: .video)
+        switch permission {
+            case .authorized:
+                openImagePicker()
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    DispatchQueue.main.async {
+                        if granted {
+                            openImagePicker()
+                        } else {
+                            self.openErrorAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+                        }
+                    }
+                }
+            
+            default:
+                openErrorAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+                return
+        }
     }
 }
 
