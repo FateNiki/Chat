@@ -41,5 +41,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    
+    <key>NSCameraUsageDescription</key>
+    <string>Это приложение использует камеру для изменения фотографии пользователя</string>
 </dict>
 </plist>
