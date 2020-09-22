@@ -103,6 +103,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
         switch source {
             case .camera:
                 imagePicker.sourceType = .camera
+                imagePicker.cameraCaptureMode = .photo
                 takePhoto {
                     self.present(self.imagePicker, animated: true)
                 }
@@ -118,7 +119,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             print("Image not found!")
             return
         }
-        currentUser.avatar = selectedImage.pngData()
+        currentUser.avatar = selectedImage.jpegData(compressionQuality: 1)
         initUserFields()
     }
         
