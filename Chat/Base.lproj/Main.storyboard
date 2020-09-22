@@ -87,6 +87,7 @@
                         <outlet property="avatarImageView" destination="9IW-5d-Tu4" id="6Dn-Jq-ELf"/>
                         <outlet property="descriptionLabel" destination="Toh-KT-8hT" id="S5d-Vk-cRX"/>
                         <outlet property="fullNameLabel" destination="ZiF-He-nAr" id="Gfn-Fu-hDg"/>
+                        <outlet property="initialsLabel" destination="5Kl-Ga-HRv" id="0ua-Km-CdC"/>
                         <outlet property="saveButton" destination="Ccn-Rz-PZb" id="iEa-EU-f1P"/>
                     </connections>
                 </viewController>

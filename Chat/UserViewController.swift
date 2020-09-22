@@ -25,6 +25,7 @@ class UserViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var initialsLabel: UILabel!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -54,6 +55,10 @@ class UserViewController: UIViewController {
         descriptionLabel.text = currentUser.description
         if let avatarImageData = currentUser.avatar {
             avatarImageView.image = UIImage(data: avatarImageData)
+            initialsLabel.isHidden = true
+        } else {
+            initialsLabel.isHidden = false
+            initialsLabel.text = currentUser.initials
         }
     }
     
