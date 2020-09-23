@@ -126,7 +126,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             case .camera:
                 imagePicker.sourceType = .camera
                 imagePicker.cameraCaptureMode = .photo
-                takePhoto {
+                requestCameraPermission {
                     self.present(self.imagePicker, animated: true)
                 }
             case .photoLibrary:
@@ -145,7 +145,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
         initUserFields()
     }
         
-    private func takePhoto(_ openImagePicker: @escaping () -> Void) {
+    private func requestCameraPermission(_ openImagePicker: @escaping () -> Void) {
         let permission = AVCaptureDevice.authorizationStatus(for: .video)
         switch permission {
             case .authorized:
