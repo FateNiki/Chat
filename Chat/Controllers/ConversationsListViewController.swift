@@ -31,13 +31,17 @@ class ConversationsListViewController: UIViewController {
         view.addSubview(tableView)
         navigationItem.title = "Tinkoff Chat"
     }
-
 }
 
 extension ConversationsListViewController: UITableViewDelegate {    
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return 10
     }
@@ -46,8 +50,17 @@ extension ConversationsListViewController: UITableViewDataSource {
         let cell: ConversationTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationTableViewCell
         let date = Calendar.current.date(byAdding: .hour, value: -10, to: Date())!
 
-        cell.configure(with: .init(name: "Test User", message: "", date: date, isOnline: Bool.random(), hasUnreadMessage: Bool.random()))
+        cell.configure(with: .init(name: "Test User", message: "", date: date, isOnline: indexPath.section == 0, hasUnreadMessage: Bool.random()))
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+            case 0: return "Online"
+            case 1: return "History"
+            default: return ""
+        }
+        
     }
     
 }
