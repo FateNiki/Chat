@@ -46,7 +46,7 @@ extension ConversationTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
         lastMessageLabel.text = model.message.isEmpty ? "No messages yet" : model.message
-        lastMessageLabel.font = model.hasUnreadMessage ? UIFont.boldSystemFont(ofSize: Self.fontSize) : UIFont.systemFont(ofSize: Self.fontSize)
+        lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         if let yesterday = yesterday, model.date.timeIntervalSince1970 < yesterday.timeIntervalSince1970 {
