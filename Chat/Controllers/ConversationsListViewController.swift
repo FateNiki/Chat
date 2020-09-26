@@ -24,17 +24,40 @@ class ConversationsListViewController: UIViewController {
     }()
     
     
-
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configUI()
     }
     
+    // MARK: - Config UI
     private func configUI() {
-        view.addSubview(tableView)
-        navigationItem.title = "Tinkoff Chat"
+        initTableView()
+        initNavigation()
     }
+    
+    private func initTableView() {
+        view.addSubview(tableView)
+    }
+    
+    private func initNavigation() {
+        navigationItem.title = "Tinkoff Chat"
+        
+        let userButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(openUserEdit))
+        navigationItem.rightBarButtonItem = userButton
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    // MARK: - Actions
+    @objc func openUserEdit() {
+        print("Edit")
+//        let controller = UserViewController()
+//        controller.currentUser = mockUser
+//        self.present(controller, animated: true, completion: nil)
+    }
+
 }
 
 extension ConversationsListViewController: UITableViewDelegate {    
