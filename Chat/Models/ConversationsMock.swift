@@ -8,7 +8,7 @@
 
 import Foundation
 
-let users: [User] = [
+private let users: [User] = [
     User(firstName: "Ronald", lastName: "Robertson"),
     User(firstName: "Johnny", lastName: "Watson"),
     User(firstName: "Martha", lastName: "Craig"),
@@ -19,7 +19,7 @@ let users: [User] = [
     User(firstName: "Colin", lastName: "Williams")
 ]
 
-func randomDate() -> Date {
+private func randomDate() -> Date {
     let delta = Int.random(in: -10...0)
     let now = Date()
     var component: Calendar.Component
@@ -32,11 +32,11 @@ func randomDate() -> Date {
 }
 
 
-func randomMessage() -> String {
+private func randomMessage() -> String {
     return Bool.random() ? "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum." : ""
 }
 
-let messages: [Message] = [
+private let messages: [Message] = [
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random()),
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random()),
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random()),
@@ -51,7 +51,7 @@ let messages: [Message] = [
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random())
 ]
 
-let connversations: [Conversation] = users.map {
+let conversationsMock: [Conversation] = users.map {
     Conversation(
         user: $0,
         lastMessage: messages.randomElement() ?? Message(text: "", date: Date(), isRead: true),

@@ -11,7 +11,9 @@ import UIKit
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationTableViewCell.self)
+    private let conversations = conversationsMock
     
+    // MARK: - UI Variables
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .plain)
         tableView.register(UINib(nibName: conversationCellIdentifier, bundle: nil), forCellReuseIdentifier: conversationCellIdentifier)
@@ -20,6 +22,8 @@ class ConversationsListViewController: UIViewController {
         tableView.delegate = self
         return tableView
     }()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,14 +47,23 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return 10
+        let isOnline = section == 0
+        return conversations.filter({ $0.isOnline == isOnline }).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ConversationTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationTableViewCell
-        let date = Calendar.current.date(byAdding: .hour, value: -10, to: Date())!
+        
+        let isOnline = indexPath.section == 0
+        let conversation = conversations.filter({ $0.isOnline == isOnline })[indexPath.row]
 
-        cell.configure(with: .init(name: "Test User", message: "", date: date, isOnline: indexPath.section == 0, hasUnreadMessage: Bool.random()))
+        cell.configure(with: .init(
+                        name: conversation.user.fullName,
+                        message: conversation.lastMessage.text,
+                        date: conversation.lastMessage.date,
+                        isOnline: conversation.isOnline,
+                        hasUnreadMessage: !conversation.lastMessage.isRead)
+        )
         return cell
     }
     
