@@ -26,4 +26,12 @@ struct User: Codable, Identifiable {
         
         return String(nameArray.map { $0[$0.startIndex] })
     }
+    
+    init(firstName: String, lastName: String, description: String? = nil, avatar: Data? = nil, id: UUID? = nil) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.description = description
+        self.avatar = avatar
+        self.id = id ?? UUID()
+    }
 }

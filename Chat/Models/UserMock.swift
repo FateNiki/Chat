@@ -10,4 +10,4 @@ import UIKit
 
 private let description = "Frontend developer, iOS Developer, Izhevsk, Russia"
 
-let mockUser = User(id: UUID(), firstName: "Aleksey", lastName: "Nikitin", description: description)
+let mockUser = User(firstName: "Aleksey", lastName: "Nikitin", description: description)
