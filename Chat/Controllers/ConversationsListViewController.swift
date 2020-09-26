@@ -38,17 +38,16 @@ extension ConversationsListViewController: UITableViewDelegate {
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
-    // Return the number of rows for the table.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return 10
     }
 
-    // Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // Fetch a cell of the appropriate type.
         let cell: ConversationTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationTableViewCell
+        let date = Calendar.current.date(byAdding: .hour, value: -10, to: Date())!
 
-       return cell
+        cell.configure(with: .init(name: "Test User", message: "", date: date, isOnline: Bool.random(), hasUnreadMessage: Bool.random()))
+        return cell
     }
     
 }
