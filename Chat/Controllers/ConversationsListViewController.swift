@@ -9,11 +9,20 @@
 import UIKit
 
 class ConversationsListViewController: UIViewController {
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: view.frame)
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        configUI()
+    }
+    
+    private func configUI() {
+        view.addSubview(tableView)
+        navigationItem.title = "Tinkoff Chat"
     }
 
 }
