@@ -18,6 +18,7 @@
 		5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */; };
 		5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */; };
 		5BECAD48251FAACB00141621 /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */; };
+		5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4B251FB96A00141621 /* ConfigurableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		5BC2B74D250D4D7C0062C724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
+		5BECAD4B251FB96A00141621 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		5BC2B73E250D4D770062C724 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5BECAD4A251FB94B00141621 /* Prototypes */,
 				5BECAD44251FAA9900141621 /* Views */,
 				5B79C34D251FA41900963D06 /* Controllers */,
 				5B6C09182517A389007F58E3 /* Models */,
@@ -112,6 +115,14 @@
 				5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5BECAD4A251FB94B00141621 /* Prototypes */ = {
+			isa = PBXGroup;
+			children = (
+				5BECAD4B251FB96A00141621 /* ConfigurableView.swift */,
+			);
+			path = Prototypes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +202,7 @@
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
 				5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */,
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
+				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
 			);
