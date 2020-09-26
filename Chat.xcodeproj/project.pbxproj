@@ -19,6 +19,8 @@
 		5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */; };
 		5BECAD48251FAACB00141621 /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */; };
 		5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4B251FB96A00141621 /* ConfigurableView.swift */; };
+		5BECAD4F251FC52300141621 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4E251FC52300141621 /* Conversation.swift */; };
+		5BECAD52251FC5AB00141621 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD51251FC5AB00141621 /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		5BECAD4B251FB96A00141621 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
+		5BECAD4E251FC52300141621 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		5BECAD51251FC5AB00141621 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 			children = (
 				5B6C09192517A3A2007F58E3 /* User.swift */,
 				5B6C09232517B25F007F58E3 /* UserMock.swift */,
+				5BECAD4E251FC52300141621 /* Conversation.swift */,
+				5BECAD51251FC5AB00141621 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,9 +206,11 @@
 				5BC2B744250D4D770062C724 /* UserViewController.swift in Sources */,
 				5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */,
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
+				5BECAD4F251FC52300141621 /* Conversation.swift in Sources */,
 				5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */,
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
+				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
 			);
