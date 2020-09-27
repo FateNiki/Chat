@@ -46,19 +46,28 @@ class ConversationsListViewController: UIViewController {
         
         let userButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(openUserEdit))
         navigationItem.rightBarButtonItem = userButton
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     // MARK: - Actions
-    @objc func openUserEdit() {
+    @objc func openUserEdit() -> Void {
         let controller = UserViewController()
         self.present(controller, animated: true, completion: nil)
+    }
+    
+    func openConversation(with conversation: Conversation) -> Void {
+        let controller = ConversationViewController()
+        controller.conversation = conversation
+        navigationController?.pushViewController(controller, animated: true)
     }
 
 }
 
-extension ConversationsListViewController: UITableViewDelegate {    
+extension ConversationsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let isOnline = indexPath.section == 0
+        let conversation = conversations.filter({ $0.isOnline == isOnline })[indexPath.row]
+        openConversation(with: conversation)
+    }
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
