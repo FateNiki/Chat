@@ -17,6 +17,8 @@
 		5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */; };
 		5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E072520B60700D73A63 /* UserViewController.swift */; };
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
+		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
+		5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */; };
 		5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */; };
 		5BECAD48251FAACB00141621 /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */; };
 		5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4B251FB96A00141621 /* ConfigurableView.swift */; };
@@ -38,6 +40,8 @@
 		5BC2B74D250D4D7C0062C724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BE20E072520B60700D73A63 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
+		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
+		5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
 		5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		5BECAD4B251FB96A00141621 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
@@ -137,9 +141,19 @@
 			path = UserViewController;
 			sourceTree = "<group>";
 		};
+		5BE20E1B2520CCB400D73A63 /* UserAvatarView */ = {
+			isa = PBXGroup;
+			children = (
+				5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */,
+				5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */,
+			);
+			path = UserAvatarView;
+			sourceTree = "<group>";
+		};
 		5BECAD44251FAA9900141621 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 			);
 			path = Views;
@@ -215,6 +229,7 @@
 				5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */,
 				5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */,
 				5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */,
+				5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */,
 				5BC2B747250D4D770062C724 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +245,7 @@
 				5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */,
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
 				5BECAD56251FC83000141621 /* ConversationsMock.swift in Sources */,
+				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5BECAD4F251FC52300141621 /* Conversation.swift in Sources */,
 				5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */,
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
