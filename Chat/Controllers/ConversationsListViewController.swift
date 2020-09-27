@@ -10,7 +10,7 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
-    private let conversationCellIdentifier = String(describing: ConversationTableViewCell.self)
+    private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
     private let conversations = conversationsMock
     
     // MARK: - UI Variables
@@ -73,7 +73,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ConversationTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationTableViewCell
+        let cell: ConversationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationsTableViewCell
         
         let isOnline = indexPath.section == 0
         let conversation = conversations.filter({ $0.isOnline == isOnline })[indexPath.row]

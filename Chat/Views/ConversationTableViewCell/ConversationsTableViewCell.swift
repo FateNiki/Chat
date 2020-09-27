@@ -1,5 +1,5 @@
 //
-//  ConversationTableViewCell.swift
+//  ConversationsTableViewCell.swift
 //  Chat
 //
 //  Created by Алексей Никитин on 26.09.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationTableViewCell: UITableViewCell {
+class ConversationsTableViewCell: UITableViewCell {
     // MARK: - static variables
     private static var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -42,7 +42,7 @@ class ConversationTableViewCell: UITableViewCell {
     
 }
 
-extension ConversationTableViewCell: ConfigurableView {
+extension ConversationsTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
         lastMessageLabel.text = model.message.isEmpty ? "No messages yet" : model.message

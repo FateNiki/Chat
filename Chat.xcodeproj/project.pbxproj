@@ -19,8 +19,8 @@
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
 		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
 		5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */; };
-		5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */; };
-		5BECAD48251FAACB00141621 /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */; };
+		5BECAD47251FAACB00141621 /* ConversationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD45251FAACB00141621 /* ConversationsTableViewCell.swift */; };
+		5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */; };
 		5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4B251FB96A00141621 /* ConfigurableView.swift */; };
 		5BECAD4F251FC52300141621 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4E251FC52300141621 /* Conversation.swift */; };
 		5BECAD52251FC5AB00141621 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD51251FC5AB00141621 /* Message.swift */; };
@@ -42,8 +42,8 @@
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
 		5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
-		5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
-		5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
+		5BECAD45251FAACB00141621 /* ConversationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsTableViewCell.swift; sourceTree = "<group>"; };
+		5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsTableViewCell.xib; sourceTree = "<group>"; };
 		5BECAD4B251FB96A00141621 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		5BECAD4E251FC52300141621 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		5BECAD51251FC5AB00141621 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -126,8 +126,8 @@
 		5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */,
-				5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */,
+				5BECAD45251FAACB00141621 /* ConversationsTableViewCell.swift */,
+				5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */,
 			);
 			path = ConversationTableViewCell;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BECAD48251FAACB00141621 /* ConversationTableViewCell.xib in Resources */,
+				5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */,
 				5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */,
 				5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */,
 				5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */,
@@ -247,7 +247,7 @@
 				5BECAD56251FC83000141621 /* ConversationsMock.swift in Sources */,
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5BECAD4F251FC52300141621 /* Conversation.swift in Sources */,
-				5BECAD47251FAACB00141621 /* ConversationTableViewCell.swift in Sources */,
+				5BECAD47251FAACB00141621 /* ConversationsTableViewCell.swift in Sources */,
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
