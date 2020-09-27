@@ -52,10 +52,9 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Actions
     @objc func openUserEdit() {
-        print("Edit")
-//        let controller = UserViewController()
-//        controller.currentUser = mockUser
-//        self.present(controller, animated: true, completion: nil)
+        let controller = UserViewController()
+        controller.currentUser = mockUser
+        self.present(controller, animated: true, completion: nil)
     }
 
 }
