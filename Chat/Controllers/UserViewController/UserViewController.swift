@@ -28,6 +28,10 @@ class UserViewController: UIViewController {
     @IBOutlet weak var initialsLabel: UILabel!
     
     // MARK: - Lifecycle
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         // print(saveButton.frame)
@@ -107,7 +111,7 @@ class UserViewController: UIViewController {
         }
         
         editAvatarDialog.addAction(UIAlertAction(title: "Отменить", style: .cancel))
-        present(editAvatarDialog, animated: true)        
+        present(editAvatarDialog, animated: true)
     }
 }
 
