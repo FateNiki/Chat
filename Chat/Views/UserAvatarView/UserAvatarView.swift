@@ -16,7 +16,7 @@ class UserAvatarView: UIView {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var initialsLabel: UILabel!
 
-    // MARK: - Config view
+    // MARK: - Create from xib
     private func initViewFromXib() -> UIView? {
         let xibName = String(describing: type(of: self))
         let bundle = Bundle(for: type(of: self))
@@ -24,7 +24,7 @@ class UserAvatarView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    private func setupViews() {
+    private func addXibView() {
         guard let xibView = initViewFromXib() else { return }
         xibView.frame = self.bounds
         xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -34,24 +34,24 @@ class UserAvatarView: UIView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        addXibView()
         
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupViews()
+        addXibView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        configAvatarImageView()        
+        setupView()
     }
     
     
     // MARK: - Interface configuring
-    private func configAvatarImageView() -> Void {
-        let minSize = min(avatarImageView.layer.frame.width, avatarImageView.layer.frame.height)
+    private func setupView() -> Void {
+        let minSize = min(self.bounds.width, self.bounds.height)
         avatarImageView.layer.cornerRadius = minSize / 2
         avatarImageView.backgroundColor = avatarBackground
         initialsLabel.font = initialsLabel.font.withSize(minSize/3)
