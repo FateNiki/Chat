@@ -54,6 +54,7 @@ class UserAvatarView: UIView {
         let minSize = min(avatarImageView.layer.frame.width, avatarImageView.layer.frame.height)
         avatarImageView.layer.cornerRadius = minSize / 2
         avatarImageView.backgroundColor = avatarBackground
+        initialsLabel.font = initialsLabel.font.withSize(minSize/3)
     }
 
 }
