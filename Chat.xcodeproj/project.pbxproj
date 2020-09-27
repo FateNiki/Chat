@@ -117,11 +117,19 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
-		5BECAD44251FAA9900141621 /* Views */ = {
+		5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				5BECAD45251FAACB00141621 /* ConversationTableViewCell.swift */,
 				5BECAD46251FAACB00141621 /* ConversationTableViewCell.xib */,
+			);
+			path = ConversationTableViewCell;
+			sourceTree = "<group>";
+		};
+		5BECAD44251FAA9900141621 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 			);
 			path = Views;
 			sourceTree = "<group>";
