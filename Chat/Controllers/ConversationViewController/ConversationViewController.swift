@@ -22,11 +22,11 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configUI()
+        setupView()
     }
     
     // MARK: - Config UI
-    private func configUI() {
+    private func setupView() {
         initTableView()
         initNavigation()
     }
