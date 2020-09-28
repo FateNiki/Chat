@@ -199,9 +199,9 @@
 		5BECAD44251FAA9900141621 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
 				5BCE62992521E3E200107339 /* OutcomeMessageTableViewCell */,
 				5BCE62922521E01700107339 /* IncomeMessageTableViewCell */,
-				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 			);
 			path = Views;
