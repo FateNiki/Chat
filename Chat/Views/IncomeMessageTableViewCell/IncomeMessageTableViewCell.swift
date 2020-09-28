@@ -14,6 +14,7 @@ class IncomeMessageTableViewCell: UITableViewCell {
     
     // MARK: - Lifecycle
     override func prepareForReuse() {
+        super.prepareForReuse()
         messageLabel.text = nil
     }
 }

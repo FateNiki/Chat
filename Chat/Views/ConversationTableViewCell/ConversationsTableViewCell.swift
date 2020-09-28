@@ -32,6 +32,7 @@ class ConversationsTableViewCell: UITableViewCell {
     
     // MARK: - Lifecycle
     override func prepareForReuse() {
+        super.prepareForReuse()
         nameLabel.text = nil
         dateLabel.text = nil
         lastMessageLabel.text = nil
