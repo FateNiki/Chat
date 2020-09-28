@@ -24,6 +24,15 @@ class ConversationsTableViewCell: UITableViewCell {
     }()
     private static let onlineColor = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
     private static let fontSize: CGFloat = 15
+    private static let nameTextColorForDarkTheme = UIColor.black
+    
+    // MARK: - Variables
+    private var userIsOnline: Bool = false {
+        didSet {
+            updateView()
+        }
+    }
+
     
     // MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
@@ -37,16 +46,32 @@ class ConversationsTableViewCell: UITableViewCell {
         dateLabel.text = nil
         lastMessageLabel.text = nil
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateView()
+    }
+    
+    
+    // MARK: - Interface configuring
+    private func updateView() -> Void {
+        if (userIsOnline) {
+            contentView.backgroundColor = Self.onlineColor
+            nameLabel.textColor = Self.nameTextColorForDarkTheme
+        } else {
+            contentView.backgroundColor = .none
+            nameLabel.textColor = .none
+        }
+    }
 }
 
 extension ConversationsTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
+        userIsOnline = model.isOnline
         nameLabel.text = model.name
         
         lastMessageLabel.text = model.message.isEmpty ? "No messages yet" : model.message
         lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
-        
-        contentView.backgroundColor = model.isOnline ? Self.onlineColor : .none
         
         if (!model.message.isEmpty) {
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
@@ -58,6 +83,5 @@ extension ConversationsTableViewCell: ConfigurableView {
         } else {
             dateLabel.text = nil
         }
-        
     }
 }
