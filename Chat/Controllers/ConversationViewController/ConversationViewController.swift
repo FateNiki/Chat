@@ -23,6 +23,7 @@ class ConversationViewController: UIViewController {
         tableView.register(UINib(nibName: incomeMessageCellIdentifier, bundle: nil), forCellReuseIdentifier: incomeMessageCellIdentifier)
         tableView.register(UINib(nibName: outcomeMessageCellIdentifier, bundle: nil), forCellReuseIdentifier: outcomeMessageCellIdentifier)
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         return tableView
     }()
 
