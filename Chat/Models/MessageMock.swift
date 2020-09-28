@@ -54,6 +54,6 @@ let conversationsMock: [Conversation] = mockUsers.map {
     return Conversation(
         user: $0,
         lastMessage: Message(text: message, date: randomDate(), direction: .income, isRead: isRead),
-        isOnline: Bool.random()
+        isOnline: message.isEmpty ? true : Bool.random()
     )
 }
