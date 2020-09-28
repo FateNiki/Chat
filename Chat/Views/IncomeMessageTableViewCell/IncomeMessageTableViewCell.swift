@@ -19,7 +19,6 @@ class IncomeMessageTableViewCell: UITableViewCell {
 
 extension IncomeMessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
-        print(model)
         messageLabel.text = model.message
     }
 }

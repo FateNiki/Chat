@@ -19,7 +19,6 @@ class OutcomeMessageTableViewCell: UITableViewCell {
 
 extension OutcomeMessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
-        print(model)
         messageLabel.text = model.message
     }
 }
