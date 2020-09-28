@@ -65,8 +65,7 @@ class ConversationsListViewController: UIViewController {
 
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let isOnline = indexPath.section == 0
-        let conversation = conversations.filter({ $0.isOnline == isOnline })[indexPath.row]
+        let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
         openConversation(with: conversation)
     }
 }
@@ -78,16 +77,13 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let isOnline = section == 0
-        return conversations.filter({ $0.isOnline == isOnline }).count
+        return conversations.withStatus(online: section == 0).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ConversationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationsTableViewCell
         
-        let isOnline = indexPath.section == 0
-        let conversation = conversations.filter({ $0.isOnline == isOnline })[indexPath.row]
-
+        let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
         cell.configure(with: .init(
                         name: conversation.user.fullName,
                         message: conversation.lastMessage.text,
