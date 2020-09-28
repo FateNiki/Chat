@@ -60,7 +60,8 @@ extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        if indexPath.row % 2 == 0 {
+        let message = messages[indexPath.row]
+        if message.direction == .income {
             cell = tableView.dequeueReusableCell(withIdentifier: incomeMessageCellIdentifier) ?? UITableViewCell()
             if let messageCell = cell as? IncomeMessageTableViewCell {
                 messageCell.configure(with: .init(message: messages[indexPath.row].text))
