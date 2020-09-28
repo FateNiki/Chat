@@ -28,38 +28,12 @@ class UserViewController: UIViewController {
     
     
     // MARK: - Lifecycle
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        // print(saveButton.frame)
-        // Невозможно обратиться к saveButton (runtime failure). В данный момент он равен nil
-        // Кнопка инициализируется только после загрузки storyboard
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configSaveButton()
         initUserFields()
-        
-        print(saveButton.frame)
-        // В данный момент View только загрузилась из связанного storyboard файла
-        // и frame указаны в соответствии с текущими значениями для выбранного в сториборд устройстве.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(saveButton.frame)
-        // В данный момент View уже отобразилась на экране устройства
-        // Уже отработал механизм autolayout для текущего устройства
-        // Так как в сториборд файле и эмуляторе выбраны устройства с разными экранами (iphone se 2 и iphone 11)
-        // то и фреймы saveButton в них разные
-        // viewDidLoad → (56.0, 597.0, 263.0, 40.0)
-        // viewDidAppear → (56.0, 792.0, 302.0, 40.0)
-
     }
     
     // MARK: - Interface configuring    
