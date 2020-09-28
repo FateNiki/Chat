@@ -9,7 +9,13 @@
 import Foundation
 
 struct Message {
+    enum Direction {
+        case income
+        case outcome
+    }
+    
     let text: String
     let date: Date
+    let direction: Direction
     var isRead: Bool
 }

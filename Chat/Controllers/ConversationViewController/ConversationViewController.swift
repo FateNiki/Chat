@@ -15,7 +15,7 @@ class ConversationViewController: UIViewController {
 
     // MARK: - Variables
     var conversation: Conversation?
-    var messages = messagesMock.shuffled()
+    var messages = mockMessages
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
