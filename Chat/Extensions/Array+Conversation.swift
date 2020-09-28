@@ -16,6 +16,8 @@ extension Array where Element == Conversation {
             } else {
                 return !$0.isOnline && !$0.lastMessage.text.isEmpty
             }
+        }.sorted {
+            $0.lastMessage.date.timeIntervalSince1970 > $1.lastMessage.date.timeIntervalSince1970
         }
     }
 }
