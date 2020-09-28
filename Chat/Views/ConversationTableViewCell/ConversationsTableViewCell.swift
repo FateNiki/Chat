@@ -46,14 +46,18 @@ extension ConversationsTableViewCell: ConfigurableView {
         lastMessageLabel.text = model.message.isEmpty ? "No messages yet" : model.message
         lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
-        if let yesterday = yesterday, model.date.timeIntervalSince1970 < yesterday.timeIntervalSince1970 {
-            dateLabel.text = Self.dateFormatter.string(from: model.date)
-        } else {
-            dateLabel.text = Self.timeFormatter.string(from: model.date)
-        }
-        
         contentView.backgroundColor = model.isOnline ? Self.onlineColor : .none
+        
+        if (!model.message.isEmpty) {
+            let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
+            if let yesterday = yesterday, model.date.timeIntervalSince1970 < yesterday.timeIntervalSince1970 {
+                dateLabel.text = Self.dateFormatter.string(from: model.date)
+            } else {
+                dateLabel.text = Self.timeFormatter.string(from: model.date)
+            }
+        } else {
+            dateLabel.text = nil
+        }
         
     }
 }
