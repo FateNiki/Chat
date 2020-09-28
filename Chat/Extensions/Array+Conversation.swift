@@ -10,6 +10,12 @@ import Foundation
 
 extension Array where Element == Conversation {
     func withStatus(online: Bool) -> [Element] {
-        self.filter { $0.isOnline == online }
+        self.filter {
+            if online {
+                return $0.isOnline
+            } else {
+                return !$0.isOnline && !$0.lastMessage.text.isEmpty
+            }
+        }
     }
 }
