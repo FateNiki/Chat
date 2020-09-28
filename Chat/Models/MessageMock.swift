@@ -44,7 +44,7 @@ func createMessage(with text: String) -> Message {
 }
 
 let mockMessages: [Message] = messages.map { createMessage(with: $0) }.sorted {
-    return $0.date.timeIntervalSince1970 > $1.date.timeIntervalSince1970
+    return $0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970
 }
 
 
