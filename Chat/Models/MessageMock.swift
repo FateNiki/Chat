@@ -22,6 +22,19 @@ private let messages = [
     "Test message 11",
     "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
     "Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro.",
+    "Test message 1",
+    "Test message 2",
+    "Test message 3",
+    "Test message 4",
+    "Test message 5",
+    "Test message 6",
+    "Test message 7",
+    "Test message 8",
+    "Test message 9",
+    "Test message 10",
+    "Test message 11",
+    "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
+    "Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro.",
 ]
 
 private func randomDate() -> Date {
