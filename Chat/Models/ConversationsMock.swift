@@ -33,10 +33,10 @@ private func randomDate() -> Date {
 
 
 private func randomMessage() -> String {
-    return Bool.random() ? "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum." : ""
+    return Bool.random() ? "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum." : "test message"
 }
 
-private let messages: [Message] = [
+let messagesMock: [Message] = [
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random()),
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random()),
     Message(text: randomMessage(), date: randomDate(), isRead: Bool.random()),
@@ -54,7 +54,7 @@ private let messages: [Message] = [
 let conversationsMock: [Conversation] = users.map {
     Conversation(
         user: $0,
-        lastMessage: messages.randomElement() ?? Message(text: "", date: Date(), isRead: true),
+        lastMessage: messagesMock.randomElement() ?? Message(text: "", date: Date(), isRead: true),
         isOnline: Bool.random()
     )
 }
