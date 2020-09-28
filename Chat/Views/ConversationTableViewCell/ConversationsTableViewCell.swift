@@ -24,27 +24,24 @@ class ConversationsTableViewCell: UITableViewCell {
     }()
     private static let onlineColor = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
     private static let fontSize: CGFloat = 15
-
-    
-    struct ConversationCellModel {
-        let name: String
-        let message: String
-        let date: Date
-        let isOnline: Bool
-        let hasUnreadMessage: Bool
-    }
     
     // MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
     
-    
+    // MARK: - Lifecycle
+    override func prepareForReuse() {
+        nameLabel.text = nil
+        dateLabel.text = nil
+        lastMessageLabel.text = nil
+    }
 }
 
 extension ConversationsTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
+        
         lastMessageLabel.text = model.message.isEmpty ? "No messages yet" : model.message
         lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         
