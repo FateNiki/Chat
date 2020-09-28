@@ -137,7 +137,7 @@
 		5BC2B73E250D4D770062C724 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				5BECAD4A251FB94B00141621 /* Prototypes */,
+				5BECAD4A251FB94B00141621 /* Protocols */,
 				5BECAD44251FAA9900141621 /* Views */,
 				5B79C34D251FA41900963D06 /* Controllers */,
 				5B6C09182517A389007F58E3 /* Models */,
@@ -207,12 +207,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5BECAD4A251FB94B00141621 /* Prototypes */ = {
+		5BECAD4A251FB94B00141621 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				5BECAD4B251FB96A00141621 /* ConfigurableView.swift */,
 			);
-			path = Prototypes;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
