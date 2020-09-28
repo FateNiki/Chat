@@ -18,16 +18,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MessageMessageMessageMessageMessage  MessageMessage MessageMessageMessageMessage Message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkj-L8-LS3" userLabel="Message">
-                        <rect key="frame" x="95" y="0.0" width="275" height="110"/>
+                        <rect key="frame" x="95" y="20" width="275" height="70"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="nkj-L8-LS3" secondAttribute="bottom" id="0c0-Ro-Ne4"/>
+                    <constraint firstAttribute="bottom" secondItem="nkj-L8-LS3" secondAttribute="bottom" constant="20" symbolic="YES" id="0c0-Ro-Ne4"/>
                     <constraint firstAttribute="trailing" secondItem="nkj-L8-LS3" secondAttribute="trailing" constant="10" id="GOA-6E-VIB"/>
-                    <constraint firstItem="nkj-L8-LS3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="K4Y-Fc-Mj8"/>
+                    <constraint firstItem="nkj-L8-LS3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" symbolic="YES" id="K4Y-Fc-Mj8"/>
                     <constraint firstItem="nkj-L8-LS3" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="3/4" constant="-10" id="xbb-uO-tpZ"/>
                 </constraints>
             </tableViewCellContentView>
