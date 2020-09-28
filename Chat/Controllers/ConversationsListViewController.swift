@@ -12,6 +12,7 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
     private let conversations = conversationsMock
+    private let currentUser = mockUser
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -44,7 +45,7 @@ class ConversationsListViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = "Tinkoff Chat"
         
-        let userButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(openUserEdit))
+        let userButton = UIBarButtonItem(title: currentUser.initials, style: .plain, target: self, action: #selector(openUserEdit))
         navigationItem.rightBarButtonItem = userButton
     }
     
