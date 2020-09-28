@@ -33,6 +33,10 @@ class ConversationViewController: UIViewController {
         setupView()
     }
     
+    override func viewDidLayoutSubviews() {
+        tableView.frame = view.frame
+    }
+    
     // MARK: - Config UI
     private func setupView() {
         initTableView()
