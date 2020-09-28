@@ -13,6 +13,13 @@ class IncomeMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     
     // MARK: - Lifecycle
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        messageLabel.layer.borderWidth = 2
+        messageLabel.layer.borderColor = UIColor.lightGray.cgColor
+        messageLabel.layer.cornerRadius = 10
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         messageLabel.text = nil
