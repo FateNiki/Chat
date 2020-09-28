@@ -57,9 +57,9 @@ class ConversationsListViewController: UIViewController {
     }
     
     func openConversation(with conversation: Conversation) -> Void {
-        let controller = ConversationViewController()
-        controller.conversation = conversation
-        navigationController?.pushViewController(controller, animated: true)
+        let conversationController = ConversationViewController()
+        conversationController.conversation = conversation
+        navigationController?.pushViewController(conversationController, animated: true)
     }
 
 }
