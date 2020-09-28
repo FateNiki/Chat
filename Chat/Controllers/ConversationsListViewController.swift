@@ -51,8 +51,9 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Actions
     @objc func openUserEdit() -> Void {
-        let controller = UserViewController()
-        self.present(controller, animated: true, completion: nil)
+        let userController = UserViewController()
+        userController.currentUser = currentUser
+        self.present(userController, animated: true, completion: nil)
     }
     
     func openConversation(with conversation: Conversation) -> Void {

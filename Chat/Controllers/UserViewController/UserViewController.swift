@@ -15,7 +15,7 @@ class UserViewController: UIViewController {
     private let saveButtonCornerRadius: CGFloat = 14
     
     // MARK: - Variables
-    public var currentUser: User = mockUser
+    var currentUser: User?
     fileprivate var imagePicker: UIImagePickerController!
 
     
@@ -44,9 +44,11 @@ class UserViewController: UIViewController {
     }
     
     private func initUserFields() -> Void {
-        fullNameLabel.text = currentUser.fullName
-        descriptionLabel.text = currentUser.description
-        userAvatarView.configure(with: currentUser)
+        guard let user = currentUser else { return }
+        
+        fullNameLabel.text = user.fullName
+        descriptionLabel.text = user.description
+        userAvatarView.configure(with: user)
     }
     
     // MARK: - Inteface Actions
@@ -106,7 +108,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             openErrorAlert(title: "Изображение", message: "Image not found!")
             return
         }
-        currentUser.avatar = selectedImage.jpegData(compressionQuality: 1)
+        currentUser?.avatar = selectedImage.jpegData(compressionQuality: 1)
         initUserFields()
     }
         
