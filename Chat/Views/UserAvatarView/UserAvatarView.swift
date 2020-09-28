@@ -29,13 +29,15 @@ class UserAvatarView: UIView {
         xibView.frame = self.bounds
         xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(xibView)
+        
+        avatarImageView.backgroundColor = avatarBackground
+        self.clipsToBounds = true
     }
     
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -52,8 +54,7 @@ class UserAvatarView: UIView {
     // MARK: - Interface configuring
     private func updateView() -> Void {
         let minSize = min(self.bounds.width, self.bounds.height)
-        avatarImageView.layer.cornerRadius = minSize / 2
-        avatarImageView.backgroundColor = avatarBackground
+        self.layer.cornerRadius = minSize / 2
         initialsLabel.font = initialsLabel.font.withSize(minSize/3)
     }
 
