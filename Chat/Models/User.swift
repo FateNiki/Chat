@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct User: Codable, Identifiable {
+class User: Codable, Identifiable {
     let id: UUID
     
     var firstName: String
