@@ -9,5 +9,17 @@
 import UIKit
 
 class IncomeMessageTableViewCell: UITableViewCell {
+    // MARK: - Outlets
+    @IBOutlet weak var messageLabel: UILabel!
     
+    override func prepareForReuse() {
+        messageLabel.text = nil
+    }
+}
+
+extension IncomeMessageTableViewCell: ConfigurableView {
+    func configure(with model: MessageCellModel) {
+        print(model)
+        messageLabel.text = model.message
+    }
 }

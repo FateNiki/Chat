@@ -21,6 +21,7 @@
 		5BCE62962521E03C00107339 /* IncomeMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE62942521E03C00107339 /* IncomeMessageTableViewCell.xib */; };
 		5BCE629C2521E3F900107339 /* OutcomeMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE629A2521E3F900107339 /* OutcomeMessageTableViewCell.swift */; };
 		5BCE629D2521E3F900107339 /* OutcomeMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE629B2521E3F900107339 /* OutcomeMessageTableViewCell.xib */; };
+		5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */; };
 		5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E072520B60700D73A63 /* UserViewController.swift */; };
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
 		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
@@ -50,6 +51,7 @@
 		5BCE62942521E03C00107339 /* IncomeMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomeMessageTableViewCell.xib; sourceTree = "<group>"; };
 		5BCE629A2521E3F900107339 /* OutcomeMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeMessageTableViewCell.swift; sourceTree = "<group>"; };
 		5BCE629B2521E3F900107339 /* OutcomeMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutcomeMessageTableViewCell.xib; sourceTree = "<group>"; };
+		5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationModel.swift; sourceTree = "<group>"; };
 		5BE20E072520B60700D73A63 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				5BECAD4E251FC52300141621 /* Conversation.swift */,
 				5BECAD55251FC83000141621 /* ConversationsMock.swift */,
 				5BECAD51251FC5AB00141621 /* Message.swift */,
+				5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
+				5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
 				5BCE629C2521E3F900107339 /* OutcomeMessageTableViewCell.swift in Sources */,
