@@ -62,12 +62,12 @@ extension ConversationViewController: UITableViewDataSource {
         var cell: UITableViewCell
         let message = messages[indexPath.row]
         if message.direction == .income {
-            cell = tableView.dequeueReusableCell(withIdentifier: incomeMessageCellIdentifier) ?? UITableViewCell()
+            cell = tableView.dequeueReusableCell(withIdentifier: incomeMessageCellIdentifier, for: indexPath)
             if let messageCell = cell as? IncomeMessageTableViewCell {
                 messageCell.configure(with: .init(message: messages[indexPath.row].text))
             }
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: outcomeMessageCellIdentifier) ?? UITableViewCell()
+            cell = tableView.dequeueReusableCell(withIdentifier: outcomeMessageCellIdentifier, for: indexPath)
             if let messageCell = cell as? OutcomeMessageTableViewCell {
                 messageCell.configure(with: .init(message: messages[indexPath.row].text))
             }
