@@ -99,7 +99,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         switch section {
             case 0: return "Online"
             case 1: return "History"
-            default: return ""
+            default: return nil
         }
         
     }
