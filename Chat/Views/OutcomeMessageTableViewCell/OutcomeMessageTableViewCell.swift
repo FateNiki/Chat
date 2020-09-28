@@ -12,6 +12,7 @@ class OutcomeMessageTableViewCell: UITableViewCell {
     // MARK: - Outlets
     @IBOutlet weak var messageLabel: UILabel!
     
+    // MARK: - Lifecycle
     override func prepareForReuse() {
         messageLabel.text = nil
     }
