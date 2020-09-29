@@ -32,10 +32,18 @@ class ConversationsListViewController: UIViewController {
         setupView()
     }
     
+    override func viewDidLayoutSubviews() {
+        updateView()
+    }
+    
     // MARK: - Config UI
     private func setupView() {
         initTableView()
         initNavigation()
+    }
+    
+    private func updateView() {
+        tableView.frame = view.frame
     }
     
     private func initTableView() {
