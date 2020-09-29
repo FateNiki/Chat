@@ -30,7 +30,7 @@ class MessageTableViewCell: UITableViewCell {
 
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
-        messageLabel.text = model.text
+        messageLabel.text = "\(model.text) | \(model.income ? "income" : "outcome")"
         incomePadding.isActive = model.income
         outcomePadding.isActive = !model.income
     }
