@@ -9,7 +9,7 @@
 import Foundation
 
 struct MessageCellModel {
-    let message: String
+    let text: String
     let income: Bool
 }
 

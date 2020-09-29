@@ -68,7 +68,7 @@ extension ConversationViewController: UITableViewDataSource {
         
         if let messageCell = cell as? MessageTableViewCell {
             let message = messages[indexPath.row]
-            messageCell.configure(with: .init(message: message.text, income: message.direction == .income))
+            messageCell.configure(with: .init(text: message.text, income: message.direction == .income))
         }
         
         return cell
