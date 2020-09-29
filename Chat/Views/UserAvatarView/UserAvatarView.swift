@@ -24,16 +24,6 @@ class UserAvatarView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    private func setupView() {
-        guard let xibView = initViewFromXib() else { return }
-        xibView.frame = self.bounds
-        xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.addSubview(xibView)
-        
-        avatarImageView.backgroundColor = avatarBackground
-        self.clipsToBounds = true
-    }
-    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,6 +42,16 @@ class UserAvatarView: UIView {
     
     
     // MARK: - Interface configuring
+    private func setupView() {
+        guard let xibView = initViewFromXib() else { return }
+        xibView.frame = self.bounds
+        xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(xibView)
+        
+        avatarImageView.backgroundColor = avatarBackground
+        self.clipsToBounds = true
+    }
+    
     private func updateView() -> Void {
         let minSize = min(self.bounds.width, self.bounds.height)
         self.layer.cornerRadius = minSize / 2

@@ -33,13 +33,17 @@ class ConversationViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        tableView.frame = view.frame
+        updateView()
     }
     
-    // MARK: - Config UI
+    // MARK: - Interface configuring
     private func setupView() {
         initTableView()
         initNavigation()
+    }
+    
+    private func updateView() {
+        tableView.frame = view.frame
     }
     
     private func initTableView() {
@@ -49,6 +53,8 @@ class ConversationViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = conversation?.user.fullName ?? "Untitled"
     }
+    
+    
 }
 
 

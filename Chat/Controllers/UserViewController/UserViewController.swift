@@ -28,15 +28,17 @@ class UserViewController: UIViewController {
     
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupView()
+    }
+    
+    // MARK: - Interface configuring
+    private func setupView() {
         configSaveButton()
         initUserFields()
     }
     
-    // MARK: - Interface configuring    
     private func configSaveButton() -> Void {
         saveButton.backgroundColor = saveButtonBackground
         saveButton.layer.cornerRadius = saveButtonCornerRadius
