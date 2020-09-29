@@ -70,8 +70,13 @@ extension ConversationsTableViewCell: ConfigurableView {
         userIsOnline = model.isOnline
         nameLabel.text = model.name
         
-        lastMessageLabel.text = model.message.isEmpty ? "No messages yet" : model.message
-        lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
+        if model.message.isEmpty {
+            lastMessageLabel.text =  "No messages yet"
+            lastMessageLabel.font = UIFont.italicSystemFont(ofSize: Self.fontSize)
+        } else {
+            lastMessageLabel.text = model.message
+            lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
+        }
         
         if (!model.message.isEmpty) {
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
