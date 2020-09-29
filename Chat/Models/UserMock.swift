@@ -20,5 +20,17 @@ let mockUsers: [User] = [
     User(firstName: "Jane", lastName: "Warren"),
     User(firstName: "Morris", lastName: "Henry"),
     User(firstName: "Irma", lastName: "Flores"),
-    User(firstName: "Colin", lastName: "Williams")
+    User(firstName: "Leanne", lastName: "Graham"),
+    User(firstName: "Ervin", lastName: "Howell"),
+    User(firstName: "Clementine", lastName: "Bauch"),
+    User(firstName: "Patricia", lastName: "Lebsack"),
+    User(firstName: "Chelsey", lastName: "Dietrich"),
+    User(firstName: "Dennis", lastName: "Schulist"),
+    User(firstName: "Kurtis", lastName: "Weissnat"),
+    User(firstName: "Colin", lastName: "Williams"),
+    User(firstName: "Test", lastName: "User"),
+    User(firstName: "Test", lastName: "User 2"),
+    User(firstName: "Test", lastName: "User 3"),
+    User(firstName: "Test", lastName: "User 4"),
+    User(firstName: "Test very long name", lastName: "User with very long surname"),
 ]

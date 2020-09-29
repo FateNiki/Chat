@@ -34,7 +34,7 @@ private let messages = [
     "Test message 10",
     "Test message 11",
     "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
-    "Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro.",
+    "Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro. \nVis cu magna altera, ex his vivendo atomorum. An suas viderer pro.\nVis cu magna altera, ex his vivendo atomorum. An suas viderer pro.",
 ]
 
 private func randomDate() -> Date {
@@ -49,7 +49,7 @@ private func randomDate() -> Date {
     return Calendar.current.date(byAdding: component, value: delta, to: now) ?? now
 }
 
-func createMessage(with text: String) -> Message {
+private func createMessage(with text: String) -> Message {
     let date = randomDate()
     let direction: Message.Direction = Bool.random() ? .income : .outcome
     let isRead: Bool = direction == .income ? Bool.random() : true
@@ -61,12 +61,14 @@ let mockMessages: [Message] = messages.map { createMessage(with: $0) }.sorted {
 }
 
 
-let conversationsMock: [Conversation] = mockUsers.map {
-    let message: String = Bool.random() ? messages.randomElement() ?? "" : ""
+let conversationsMock: [Conversation] = mockUsers.enumerated().map {
+    let isOnline = $0 % 2 == 0
+    var message: String = messages.randomElement() ?? ""
+    if $0 % 4 == 0 { message = "" }
     let isRead: Bool = message.isEmpty ? true : Bool.random()
     return Conversation(
-        user: $0,
+        user: $1,
         lastMessage: Message(text: message, date: randomDate(), direction: .income, isRead: isRead),
-        isOnline: message.isEmpty ? true : Bool.random()
+        isOnline: isOnline
     )
 }
