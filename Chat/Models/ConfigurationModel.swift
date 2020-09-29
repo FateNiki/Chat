@@ -10,6 +10,7 @@ import Foundation
 
 struct MessageCellModel {
     let message: String
+    let income: Bool
 }
 
 struct ConversationCellModel {

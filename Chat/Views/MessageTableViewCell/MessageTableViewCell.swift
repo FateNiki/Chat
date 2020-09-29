@@ -1,5 +1,5 @@
 //
-//  OutcomeMessageTableViewCell.swift
+//  IncomeMessageTableViewCell.swift
 //  Chat
 //
 //  Created by Алексей Никитин on 28.09.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OutcomeMessageTableViewCell: UITableViewCell {
+class MessageTableViewCell: UITableViewCell {
     // MARK: - Outlets
     @IBOutlet weak var messageLabel: UILabel!
     
@@ -26,9 +26,8 @@ class OutcomeMessageTableViewCell: UITableViewCell {
     }
 }
 
-extension OutcomeMessageTableViewCell: ConfigurableView {
+extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.message
     }
 }
-

@@ -17,10 +17,8 @@
 		5BC2B747250D4D770062C724 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B745250D4D770062C724 /* Main.storyboard */; };
 		5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B748250D4D7C0062C724 /* Assets.xcassets */; };
 		5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */; };
-		5BCE62952521E03C00107339 /* IncomeMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62932521E03C00107339 /* IncomeMessageTableViewCell.swift */; };
-		5BCE62962521E03C00107339 /* IncomeMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE62942521E03C00107339 /* IncomeMessageTableViewCell.xib */; };
-		5BCE629C2521E3F900107339 /* OutcomeMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE629A2521E3F900107339 /* OutcomeMessageTableViewCell.swift */; };
-		5BCE629D2521E3F900107339 /* OutcomeMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE629B2521E3F900107339 /* OutcomeMessageTableViewCell.xib */; };
+		5BCE62952521E03C00107339 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62932521E03C00107339 /* MessageTableViewCell.swift */; };
+		5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE62942521E03C00107339 /* MessageTableViewCell.xib */; };
 		5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */; };
 		5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E072520B60700D73A63 /* UserViewController.swift */; };
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
@@ -49,10 +47,8 @@
 		5BC2B748250D4D7C0062C724 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BC2B74B250D4D7C0062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BC2B74D250D4D7C0062C724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5BCE62932521E03C00107339 /* IncomeMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeMessageTableViewCell.swift; sourceTree = "<group>"; };
-		5BCE62942521E03C00107339 /* IncomeMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomeMessageTableViewCell.xib; sourceTree = "<group>"; };
-		5BCE629A2521E3F900107339 /* OutcomeMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeMessageTableViewCell.swift; sourceTree = "<group>"; };
-		5BCE629B2521E3F900107339 /* OutcomeMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutcomeMessageTableViewCell.xib; sourceTree = "<group>"; };
+		5BCE62932521E03C00107339 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		5BCE62942521E03C00107339 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationModel.swift; sourceTree = "<group>"; };
 		5BE20E072520B60700D73A63 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
@@ -153,22 +149,13 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
-		5BCE62922521E01700107339 /* IncomeMessageTableViewCell */ = {
+		5BCE62922521E01700107339 /* MessageTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				5BCE62932521E03C00107339 /* IncomeMessageTableViewCell.swift */,
-				5BCE62942521E03C00107339 /* IncomeMessageTableViewCell.xib */,
+				5BCE62932521E03C00107339 /* MessageTableViewCell.swift */,
+				5BCE62942521E03C00107339 /* MessageTableViewCell.xib */,
 			);
-			path = IncomeMessageTableViewCell;
-			sourceTree = "<group>";
-		};
-		5BCE62992521E3E200107339 /* OutcomeMessageTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				5BCE629A2521E3F900107339 /* OutcomeMessageTableViewCell.swift */,
-				5BCE629B2521E3F900107339 /* OutcomeMessageTableViewCell.xib */,
-			);
-			path = OutcomeMessageTableViewCell;
+			path = MessageTableViewCell;
 			sourceTree = "<group>";
 		};
 		5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */ = {
@@ -202,8 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
-				5BCE62992521E3E200107339 /* OutcomeMessageTableViewCell */,
-				5BCE62922521E01700107339 /* IncomeMessageTableViewCell */,
+				5BCE62922521E01700107339 /* MessageTableViewCell */,
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 				5BE9E96B25220B5300AA77E2 /* PaddingLabel.swift */,
 			);
@@ -278,10 +264,9 @@
 			files = (
 				5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */,
 				5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */,
-				5BCE62962521E03C00107339 /* IncomeMessageTableViewCell.xib in Resources */,
+				5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */,
 				5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */,
 				5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */,
-				5BCE629D2521E3F900107339 /* OutcomeMessageTableViewCell.xib in Resources */,
 				5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */,
 				5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */,
 				5BC2B747250D4D770062C724 /* Main.storyboard in Resources */,
@@ -305,14 +290,13 @@
 				5BECAD4F251FC52300141621 /* Conversation.swift in Sources */,
 				5BE9E9662521FB8F00AA77E2 /* Array+Conversation.swift in Sources */,
 				5BECAD47251FAACB00141621 /* ConversationsTableViewCell.swift in Sources */,
-				5BCE62952521E03C00107339 /* IncomeMessageTableViewCell.swift in Sources */,
+				5BCE62952521E03C00107339 /* MessageTableViewCell.swift in Sources */,
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
 				5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
-				5BCE629C2521E3F900107339 /* OutcomeMessageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

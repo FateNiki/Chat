@@ -10,8 +10,7 @@ import UIKit
 
 class ConversationViewController: UIViewController {
     // MARK: - Constants
-    private let incomeMessageCellIdentifier = String(describing: IncomeMessageTableViewCell.self)
-    private let outcomeMessageCellIdentifier = String(describing: OutcomeMessageTableViewCell.self)
+    private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
 
     // MARK: - Variables
     var conversation: Conversation?
@@ -20,8 +19,7 @@ class ConversationViewController: UIViewController {
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .plain)
-        tableView.register(UINib(nibName: incomeMessageCellIdentifier, bundle: nil), forCellReuseIdentifier: incomeMessageCellIdentifier)
-        tableView.register(UINib(nibName: outcomeMessageCellIdentifier, bundle: nil), forCellReuseIdentifier: outcomeMessageCellIdentifier)
+        tableView.register(UINib(nibName: messageCellIdentifier, bundle: nil), forCellReuseIdentifier: messageCellIdentifier)
         tableView.dataSource = self
         tableView.separatorStyle = .none
         return tableView
@@ -60,18 +58,11 @@ extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messages.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
         let message = messages[indexPath.row]
-        if message.direction == .income {
-            cell = tableView.dequeueReusableCell(withIdentifier: incomeMessageCellIdentifier, for: indexPath)
-            if let messageCell = cell as? IncomeMessageTableViewCell {
-                messageCell.configure(with: .init(message: messages[indexPath.row].text))
-            }
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: outcomeMessageCellIdentifier, for: indexPath)
-            if let messageCell = cell as? OutcomeMessageTableViewCell {
-                messageCell.configure(with: .init(message: messages[indexPath.row].text))
-            }
+        
+        if let messageCell = cell as? MessageTableViewCell {
+            messageCell.configure(with: .init(message: message.text, income: message.direction == .income))
         }
         
         return cell
