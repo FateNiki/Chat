@@ -90,16 +90,18 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ConversationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath) as! ConversationsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
         
-        let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
-        cell.configure(with: .init(
-                        name: conversation.user.fullName,
-                        message: conversation.lastMessage.text,
-                        date: conversation.lastMessage.date,
-                        isOnline: conversation.isOnline,
-                        hasUnreadMessage: !conversation.lastMessage.isRead)
-        )
+        if let conversationCell = cell as? ConversationsTableViewCell {
+            let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
+            conversationCell.configure(with: .init(
+                            name: conversation.user.fullName,
+                            message: conversation.lastMessage.text,
+                            date: conversation.lastMessage.date,
+                            isOnline: conversation.isOnline,
+                            hasUnreadMessage: !conversation.lastMessage.isRead)
+            )
+        }
         return cell
     }
     
