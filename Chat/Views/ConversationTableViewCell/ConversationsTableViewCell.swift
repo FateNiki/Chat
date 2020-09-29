@@ -29,7 +29,7 @@ class ConversationsTableViewCell: UITableViewCell {
     // MARK: - Variables
     private var userIsOnline: Bool = false {
         didSet {
-            updateView()
+            updateViewColors()
         }
     }
 
@@ -49,12 +49,12 @@ class ConversationsTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateView()
+        updateViewColors()
     }
     
     
     // MARK: - Interface configuring
-    private func updateView() -> Void {
+    private func updateViewColors() -> Void {
         if (userIsOnline) {
             contentView.backgroundColor = Self.onlineColor
             nameLabel.textColor = Self.nameTextColorForDarkTheme
