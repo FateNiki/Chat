@@ -20,6 +20,7 @@ class MessageTableViewCell: UITableViewCell {
         messageLabel.layer.borderWidth = 2
         messageLabel.layer.borderColor = UIColor.lightGray.cgColor
         messageLabel.layer.cornerRadius = 10
+        messageLabel.clipsToBounds = true
     }
     
     override func prepareForReuse() {
