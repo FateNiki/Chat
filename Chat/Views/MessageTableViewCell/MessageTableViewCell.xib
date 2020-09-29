@@ -17,8 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="337" height="166"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Test message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4d-HB-qtz" userLabel="Message" customClass="PaddingLabel" customModule="Chat" customModuleProvider="target">
-                        <rect key="frame" x="10" y="5" width="243" height="156"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4d-HB-qtz" userLabel="Message" customClass="PaddingLabel" customModule="Chat" customModuleProvider="target">
+                        <rect key="frame" x="84.5" y="5" width="242.5" height="156"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -39,14 +39,23 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="T4d-HB-qtz" secondAttribute="trailing" priority="999" constant="10" id="GAS-Tn-utF"/>
                     <constraint firstItem="T4d-HB-qtz" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="3/4" constant="-10" id="Kl3-BD-tUY"/>
                     <constraint firstItem="T4d-HB-qtz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="i0L-53-V16"/>
                     <constraint firstAttribute="bottom" secondItem="T4d-HB-qtz" secondAttribute="bottom" constant="5" id="sgv-6N-dbT"/>
+                    <constraint firstItem="T4d-HB-qtz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" priority="999" constant="10" id="yI8-sp-XX6"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="yI8-sp-XX6"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="incomePadding" destination="GAS-Tn-utF" id="85r-JW-jxv"/>
                 <outlet property="messageLabel" destination="T4d-HB-qtz" id="NEU-XJ-vD2"/>
+                <outlet property="outcomePadding" destination="yI8-sp-XX6" id="tNm-Qm-dgE"/>
             </connections>
             <point key="canvasLocation" x="134.05797101449275" y="125.22321428571428"/>
         </tableViewCell>
