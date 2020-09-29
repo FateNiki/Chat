@@ -12,6 +12,9 @@ class UserAvatarView: UIView {
     // MARK: - Interface constants
     private let avatarBackground = UIColor(red: 0.89, green: 0.91, blue: 0.17, alpha: 1.00)
     
+    // MARK: - Variables
+    var delegate: UserAvatarViewDelegate?
+    
     // MARK: - Outlets
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var initialsLabel: UILabel!
@@ -50,12 +53,19 @@ class UserAvatarView: UIView {
         
         avatarImageView.backgroundColor = avatarBackground
         self.clipsToBounds = true
+        
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(avaratDidTap)))
     }
     
     private func updateView() -> Void {
         let minSize = min(self.bounds.width, self.bounds.height)
         self.layer.cornerRadius = minSize / 2
         initialsLabel.font = initialsLabel.font.withSize(minSize/3)
+    }
+    
+    // MARK: - Action
+    @objc func avaratDidTap(_ gestureRecognizer : UITapGestureRecognizer ) {
+        delegate?.userAvatarDidTap()
     }
 
 }

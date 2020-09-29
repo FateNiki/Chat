@@ -23,6 +23,14 @@ class ConversationsListViewController: UIViewController {
         tableView.delegate = self
         return tableView
     }()
+    private lazy var userAvatarView: UserAvatarView = {
+        let uaView = UserAvatarView()
+        uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        uaView.configure(with: currentUser)
+        uaView.delegate = self
+        return uaView
+    }()
     
     
     // MARK: - Lifecycle
@@ -53,12 +61,12 @@ class ConversationsListViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = "Tinkoff Chat"
         
-        let userButton = UIBarButtonItem(title: currentUser.initials, style: .plain, target: self, action: #selector(openUserEdit))
+        let userButton = UIBarButtonItem(customView: userAvatarView)
         navigationItem.rightBarButtonItem = userButton
     }
     
     // MARK: - Actions
-    @objc func openUserEdit() -> Void {
+    func openUserEdit() -> Void {
         let userController = UserViewController()
         userController.currentUser = currentUser
         self.present(userController, animated: true, completion: nil)
@@ -114,4 +122,10 @@ extension ConversationsListViewController: UITableViewDataSource {
         
     }
     
+}
+
+extension ConversationsListViewController: UserAvatarViewDelegate {
+    func userAvatarDidTap() {
+        openUserEdit()
+    }
 }
