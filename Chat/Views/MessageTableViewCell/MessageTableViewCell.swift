@@ -10,7 +10,16 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
     // MARK: - Outlets
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageLabel: PaddingLabel!
+    
+    // MARK: - UI Variables
+    private lazy var incomePadding: NSLayoutConstraint = {
+        return messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10)
+    }()
+    
+    private lazy var outcomePadding: NSLayoutConstraint = {
+        return messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+    }()
     
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -23,11 +32,15 @@ class MessageTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         messageLabel.text = nil
+        incomePadding.isActive = false
+        outcomePadding.isActive = false
     }
 }
 
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.message
+        incomePadding.isActive = model.income
+        outcomePadding.isActive = !model.income
     }
 }
