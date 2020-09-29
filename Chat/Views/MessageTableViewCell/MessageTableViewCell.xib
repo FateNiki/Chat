@@ -43,7 +43,7 @@
                     <constraint firstItem="T4d-HB-qtz" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="3/4" constant="-10" id="Kl3-BD-tUY"/>
                     <constraint firstItem="T4d-HB-qtz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="i0L-53-V16"/>
                     <constraint firstAttribute="bottom" secondItem="T4d-HB-qtz" secondAttribute="bottom" constant="5" id="sgv-6N-dbT"/>
-                    <constraint firstItem="T4d-HB-qtz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" priority="999" constant="10" id="yI8-sp-XX6"/>
+                    <constraint firstItem="T4d-HB-qtz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="999" constant="10" id="yI8-sp-XX6"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
