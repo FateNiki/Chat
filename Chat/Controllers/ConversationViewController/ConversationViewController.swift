@@ -33,6 +33,7 @@ class ConversationViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         updateView()
     }
     

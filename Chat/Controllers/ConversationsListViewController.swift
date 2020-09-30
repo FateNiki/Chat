@@ -41,6 +41,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         updateView()
     }
     
