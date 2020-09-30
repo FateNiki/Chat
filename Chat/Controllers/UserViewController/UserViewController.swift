@@ -82,13 +82,7 @@ class UserViewController: UIViewController {
 
 // MARK: - Work with ImagePicker
 extension UserViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    enum ImageSource {
-        case photoLibrary
-        case camera
-    }
-    
-    
-    func selectImageFrom(_ source: ImageSource){
+    func selectImageFrom(_ source: UIImagePickerController.SourceType){
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         switch source {
@@ -101,6 +95,8 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             case .photoLibrary:
                 imagePicker.sourceType = .photoLibrary
                 present(imagePicker, animated: true)
+            default:
+                return
         }
     }
     
