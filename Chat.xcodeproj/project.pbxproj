@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */; };
+		5B6C091A2517A3A2007F58E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09192517A3A2007F58E3 /* User.swift */; };
+		5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09232517B25F007F58E3 /* UserMock.swift */; };
 		5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B73F250D4D770062C724 /* AppDelegate.swift */; };
-		5BC2B744250D4D770062C724 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B743250D4D770062C724 /* ViewController.swift */; };
+		5BC2B744250D4D770062C724 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B743250D4D770062C724 /* UserViewController.swift */; };
 		5BC2B747250D4D770062C724 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B745250D4D770062C724 /* Main.storyboard */; };
 		5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B748250D4D7C0062C724 /* Assets.xcassets */; };
 		5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
+		5B6C09192517A3A2007F58E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5B6C09232517B25F007F58E3 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
 		5BC2B73C250D4D770062C724 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC2B73F250D4D770062C724 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5BC2B743250D4D770062C724 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5BC2B743250D4D770062C724 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5BC2B746250D4D770062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5BC2B748250D4D7C0062C724 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BC2B74B250D4D7C0062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -35,6 +41,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B5A8CEB251A5224000A541A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5B6C09182517A389007F58E3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5B6C09192517A3A2007F58E3 /* User.swift */,
+				5B6C09232517B25F007F58E3 /* UserMock.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5BC2B733250D4D770062C724 = {
 			isa = PBXGroup;
 			children = (
@@ -54,8 +77,10 @@
 		5BC2B73E250D4D770062C724 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5B6C09182517A389007F58E3 /* Models */,
+				5B5A8CEB251A5224000A541A /* Extensions */,
 				5BC2B73F250D4D770062C724 /* AppDelegate.swift */,
-				5BC2B743250D4D770062C724 /* ViewController.swift */,
+				5BC2B743250D4D770062C724 /* UserViewController.swift */,
 				5BC2B745250D4D770062C724 /* Main.storyboard */,
 				5BC2B748250D4D7C0062C724 /* Assets.xcassets */,
 				5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */,
@@ -91,7 +116,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Алексей Никитин";
 				TargetAttributes = {
 					5BC2B73B250D4D770062C724 = {
@@ -135,8 +160,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BC2B744250D4D770062C724 /* ViewController.swift in Sources */,
+				5BC2B744250D4D770062C724 /* UserViewController.swift in Sources */,
+				5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */,
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
+				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
+				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +216,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -248,6 +277,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -281,6 +311,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QNSD6F386;
 				INFOPLIST_FILE = Chat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -298,6 +329,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QNSD6F386;
 				INFOPLIST_FILE = Chat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
