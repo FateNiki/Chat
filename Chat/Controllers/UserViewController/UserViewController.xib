@@ -23,13 +23,13 @@
             <rect key="frame" x="0.0" y="0.0" width="385" height="712"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdQ-qF-wAA">
-                    <rect key="frame" x="138.5" y="341" width="108" height="29"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdQ-qF-wAA" userLabel="Full Name">
+                    <rect key="frame" x="139" y="341" width="107.5" height="29"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXn-xS-o5F">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Description " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXn-xS-o5F" userLabel="Description">
                     <rect key="frame" x="83.5" y="402" width="218" height="19.5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="218" id="HOe-3J-Jse"/>
@@ -68,6 +68,7 @@
             <constraints>
                 <constraint firstItem="VXn-xS-o5F" firstAttribute="centerX" secondItem="3bR-df-QtI" secondAttribute="centerX" id="23V-cK-gKT"/>
                 <constraint firstItem="VXn-xS-o5F" firstAttribute="top" secondItem="qdQ-qF-wAA" secondAttribute="bottom" constant="32" id="297-1P-nOr"/>
+                <constraint firstItem="vj1-Am-8OI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VXn-xS-o5F" secondAttribute="bottom" constant="50" id="7j7-Kw-g6f"/>
                 <constraint firstItem="wWL-dn-fTG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wrv-eh-TC6" secondAttribute="leading" symbolic="YES" id="8hu-oe-tIl"/>
                 <constraint firstItem="kBf-Ar-aAQ" firstAttribute="top" secondItem="Wrv-eh-TC6" secondAttribute="top" constant="25" id="8iP-No-pVc"/>
                 <constraint firstItem="qdQ-qF-wAA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3bR-df-QtI" secondAttribute="leading" constant="32" id="9UK-5l-JGe"/>
