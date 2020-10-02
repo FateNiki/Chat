@@ -64,6 +64,9 @@ class ConversationsListViewController: UIViewController {
         
         let userButton = UIBarButtonItem(customView: userAvatarView)
         navigationItem.rightBarButtonItem = userButton
+        
+        let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openSettings))
+        navigationItem.leftBarButtonItem = settingButton
     }
     
     // MARK: - Actions
@@ -77,6 +80,10 @@ class ConversationsListViewController: UIViewController {
         let conversationController = ConversationViewController()
         conversationController.conversation = conversation
         navigationController?.pushViewController(conversationController, animated: true)
+    }
+    
+    @objc func openSettings() -> Void {
+//        navigationController?.pushViewController(sd, animated: true)
     }
 
 }
