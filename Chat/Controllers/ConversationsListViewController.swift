@@ -65,7 +65,7 @@ class ConversationsListViewController: UIViewController {
         let userButton = UIBarButtonItem(customView: userAvatarView)
         navigationItem.rightBarButtonItem = userButton
         
-        let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openSettings))
+        let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openThemeChoice))
         navigationItem.leftBarButtonItem = settingButton
     }
     
@@ -82,8 +82,9 @@ class ConversationsListViewController: UIViewController {
         navigationController?.pushViewController(conversationController, animated: true)
     }
     
-    @objc func openSettings() -> Void {
-//        navigationController?.pushViewController(sd, animated: true)
+    @objc func openThemeChoice() -> Void {
+        let themeController = ThemesViewController()
+        navigationController?.pushViewController(themeController, animated: true)
     }
 
 }
