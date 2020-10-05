@@ -10,10 +10,13 @@ import UIKit
 
 class ThemesViewController: UIViewController {
     // MARK: - Outlets
-    @IBOutlet weak var classicPlaceholder: ThemePlaceholderView!
-    @IBOutlet weak var dayPlaceholder: ThemePlaceholderView!
-    @IBOutlet weak var nightPlaceholder: ThemePlaceholderView!
+    @IBOutlet var placeholders: [ThemePlaceholderView]!
     
+    // MARK: - Variables
+    var delegate: ThemePickerDelegate?
+    var selectThemeClosure: ((ThemeName) -> Void)?
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,19 +27,38 @@ class ThemesViewController: UIViewController {
     private func setupView() {
         navigationItem.title = "Settings"
         
-        classicPlaceholder.configure(with: ThemeName.classic)
-        classicPlaceholder.delegate = ThemeManager.shared
-        
-        dayPlaceholder.configure(with: ThemeName.day)
-        dayPlaceholder.delegate = ThemeManager.shared
-
-        nightPlaceholder.configure(with: ThemeName.night)
-        nightPlaceholder.delegate = ThemeManager.shared
-
+        for (index, themeName) in ThemeName.allCases.enumerated() where index < placeholders.count {
+            placeholders[index].configure(with: themeName)
+            placeholders[index].delegate = self
+        }
     }
     
     
     private func updateView() {
     }
+}
 
+extension ThemesViewController {
+    private func updateActive(for themeName: ThemeName) {
+        for (index, iterableThemeName) in ThemeName.allCases.enumerated() where index < placeholders.count {
+            placeholders[index].isActive = iterableThemeName == themeName
+        }
+    }
+    
+    private func updateColor(for themeName: ThemeName) {
+        let theme = themeName.theme
+        view.backgroundColor = theme.backgroundColor
+        
+        for placeholder in placeholders {
+            placeholder.backgroundColor = theme.backgroundColor
+            placeholder.themeNameLabel.textColor = theme.textColor
+        }
+    }
+}
+
+extension ThemesViewController: ThemePlaceholderDelegate {
+    func didTap(themeName: ThemeName) {
+        updateActive(for: themeName)
+        updateColor(for: themeName)
+    }
 }

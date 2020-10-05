@@ -65,7 +65,7 @@ struct NightTheme: Theme {
     var outcomeMessageTextColor: UIColor = .white
 }
 
-enum ThemeName: String {
+enum ThemeName: String, CaseIterable {
     case classic, day, night
     
     var theme: Theme {
@@ -83,18 +83,16 @@ enum ThemeName: String {
 class ThemeManager {
     static let shared = ThemeManager()
     
-    private(set) var currentTheme: ThemeName {
+    private(set) var currentTheme: ThemeName? {
         didSet {
             apply()
         }
     }
     
-    private init() {
-        currentTheme = ThemeName.day
-    }
+    private init() {}
     
     public func load() -> Void {
-        //load
+        currentTheme = ThemeName.day
     }
     
     public func save(newTheme: ThemeName) -> Void {
@@ -103,7 +101,7 @@ class ThemeManager {
     }
     
     private func apply() -> Void {
-        let theme = currentTheme.theme
+        guard let theme = currentTheme?.theme else { return }
         
         
         // ThemedView

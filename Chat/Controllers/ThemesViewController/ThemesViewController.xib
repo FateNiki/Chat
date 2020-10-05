@@ -11,10 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ThemesViewController" customModule="Chat" customModuleProvider="target">
             <connections>
-                <outlet property="classicPlaceholder" destination="Rw3-nJ-99d" id="zWt-8m-PDV"/>
-                <outlet property="dayPlaceholder" destination="VGe-Vy-VtW" id="9PL-Y0-nat"/>
-                <outlet property="nightPlaceholder" destination="2VK-wR-4Al" id="gFN-AZ-p5w"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outletCollection property="placeholders" destination="Rw3-nJ-99d" collectionClass="NSMutableArray" id="TS3-6h-iky"/>
+                <outletCollection property="placeholders" destination="VGe-Vy-VtW" collectionClass="NSMutableArray" id="kPl-Bw-QxF"/>
+                <outletCollection property="placeholders" destination="2VK-wR-4Al" collectionClass="NSMutableArray" id="BKz-Ec-uAV"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
