@@ -1,5 +1,5 @@
 //
-//  ThemePickerDelegate.swift
+//  ThemePlaceholderDelegate.swift
 //  Chat
 //
 //  Created by Алексей Никитин on 05.10.2020.
@@ -8,5 +8,6 @@
 
 import Foundation
 
-protocol ThemePickerDelegate {
+protocol ThemePlaceholderDelegate {
+    func didTap(themeName: ThemeName) -> Void
 }

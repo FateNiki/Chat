@@ -30,6 +30,7 @@
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
 		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
 		5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */; };
+		5BE8FA1C252B62A200B06809 /* ThemePlaceholderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */; };
 		5BE9E9602521F56B00AA77E2 /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE9E95F2521F56B00AA77E2 /* MessageMock.swift */; };
 		5BE9E9662521FB8F00AA77E2 /* Array+Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE9E9652521FB8F00AA77E2 /* Array+Conversation.swift */; };
 		5BE9E96C25220B5300AA77E2 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE9E96B25220B5300AA77E2 /* PaddingLabel.swift */; };
@@ -68,6 +69,7 @@
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
 		5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
+		5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholderDelegate.swift; sourceTree = "<group>"; };
 		5BE9E95F2521F56B00AA77E2 /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
 		5BE9E9652521FB8F00AA77E2 /* Array+Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Conversation.swift"; sourceTree = "<group>"; };
 		5BE9E96B25220B5300AA77E2 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				5BECAD4B251FB96A00141621 /* ConfigurableView.swift */,
 				5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */,
 				5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */,
+				5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */,
 				5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */,
+				5BE8FA1C252B62A200B06809 /* ThemePlaceholderDelegate.swift in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
 				5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */,
 				5B8586542527BA0800DCCD63 /* Theme.swift in Sources */,
