@@ -82,8 +82,9 @@ enum ThemeName: String, CaseIterable {
 
 class ThemeManager {
     static let shared = ThemeManager()
+    private static let keyForStorage = "currentTheme"
     
-    private(set) var currentTheme: ThemeName? {
+    private(set) var currentThemeName: ThemeName? {
         didSet {
             apply()
         }
@@ -92,16 +93,24 @@ class ThemeManager {
     private init() {}
     
     public func load() -> Void {
-        currentTheme = ThemeName.day
+        let storedThemeAsAny = UserDefaults.standard.value(forKey: Self.keyForStorage)
+        
+        if let storedThemeAsString = storedThemeAsAny as? String,
+           let storedThemeName = ThemeName(rawValue: storedThemeAsString) {
+            currentThemeName = storedThemeName
+        } else {
+            currentThemeName = .classic
+        }
+
     }
     
     private func save(newTheme: ThemeName) -> Void {
-        //save
-        currentTheme = newTheme
+        UserDefaults.standard.set(newTheme.rawValue, forKey: Self.keyForStorage)
+        currentThemeName = newTheme
     }
     
     private func apply() -> Void {
-        guard let theme = currentTheme?.theme else { return }
+        guard let theme = currentThemeName?.theme else { return }
         
         
         // ThemedView

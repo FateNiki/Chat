@@ -32,7 +32,7 @@ class ThemesViewController: UIViewController {
         for (index, themeName) in ThemeName.allCases.enumerated() where index < placeholders.count {
             placeholders[index].configure(with: themeName)
             placeholders[index].delegate = self
-            placeholders[index].isActive = themeName == ThemeManager.shared.currentTheme
+            placeholders[index].isActive = themeName == ThemeManager.shared.currentThemeName
         }
     }
 }
@@ -47,6 +47,8 @@ extension ThemesViewController {
     private func updateColor(for themeName: ThemeName) {
         let theme = themeName.theme
         view.backgroundColor = theme.backgroundColor
+        navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
         
         for placeholder in placeholders {
             placeholder.backgroundColor = theme.backgroundColor
