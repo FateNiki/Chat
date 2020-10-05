@@ -26,26 +26,10 @@ class ThemesViewController: UIViewController {
         classicPlaceholder.configure(with: ThemeName.classic)
         dayPlaceholder.configure(with: ThemeName.day)
         nightPlaceholder.configure(with: ThemeName.night)
-        
-        updateColor()
     }
     
     
     private func updateView() {
-    }
-    
-    private func updateColor() {
-        let theme = ThemeManager.shared.currentTheme.theme
-        view.backgroundColor = theme.backgroundColor
-        
-        classicPlaceholder.backgroundColor = theme.backgroundColor
-        classicPlaceholder.themeNameLabel.textColor = theme.textColor
-        
-        dayPlaceholder.themeNameLabel.textColor = theme.textColor
-        dayPlaceholder.backgroundColor = theme.backgroundColor
-        
-        nightPlaceholder.themeNameLabel.textColor = theme.textColor
-        nightPlaceholder.backgroundColor = theme.backgroundColor
     }
 
 }
