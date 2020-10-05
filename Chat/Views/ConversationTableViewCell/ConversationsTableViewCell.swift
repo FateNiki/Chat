@@ -27,6 +27,7 @@ class ConversationsTableViewCell: UITableViewCell {
     @objc dynamic var onlineBackgroundColor: UIColor? = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
     @objc dynamic var nameTextColor = UIColor.black
     @objc dynamic var onlineNameTextColor = UIColor.black
+    static let lastMessageColor = UIColor.lightGray
     static let fontSize: CGFloat = 15
     
     // MARK: - Variables
@@ -65,6 +66,7 @@ class ConversationsTableViewCell: UITableViewCell {
             contentView.backgroundColor = backgroundColor
             nameLabel.textColor = nameTextColor
         }
+        lastMessageLabel.textColor = Self.lastMessageColor
     }
 }
 
