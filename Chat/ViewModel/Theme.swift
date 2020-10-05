@@ -10,6 +10,7 @@ import UIKit
 
 protocol Theme {
     var backgroundColor: UIColor { get }
+    var secondBackgroundColor: UIColor { get }
     var textColor: UIColor { get }
     
     //Converation cell
@@ -33,6 +34,7 @@ extension Theme {
 
 struct ClassicTheme: Theme {
     var backgroundColor: UIColor = .white
+    var secondBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
     var textColor: UIColor = .black
     
     var incomeMessageCellColor: UIColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00)
@@ -43,6 +45,7 @@ struct ClassicTheme: Theme {
 
 struct DayTheme: Theme {
     var backgroundColor: UIColor = .white
+    var secondBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
     var textColor: UIColor = .black
     
     var incomeMessageCellColor: UIColor = UIColor(red: 0.92, green: 0.92, blue: 0.93, alpha: 1.00)
@@ -53,6 +56,7 @@ struct DayTheme: Theme {
 
 struct NightTheme: Theme {
     var backgroundColor: UIColor = .black
+    var secondBackgroundColor = UIColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1.00)
     var textColor: UIColor = .white
     
     var incomeMessageCellColor: UIColor = UIColor(red: 0.18, green: 0.18, blue: 0.18, alpha: 1.00)
@@ -82,7 +86,7 @@ class ThemeManager {
     private(set) var currentTheme: ThemeName
     
     private init() {
-        currentTheme = ThemeName.day
+        currentTheme = ThemeName.classic
     }
     
     public func load() -> Void {
@@ -98,6 +102,10 @@ class ThemeManager {
         let theme = currentTheme.theme
         
         UITableView.appearance().backgroundColor = theme.backgroundColor
+        
+        // NavigationBar
+        UINavigationBar.appearance().barTintColor = theme.secondBackgroundColor
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.textColor]
         
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor
