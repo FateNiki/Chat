@@ -86,7 +86,7 @@ class ThemeManager {
     private(set) var currentTheme: ThemeName
     
     private init() {
-        currentTheme = ThemeName.classic
+        currentTheme = ThemeName.day
     }
     
     public func load() -> Void {
@@ -101,6 +101,13 @@ class ThemeManager {
     private func apply() -> Void {
         let theme = currentTheme.theme
         
+        
+        // ThemedView
+        ThemedView.appearance().backgroundColor = theme.backgroundColor
+        UILabel.appearance(whenContainedInInstancesOf: [ThemedView.self]).textColor = theme.textColor
+        UILabel.appearance(whenContainedInInstancesOf: [UserAvatarView.self, ThemedView.self]).textColor = UIColor(red: 0.21, green: 0.22, blue: 0.22, alpha: 1.00)
+       
+        // UITableView
         UITableView.appearance().backgroundColor = theme.backgroundColor
         
         // NavigationBar
