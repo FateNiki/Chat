@@ -20,10 +20,14 @@ class ThemePlaceholderView: UIView {
     @IBOutlet weak var themeNameLabel: UILabel!
     
     // MARK: - Variables
-    private(set) var isActive: Bool = false
+    private var isActive: Bool = false {
+        didSet {
+            updateActive()
+        }
+    }
     private(set) var themeName: ThemeName? {
         didSet {
-            updateView()
+            updateTheme()
         }
     }
 
@@ -69,17 +73,24 @@ class ThemePlaceholderView: UIView {
     }
     
     private func updateView() -> Void {
+        updateActive()
+        updateTheme()
+    }
+    
+    private func updateTheme() {
         guard let theme = themeName?.theme else { return }
         
-        messagesContainer.backgroundColor = theme.backgroundColor
-        messagesContainer.layer.borderWidth = isActive ? 3 : 1
-        messagesContainer.layer.borderColor = isActive ? Self.activeBorderColor : Self.inactiveBorderColor
-        
         themeNameLabel.text = themeName?.rawValue
+        messagesContainer.backgroundColor = theme.backgroundColor
         incomePlaceholderLabel.backgroundColor = theme.incomeMessageCellColor
         incomePlaceholderLabel.textColor = theme.incomeMessageTextColor
         outcomePlaceholderLabel.backgroundColor = theme.outcomeMessageCellColor
         outcomePlaceholderLabel.textColor = theme.outcomeMessageTextColor
+    }
+    
+    private func updateActive() {
+        messagesContainer.layer.borderWidth = isActive ? 3 : 1
+        messagesContainer.layer.borderColor = isActive ? Self.activeBorderColor : Self.inactiveBorderColor
     }
 }
 
