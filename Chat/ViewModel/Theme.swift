@@ -15,6 +15,12 @@ protocol Theme {
     //Converation cell
     var onlineConverationCellColor: UIColor { get }
     var onlineConverationCellTextColor: UIColor { get }
+    
+    // Message cell
+    var incomeMessageCellColor: UIColor { get }
+    var incomeMessageTextColor: UIColor { get }
+    var outcomeMessageCellColor: UIColor { get }
+    var outcomeMessageTextColor: UIColor { get }
 }
 
 extension Theme {
@@ -26,18 +32,33 @@ extension Theme {
 }
 
 struct ClassicTheme: Theme {
-    var backgroundColor: UIColor { .white }
-    var textColor: UIColor { .black }
+    var backgroundColor: UIColor = .white
+    var textColor: UIColor = .black
+    
+    var incomeMessageCellColor: UIColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00)
+    var outcomeMessageCellColor: UIColor = UIColor(red: 0.86, green: 0.97, blue: 0.77, alpha: 1.00)
+    var incomeMessageTextColor: UIColor = .black
+    var outcomeMessageTextColor: UIColor = .black
 }
 
 struct DayTheme: Theme {
-    var backgroundColor: UIColor { .blue }
-    var textColor: UIColor { .white }
+    var backgroundColor: UIColor = .white
+    var textColor: UIColor = .black
+    
+    var incomeMessageCellColor: UIColor = UIColor(red: 0.92, green: 0.92, blue: 0.93, alpha: 1.00)
+    var outcomeMessageCellColor: UIColor = UIColor(red: 0.26, green: 0.54, blue: 0.98, alpha: 1.00)
+    var incomeMessageTextColor: UIColor = .black
+    var outcomeMessageTextColor: UIColor = .white
 }
 
 struct NightTheme: Theme {
-    var backgroundColor: UIColor { .black }
-    var textColor: UIColor { .white }
+    var backgroundColor: UIColor = .black
+    var textColor: UIColor = .white
+    
+    var incomeMessageCellColor: UIColor = UIColor(red: 0.18, green: 0.18, blue: 0.18, alpha: 1.00)
+    var outcomeMessageCellColor: UIColor = UIColor(red: 0.36, green: 0.36, blue: 0.36, alpha: 1.00)
+    var incomeMessageTextColor: UIColor = .white
+    var outcomeMessageTextColor: UIColor = .white
 }
 
 enum ThemeName: String {
@@ -61,7 +82,7 @@ class ThemeManager {
     private(set) var currentTheme: ThemeName
     
     private init() {
-        currentTheme = ThemeName.classic
+        currentTheme = ThemeName.day
     }
     
     public func load() -> Void {
@@ -83,6 +104,12 @@ class ThemeManager {
         ConversationsTableViewCell.appearance().nameTextColor = theme.textColor
         ConversationsTableViewCell.appearance().onlineBackgroundColor = theme.onlineConverationCellColor
         ConversationsTableViewCell.appearance().onlineNameTextColor = theme.onlineConverationCellTextColor
-
+        
+        // MessageTableViewCell
+        MessageTableViewCell.appearance().backgroundColor = theme.backgroundColor
+        MessageTableViewCell.appearance().incomeMessageCellColor = theme.incomeMessageCellColor
+        MessageTableViewCell.appearance().outcomeMessageCellColor = theme.outcomeMessageCellColor
+        MessageTableViewCell.appearance().incomeMessageTextColor = theme.incomeMessageTextColor
+        MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
     }
 }

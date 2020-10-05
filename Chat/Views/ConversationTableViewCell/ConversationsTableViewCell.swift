@@ -27,7 +27,7 @@ class ConversationsTableViewCell: UITableViewCell {
     @objc dynamic var onlineBackgroundColor: UIColor? = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
     @objc dynamic var nameTextColor = UIColor.black
     @objc dynamic var onlineNameTextColor = UIColor.black
-    let fontSize: CGFloat = 15
+    static let fontSize: CGFloat = 15
     
     // MARK: - Variables
     private var userIsOnline: Bool = false {
@@ -75,10 +75,10 @@ extension ConversationsTableViewCell: ConfigurableView {
         
         if model.message.isEmpty {
             lastMessageLabel.text =  "No messages yet"
-            lastMessageLabel.font = UIFont.italicSystemFont(ofSize: fontSize)
+            lastMessageLabel.font = UIFont.italicSystemFont(ofSize: Self.fontSize)
         } else {
             lastMessageLabel.text = model.message
-            lastMessageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
+            lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         }
         
         if (!model.message.isEmpty) {
