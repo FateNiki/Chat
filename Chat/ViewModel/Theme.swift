@@ -95,7 +95,7 @@ class ThemeManager {
         currentTheme = ThemeName.day
     }
     
-    public func save(newTheme: ThemeName) -> Void {
+    private func save(newTheme: ThemeName) -> Void {
         //save
         currentTheme = newTheme
     }
@@ -128,5 +128,11 @@ class ThemeManager {
         MessageTableViewCell.appearance().outcomeMessageCellColor = theme.outcomeMessageCellColor
         MessageTableViewCell.appearance().incomeMessageTextColor = theme.incomeMessageTextColor
         MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
+    }
+}
+
+extension ThemeManager: ThemePickerDelegate {
+    func pickTheme(with name: ThemeName) {
+        save(newTheme: name)
     }
 }
