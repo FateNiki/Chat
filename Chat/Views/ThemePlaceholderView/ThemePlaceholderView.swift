@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ThemePlaceholderView: UIView {
+class ThemePlaceholderView: ThemedView {
     // MARK: - Interface variables
     static private let activeBorderColor = UIColor(red: 0.00, green: 0.48, blue: 1.00, alpha: 1.00).cgColor
     static private let inactiveBorderColor = UIColor(red: 0.59, green: 0.59, blue: 0.59, alpha: 1.00).cgColor
