@@ -83,19 +83,23 @@ enum ThemeName: String {
 class ThemeManager {
     static let shared = ThemeManager()
     
-    private(set) var currentTheme: ThemeName
+    private(set) var currentTheme: ThemeName {
+        didSet {
+            apply()
+        }
+    }
     
     private init() {
         currentTheme = ThemeName.day
     }
     
     public func load() -> Void {
-        apply()        
+        //load
     }
     
     public func save(newTheme: ThemeName) -> Void {
+        //save
         currentTheme = newTheme
-        apply()
     }
     
     private func apply() -> Void {
@@ -126,13 +130,5 @@ class ThemeManager {
         MessageTableViewCell.appearance().outcomeMessageCellColor = theme.outcomeMessageCellColor
         MessageTableViewCell.appearance().incomeMessageTextColor = theme.incomeMessageTextColor
         MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
-    }
-}
-
-
-
-extension ThemeManager: ThemePickerDelegate {
-    func themeWillSelect(themeName: ThemeName) {
-        print(themeName)
     }
 }
