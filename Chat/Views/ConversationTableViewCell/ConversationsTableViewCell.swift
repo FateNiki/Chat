@@ -22,9 +22,12 @@ class ConversationsTableViewCell: UITableViewCell {
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
-    private static let onlineColor = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
-    private static let fontSize: CGFloat = 15
-    private static let nameTextColorForDarkTheme = UIColor.black
+    
+    // MARK: - Interface constants
+    @objc dynamic var onlineBackgroundColor: UIColor? = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
+    @objc dynamic var fontSize: CGFloat = 15
+    @objc dynamic var nameTextColor = UIColor.black
+    @objc dynamic var onlineNameTextColor = UIColor.black
     
     // MARK: - Variables
     private var userIsOnline: Bool = false {
@@ -56,11 +59,11 @@ class ConversationsTableViewCell: UITableViewCell {
     // MARK: - Interface configuring
     private func updateViewColors() -> Void {
         if (userIsOnline) {
-            contentView.backgroundColor = Self.onlineColor
-            nameLabel.textColor = Self.nameTextColorForDarkTheme
+            contentView.backgroundColor = onlineBackgroundColor
+            nameLabel.textColor = onlineNameTextColor
         } else {
-            contentView.backgroundColor = .none
-            nameLabel.textColor = .none
+            contentView.backgroundColor = backgroundColor
+            nameLabel.textColor = nameTextColor
         }
     }
 }
@@ -72,10 +75,10 @@ extension ConversationsTableViewCell: ConfigurableView {
         
         if model.message.isEmpty {
             lastMessageLabel.text =  "No messages yet"
-            lastMessageLabel.font = UIFont.italicSystemFont(ofSize: Self.fontSize)
+            lastMessageLabel.font = UIFont.italicSystemFont(ofSize: fontSize)
         } else {
             lastMessageLabel.text = model.message
-            lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
+            lastMessageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         }
         
         if (!model.message.isEmpty) {
