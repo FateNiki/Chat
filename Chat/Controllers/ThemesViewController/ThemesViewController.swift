@@ -24,6 +24,7 @@ class ThemesViewController: UIViewController {
     private func setupView() {
         navigationItem.title = "Settings"
         classicPlaceholder.configure(with: ThemeName.classic)
+        classicPlaceholder.delegate = self
         dayPlaceholder.configure(with: ThemeName.day)
         nightPlaceholder.configure(with: ThemeName.night)
         classicPlaceholder.isActive = true
@@ -33,4 +34,10 @@ class ThemesViewController: UIViewController {
     private func updateView() {
     }
 
+}
+
+extension ThemesViewController: ThemePickerDelegate {
+    func themeWillSelect(themeName: ThemeName) {
+        print(themeName)
+    }
 }
