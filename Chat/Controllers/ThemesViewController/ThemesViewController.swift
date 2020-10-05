@@ -26,6 +26,7 @@ class ThemesViewController: UIViewController {
         classicPlaceholder.configure(with: ThemeName.classic)
         dayPlaceholder.configure(with: ThemeName.day)
         nightPlaceholder.configure(with: ThemeName.night)
+        classicPlaceholder.isActive = true
     }
     
     

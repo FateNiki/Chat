@@ -20,7 +20,7 @@ class ThemePlaceholderView: UIView {
     @IBOutlet weak var themeNameLabel: UILabel!
     
     // MARK: - Variables
-    private var isActive: Bool = false {
+    var isActive: Bool = false {
         didSet {
             updateActive()
         }
