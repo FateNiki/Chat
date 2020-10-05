@@ -25,9 +25,9 @@ class ConversationsTableViewCell: UITableViewCell {
     
     // MARK: - Interface constants
     @objc dynamic var onlineBackgroundColor: UIColor? = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
-    @objc dynamic var fontSize: CGFloat = 15
     @objc dynamic var nameTextColor = UIColor.black
     @objc dynamic var onlineNameTextColor = UIColor.black
+    let fontSize: CGFloat = 15
     
     // MARK: - Variables
     private var userIsOnline: Bool = false {
