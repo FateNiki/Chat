@@ -20,6 +20,7 @@ class ThemePlaceholderView: UIView {
     @IBOutlet weak var themeNameLabel: UILabel!
     
     // MARK: - Variables
+    var delegate: ThemePickerDelegate?
     var isActive: Bool = false {
         didSet {
             updateActive()
@@ -70,6 +71,9 @@ class ThemePlaceholderView: UIView {
         incomePlaceholderLabel.clipsToBounds = true
         outcomePlaceholderLabel.layer.cornerRadius = 10
         outcomePlaceholderLabel.clipsToBounds = true
+        
+        messagesContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
+        themeNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
     }
     
     private func updateView() -> Void {
@@ -91,6 +95,13 @@ class ThemePlaceholderView: UIView {
     private func updateActive() {
         messagesContainer.layer.borderWidth = isActive ? 3 : 1
         messagesContainer.layer.borderColor = isActive ? Self.activeBorderColor : Self.inactiveBorderColor
+    }
+    
+    // MARK: - Actions
+    @objc func selectTheme() -> Void {
+        if let delegate = delegate, let themeName = themeName {
+            delegate.themeWillSelect(themeName: themeName)
+        }
     }
 }
 
