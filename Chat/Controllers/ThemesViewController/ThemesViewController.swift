@@ -9,7 +9,11 @@
 import UIKit
 
 class ThemesViewController: UIViewController {
-
+    // MARK: - Outlets
+    @IBOutlet weak var classicPlaceholder: ThemePlaceholderView!
+    @IBOutlet weak var dayPlaceholder: ThemePlaceholderView!
+    @IBOutlet weak var nightPlaceholder: ThemePlaceholderView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,14 +22,13 @@ class ThemesViewController: UIViewController {
     
     // MARK: - Config UI
     private func setupView() {
-        initNavigation()
+        navigationItem.title = "Settings"
+        classicPlaceholder.configure(with: ThemeName.classic.theme)
+        dayPlaceholder.configure(with: ThemeName.day.theme)
+        nightPlaceholder.configure(with: ThemeName.night.theme)
     }
     
     private func updateView() {
-    }
-    
-    private func initNavigation() {
-        navigationItem.title = "Settings"
     }
 
 }
