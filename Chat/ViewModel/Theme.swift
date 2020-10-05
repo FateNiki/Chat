@@ -128,3 +128,11 @@ class ThemeManager {
         MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
     }
 }
+
+
+
+extension ThemeManager: ThemePickerDelegate {
+    func themeWillSelect(themeName: ThemeName) {
+        print(themeName)
+    }
+}
