@@ -10,6 +10,8 @@
 		5B100E8825211DF0002E75B4 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B100E8625211DF0002E75B4 /* ConversationViewController.swift */; };
 		5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B100E8725211DF0002E75B4 /* ConversationViewController.xib */; };
 		5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */; };
+		5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */; };
+		5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */; };
 		5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */; };
 		5B6C091A2517A3A2007F58E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09192517A3A2007F58E3 /* User.swift */; };
 		5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09232517B25F007F58E3 /* UserMock.swift */; };
@@ -42,6 +44,8 @@
 		5B100E8625211DF0002E75B4 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		5B100E8725211DF0002E75B4 /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
 		5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewDelegate.swift; sourceTree = "<group>"; };
+		5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholderView.swift; sourceTree = "<group>"; };
+		5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePlaceholderView.xib; sourceTree = "<group>"; };
 		5B5A8CEC251A524E000A541A /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
 		5B6C09192517A3A2007F58E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5B6C09232517B25F007F58E3 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
@@ -90,6 +94,15 @@
 				5B100E8725211DF0002E75B4 /* ConversationViewController.xib */,
 			);
 			path = ConversationViewController;
+			sourceTree = "<group>";
+		};
+		5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */ = {
+			isa = PBXGroup;
+			children = (
+				5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */,
+				5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */,
+			);
+			path = ThemePlaceholderView;
 			sourceTree = "<group>";
 		};
 		5B5A8CEB251A5224000A541A /* Extensions */ = {
@@ -206,6 +219,7 @@
 		5BECAD44251FAA9900141621 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */,
 				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
 				5BCE62922521E01700107339 /* MessageTableViewCell */,
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
@@ -292,6 +306,7 @@
 			files = (
 				5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */,
 				5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */,
+				5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */,
 				5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */,
 				5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */,
 				5BEF6A1D2527B7FA00F88572 /* ThemesViewController.xib in Resources */,
@@ -324,6 +339,7 @@
 				5B6C09242517B25F007F58E3 /* UserMock.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */,
+				5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
 				5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */,
 				5B8586542527BA0800DCCD63 /* Theme.swift in Sources */,
