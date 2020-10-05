@@ -21,6 +21,8 @@ class ThemesViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
+        
+        delegate = ThemeManager.shared
     }
     
     // MARK: - Config UI
@@ -30,11 +32,8 @@ class ThemesViewController: UIViewController {
         for (index, themeName) in ThemeName.allCases.enumerated() where index < placeholders.count {
             placeholders[index].configure(with: themeName)
             placeholders[index].delegate = self
+            placeholders[index].isActive = themeName == ThemeManager.shared.currentTheme
         }
-    }
-    
-    
-    private func updateView() {
     }
 }
 
@@ -58,7 +57,11 @@ extension ThemesViewController {
 
 extension ThemesViewController: ThemePlaceholderDelegate {
     func didTap(themeName: ThemeName) {
+        // Common actions
         updateActive(for: themeName)
         updateColor(for: themeName)
+        
+        // delegate
+        delegate?.pickTheme(with: themeName)
     }
 }
