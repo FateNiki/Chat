@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0D0D51252B431F00CCBB3F /* ThemedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0D0D50252B431F00CCBB3F /* ThemedView.swift */; };
 		5B100E8825211DF0002E75B4 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B100E8625211DF0002E75B4 /* ConversationViewController.swift */; };
 		5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B100E8725211DF0002E75B4 /* ConversationViewController.xib */; };
 		5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B0D0D50252B431F00CCBB3F /* ThemedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedView.swift; sourceTree = "<group>"; };
 		5B100E8625211DF0002E75B4 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		5B100E8725211DF0002E75B4 /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
 		5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				5BCE62922521E01700107339 /* MessageTableViewCell */,
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 				5BE9E96B25220B5300AA77E2 /* PaddingLabel.swift */,
+				5B0D0D50252B431F00CCBB3F /* ThemedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				5B5A8CED251A524E000A541A /* UIViewController+Error.swift in Sources */,
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
 				5B100E8825211DF0002E75B4 /* ConversationViewController.swift in Sources */,
+				5B0D0D51252B431F00CCBB3F /* ThemedView.swift in Sources */,
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5BE9E96C25220B5300AA77E2 /* PaddingLabel.swift in Sources */,
 				5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */,
