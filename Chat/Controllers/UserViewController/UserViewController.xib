@@ -62,6 +62,18 @@
                         <action selector="editAvatarButtonDidTap:" destination="-1" eventType="touchUpInside" id="2zt-Tw-EFf"/>
                     </connections>
                 </button>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HeY-3u-7im">
+                    <rect key="frame" x="0.0" y="0.0" width="385" height="44"/>
+                    <items>
+                        <navigationItem title="My Profile" id="QXh-2H-Q9A">
+                            <barButtonItem key="rightBarButtonItem" title="Close" style="plain" id="4IJ-bx-cYo">
+                                <connections>
+                                    <action selector="closeModal" destination="-1" id="r2Y-ii-CcU"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Wrv-eh-TC6"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -70,16 +82,19 @@
                 <constraint firstItem="VXn-xS-o5F" firstAttribute="top" secondItem="qdQ-qF-wAA" secondAttribute="bottom" constant="32" id="297-1P-nOr"/>
                 <constraint firstItem="vj1-Am-8OI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VXn-xS-o5F" secondAttribute="bottom" constant="50" id="7j7-Kw-g6f"/>
                 <constraint firstItem="wWL-dn-fTG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wrv-eh-TC6" secondAttribute="leading" symbolic="YES" id="8hu-oe-tIl"/>
-                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="top" secondItem="Wrv-eh-TC6" secondAttribute="top" constant="25" id="8iP-No-pVc"/>
+                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="top" secondItem="HeY-3u-7im" secondAttribute="bottom" constant="25" id="8iP-No-pVc"/>
                 <constraint firstItem="qdQ-qF-wAA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3bR-df-QtI" secondAttribute="leading" constant="32" id="9UK-5l-JGe"/>
                 <constraint firstItem="wWL-dn-fTG" firstAttribute="trailing" secondItem="kBf-Ar-aAQ" secondAttribute="trailing" id="B7q-Ik-qsF"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qdQ-qF-wAA" secondAttribute="trailing" constant="32" id="FkY-da-tnK"/>
                 <constraint firstItem="Wrv-eh-TC6" firstAttribute="trailing" secondItem="vj1-Am-8OI" secondAttribute="trailing" constant="56" id="QYG-TT-4VS"/>
                 <constraint firstItem="wWL-dn-fTG" firstAttribute="bottom" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="8" id="RGK-33-AvX"/>
+                <constraint firstItem="HeY-3u-7im" firstAttribute="top" secondItem="3bR-df-QtI" secondAttribute="top" id="U03-zx-Rhm"/>
                 <constraint firstItem="qdQ-qF-wAA" firstAttribute="top" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="32" id="WBM-A4-LcY"/>
                 <constraint firstItem="vj1-Am-8OI" firstAttribute="leading" secondItem="Wrv-eh-TC6" secondAttribute="leading" constant="56" id="YOq-36-rwE"/>
                 <constraint firstItem="qdQ-qF-wAA" firstAttribute="centerX" secondItem="3bR-df-QtI" secondAttribute="centerX" id="YVB-RA-Nn6"/>
                 <constraint firstItem="Wrv-eh-TC6" firstAttribute="bottom" secondItem="vj1-Am-8OI" secondAttribute="bottom" constant="30" id="YdS-6o-cUS"/>
+                <constraint firstAttribute="trailing" secondItem="HeY-3u-7im" secondAttribute="trailing" id="fJd-9f-yIt"/>
+                <constraint firstItem="HeY-3u-7im" firstAttribute="leading" secondItem="3bR-df-QtI" secondAttribute="leading" id="vWs-qW-ZUZ"/>
                 <constraint firstItem="kBf-Ar-aAQ" firstAttribute="centerX" secondItem="3bR-df-QtI" secondAttribute="centerX" id="xWD-O6-gqx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

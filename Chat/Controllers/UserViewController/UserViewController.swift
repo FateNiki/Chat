@@ -78,6 +78,10 @@ class UserViewController: UIViewController {
         editAvatarDialog.addAction(UIAlertAction(title: "Отменить", style: .cancel))
         present(editAvatarDialog, animated: true)
     }
+    
+    @IBAction func closeModal() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 // MARK: - Work with ImagePicker
