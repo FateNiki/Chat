@@ -19,7 +19,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="3bR-df-QtI">
+        <view contentMode="scaleToFill" id="3bR-df-QtI" customClass="ThemedView" customModule="Chat" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="385" height="712"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
