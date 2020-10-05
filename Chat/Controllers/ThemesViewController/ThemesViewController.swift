@@ -23,9 +23,9 @@ class ThemesViewController: UIViewController {
     // MARK: - Config UI
     private func setupView() {
         navigationItem.title = "Settings"
-        classicPlaceholder.configure(with: ThemeName.classic.theme)
-        dayPlaceholder.configure(with: ThemeName.day.theme)
-        nightPlaceholder.configure(with: ThemeName.night.theme)
+        classicPlaceholder.configure(with: ThemeName.classic)
+        dayPlaceholder.configure(with: ThemeName.day)
+        nightPlaceholder.configure(with: ThemeName.night)
     }
     
     private func updateView() {
