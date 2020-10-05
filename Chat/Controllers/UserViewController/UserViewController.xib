@@ -66,9 +66,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="385" height="44"/>
                     <items>
                         <navigationItem title="My Profile" id="QXh-2H-Q9A">
-                            <barButtonItem key="rightBarButtonItem" title="Close" style="plain" id="4IJ-bx-cYo">
+                            <barButtonItem key="rightBarButtonItem" title="Cancel" style="done" id="VwY-9g-uCl">
                                 <connections>
-                                    <action selector="closeModal" destination="-1" id="r2Y-ii-CcU"/>
+                                    <action selector="closeModal" destination="-1" id="mfe-Q4-bAx"/>
                                 </connections>
                             </barButtonItem>
                         </navigationItem>
