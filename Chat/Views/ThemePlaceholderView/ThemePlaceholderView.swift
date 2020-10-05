@@ -20,7 +20,7 @@ class ThemePlaceholderView: UIView {
     @IBOutlet weak var themeNameLabel: UILabel!
     
     // MARK: - Variables
-    var delegate: ThemePickerDelegate?
+    var delegate: ThemePlaceholderDelegate?
     var isActive: Bool = false {
         didSet {
             updateActive()
@@ -100,7 +100,7 @@ class ThemePlaceholderView: UIView {
     // MARK: - Actions
     @objc func selectTheme() -> Void {
         if let delegate = delegate, let themeName = themeName {
-            delegate.themeWillSelect(themeName: themeName)
+            delegate.didTap(themeName: themeName)
         }
     }
 }
