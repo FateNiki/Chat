@@ -76,7 +76,6 @@ class ThemePlaceholderView: UIView {
         messagesContainer.layer.borderColor = isActive ? Self.activeBorderColor : Self.inactiveBorderColor
         
         themeNameLabel.text = themeName?.rawValue
-        themeNameLabel.textColor = theme.textColor
         incomePlaceholderLabel.backgroundColor = theme.incomeMessageCellColor
         incomePlaceholderLabel.textColor = theme.incomeMessageTextColor
         outcomePlaceholderLabel.backgroundColor = theme.outcomeMessageCellColor
