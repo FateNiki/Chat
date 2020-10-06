@@ -87,6 +87,7 @@ class ConversationsListViewController: UIViewController {
     
     @objc func openThemeChoice() -> Void {
         let themeController = ThemesViewController()
+        themeController.delegate = self
         navigationController?.pushViewController(themeController, animated: true)
     }
 
@@ -141,5 +142,12 @@ extension ConversationsListViewController: UITableViewDataSource {
 extension ConversationsListViewController: UserAvatarViewDelegate {
     func userAvatarDidTap() {
         openUserEdit()
+    }
+}
+
+extension ConversationsListViewController: ThemePickerDelegate {
+    func pickTheme(with name: ThemeName) {
+        ThemeManager.shared.saveTheme(with: name)
+        tableView.reloadData()
     }
 }

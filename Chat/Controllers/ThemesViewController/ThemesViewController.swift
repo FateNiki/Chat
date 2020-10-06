@@ -21,11 +21,6 @@ class ThemesViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        
-        delegate = ThemeManager.shared
-//        selectThemeClosure = { themeName in
-//            ThemeManager.shared.pickTheme(with: themeName)
-//        }
     }
     
     // MARK: - Config UI

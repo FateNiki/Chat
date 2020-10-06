@@ -104,9 +104,9 @@ class ThemeManager {
 
     }
     
-    private func save(newTheme: ThemeName) -> Void {
-        UserDefaults.standard.set(newTheme.rawValue, forKey: Self.keyForStorage)
-        currentThemeName = newTheme
+    public func saveTheme(with name: ThemeName) -> Void {
+        UserDefaults.standard.set(name.rawValue, forKey: Self.keyForStorage)
+        currentThemeName = name
     }
     
     private func apply() -> Void {
@@ -137,11 +137,5 @@ class ThemeManager {
         MessageTableViewCell.appearance().outcomeMessageCellColor = theme.outcomeMessageCellColor
         MessageTableViewCell.appearance().incomeMessageTextColor = theme.incomeMessageTextColor
         MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
-    }
-}
-
-extension ThemeManager: ThemePickerDelegate {
-    func pickTheme(with name: ThemeName) {
-        save(newTheme: name)
     }
 }
