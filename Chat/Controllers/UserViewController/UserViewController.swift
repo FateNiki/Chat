@@ -37,6 +37,12 @@ class UserViewController: UIViewController {
     private func setupView() {
         configSaveButton()
         initUserFields()
+        configNavigation()
+    }
+    
+    private func configNavigation() {
+        navigationItem.title = "My profile"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
     }
     
     private func configSaveButton() -> Void {
@@ -79,7 +85,7 @@ class UserViewController: UIViewController {
         present(editAvatarDialog, animated: true)
     }
     
-    @IBAction func closeModal() {
+    @objc func closeModal() {
         dismiss(animated: true, completion: nil)
     }
 }

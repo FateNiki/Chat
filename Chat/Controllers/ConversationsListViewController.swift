@@ -73,7 +73,10 @@ class ConversationsListViewController: UIViewController {
     func openUserEdit() -> Void {
         let userController = UserViewController()
         userController.currentUser = currentUser
-        self.present(userController, animated: true, completion: nil)
+        
+        let userNavigationController = UINavigationController(rootViewController: userController)
+        
+        self.present(userNavigationController, animated: true, completion: nil)
     }
     
     func openConversation(with conversation: Conversation) -> Void {
