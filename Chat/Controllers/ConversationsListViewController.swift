@@ -27,7 +27,7 @@ class ConversationsListViewController: UIViewController {
         let uaView = UserAvatarView()
         uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        uaView.configure(with: currentUser)
+        uaView.configure(with: UserAvatarModel(initials: currentUser.initials, avatar: currentUser.avatar))
         uaView.delegate = self
         return uaView
     }()
@@ -112,12 +112,14 @@ extension ConversationsListViewController: UITableViewDataSource {
         if let conversationCell = cell as? ConversationsTableViewCell {
             let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
             conversationCell.configure(with: .init(
-                            name: conversation.user.fullName,
-                            message: conversation.lastMessage.text,
-                            date: conversation.lastMessage.date,
-                            isOnline: conversation.isOnline,
-                            hasUnreadMessage: !conversation.lastMessage.isRead)
-            )
+                name: conversation.user.fullName,
+                message: conversation.lastMessage.text,
+                date: conversation.lastMessage.date,
+                isOnline: conversation.isOnline,
+                hasUnreadMessage: !conversation.lastMessage.isRead,
+                initials: conversation.user.initials,
+                avatar: conversation.user.avatar
+            ))
         }
         return cell
     }

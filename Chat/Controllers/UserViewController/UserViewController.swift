@@ -50,7 +50,7 @@ class UserViewController: UIViewController {
         
         fullNameLabel.text = user.fullName
         descriptionLabel.text = user.description
-        userAvatarView.configure(with: user)
+        userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
     }
     
     // MARK: - Inteface Actions

@@ -71,7 +71,7 @@ class UserAvatarView: UIView {
 }
 
 extension UserAvatarView: ConfigurableView {
-    func configure(with model: User) {
+    func configure(with model: UserAvatarModelProtocol) {
         if let avatarImageData = model.avatar {
             avatarImageView.image = UIImage(data: avatarImageData)
             initialsLabel.isHidden = true

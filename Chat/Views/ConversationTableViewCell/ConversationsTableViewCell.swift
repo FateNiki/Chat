@@ -42,6 +42,7 @@ class ConversationsTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
+    @IBOutlet weak var avatarView: UserAvatarView!
     
     // MARK: - Lifecycle
     override func prepareForReuse() {
@@ -49,6 +50,7 @@ class ConversationsTableViewCell: UITableViewCell {
         nameLabel.text = nil
         dateLabel.text = nil
         lastMessageLabel.text = nil
+        avatarView.avatarImageView.image = nil
     }
     
     override func layoutSubviews() {
@@ -75,6 +77,7 @@ extension ConversationsTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
         userIsOnline = model.isOnline
         nameLabel.text = model.name
+        avatarView.configure(with: model)
         
         if model.message.isEmpty {
             lastMessageLabel.text =  "No messages yet"

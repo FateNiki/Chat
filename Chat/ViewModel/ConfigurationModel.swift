@@ -13,10 +13,24 @@ struct MessageCellModel {
     let income: Bool
 }
 
-struct ConversationCellModel {
+struct ConversationCellModel: UserAvatarModelProtocol {
     let name: String
     let message: String
     let date: Date
     let isOnline: Bool
     let hasUnreadMessage: Bool
+    
+    // For Avatar
+    let initials: String
+    let avatar: Data?
+}
+
+struct UserAvatarModel: UserAvatarModelProtocol {
+    let initials: String
+    let avatar: Data?
+}
+
+protocol UserAvatarModelProtocol {
+    var initials: String { get }
+    var avatar: Data? { get }
 }
