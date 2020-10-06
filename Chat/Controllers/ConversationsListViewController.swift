@@ -87,7 +87,10 @@ class ConversationsListViewController: UIViewController {
     
     @objc func openThemeChoice() -> Void {
         let themeController = ThemesViewController()
-        themeController.delegate = self
+//        themeController.delegate = self
+        themeController.selectThemeClosure = { [weak self] (themeName) in
+            self?.pickTheme(with: themeName)
+        }
         navigationController?.pushViewController(themeController, animated: true)
     }
 
