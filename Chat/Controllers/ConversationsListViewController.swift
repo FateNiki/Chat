@@ -149,5 +149,9 @@ extension ConversationsListViewController: ThemePickerDelegate {
     func pickTheme(with name: ThemeName) {
         ThemeManager.shared.saveTheme(with: name)
         tableView.reloadData()
+        
+        let theme = name.theme
+        navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
     }
 }
