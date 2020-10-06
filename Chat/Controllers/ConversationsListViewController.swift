@@ -31,6 +31,14 @@ class ConversationsListViewController: UIViewController {
         uaView.delegate = self
         return uaView
     }()
+    private lazy var themesController: ThemesViewController = {
+        let themesController = ThemesViewController()
+//        themesController.delegate = self
+        themesController.selectThemeClosure = { [weak self] (themeName) in
+            self?.pickTheme(with: themeName)
+        }
+        return themesController
+    }()
     
     
     // MARK: - Lifecycle
@@ -86,12 +94,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     @objc func openThemeChoice() -> Void {
-        let themeController = ThemesViewController()
-//        themeController.delegate = self
-        themeController.selectThemeClosure = { [weak self] (themeName) in
-            self?.pickTheme(with: themeName)
-        }
-        navigationController?.pushViewController(themeController, animated: true)
+        navigationController?.pushViewController(themesController, animated: true)
     }
 
 }
