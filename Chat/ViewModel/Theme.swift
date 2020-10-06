@@ -127,7 +127,7 @@ class ThemeManager {
         
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor
-        ConversationsTableViewCell.appearance().nameTextColor = theme.textColor
+        ConversationsTableViewCell.appearance().primaryTextColor = theme.textColor
         ConversationsTableViewCell.appearance().onlineBackgroundColor = theme.onlineConverationCellColor
         ConversationsTableViewCell.appearance().onlineNameTextColor = theme.onlineConverationCellTextColor
         
