@@ -23,6 +23,9 @@ class ThemesViewController: UIViewController {
         setupView()
         
         delegate = ThemeManager.shared
+//        selectThemeClosure = { themeName in
+//            ThemeManager.shared.pickTheme(with: themeName)
+//        }
     }
     
     // MARK: - Config UI
@@ -59,11 +62,20 @@ extension ThemesViewController {
 
 extension ThemesViewController: ThemePlaceholderDelegate {
     func didTap(themeName: ThemeName) {
-        // Common actions
-        updateActive(for: themeName)
-        updateColor(for: themeName)
-        
-        // delegate
-        delegate?.pickTheme(with: themeName)
+        if let delegate = delegate {
+            // Delegate
+            delegate.pickTheme(with: themeName)
+            
+            // Common actions
+            updateActive(for: themeName)
+            updateColor(for: themeName)
+        } else if let closure = selectThemeClosure {
+            // Closure
+            closure(themeName)
+            
+            // Common actions
+            updateActive(for: themeName)
+            updateColor(for: themeName)
+        }
     }
 }
