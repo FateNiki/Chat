@@ -45,8 +45,6 @@ extension ThemesViewController {
     private func updateColor(for themeName: ThemeName) {
         let theme = themeName.theme
         view.backgroundColor = theme.backgroundColor
-        navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
         
         for placeholder in placeholders {
             placeholder.backgroundColor = theme.backgroundColor
@@ -57,20 +55,14 @@ extension ThemesViewController {
 
 extension ThemesViewController: ThemePlaceholderDelegate {
     func didTap(themeName: ThemeName) {
+        // Common actions
+        updateActive(for: themeName)
+        updateColor(for: themeName)
+        
         if let delegate = delegate {
-            // Delegate
             delegate.pickTheme(with: themeName)
-            
-            // Common actions
-            updateActive(for: themeName)
-            updateColor(for: themeName)
         } else if let closure = selectThemeClosure {
-            // Closure
             closure(themeName)
-            
-            // Common actions
-            updateActive(for: themeName)
-            updateColor(for: themeName)
         }
     }
 }
