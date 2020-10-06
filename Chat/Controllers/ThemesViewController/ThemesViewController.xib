@@ -52,9 +52,11 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="LZJ-bx-Ej4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="24z-yf-NIS"/>
+                <constraint firstItem="LZJ-bx-Ej4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="24z-yf-NIS"/>
                 <constraint firstItem="LZJ-bx-Ej4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="2Ay-aq-cGY"/>
                 <constraint firstItem="LZJ-bx-Ej4" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="3Xt-Tw-rKR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LZJ-bx-Ej4" secondAttribute="trailing" constant="20" id="DTK-Wb-3KW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LZJ-bx-Ej4" secondAttribute="bottom" constant="20" id="G31-KV-jz3"/>
                 <constraint firstItem="LZJ-bx-Ej4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Mff-SQ-ha1"/>
             </constraints>
             <point key="canvasLocation" x="-146.40000000000001" y="108.39580209895054"/>
