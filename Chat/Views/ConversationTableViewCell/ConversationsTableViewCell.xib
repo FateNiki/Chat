@@ -28,19 +28,19 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-vy-eR4">
-                        <rect key="frame" x="76" y="20" width="251" height="112"/>
+                        <rect key="frame" x="88" y="20" width="239" height="112"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="F03-rw-tgc">
-                                <rect key="frame" x="0.0" y="0.0" width="251" height="18"/>
+                                <rect key="frame" x="0.0" y="0.0" width="239" height="18"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Ronald Robertson Ronald Robertson Robertson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2V-CB-acr" userLabel="Name">
-                                        <rect key="frame" x="0.0" y="0.0" width="193" height="18"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="181" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Today" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIb-ZZ-BJw" userLabel="Date">
-                                        <rect key="frame" x="201" y="0.0" width="50" height="18"/>
+                                        <rect key="frame" x="189" y="0.0" width="50" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="iwL-Qy-Tov"/>
                                         </constraints>
@@ -67,7 +67,7 @@
                     <constraint firstItem="fPO-DL-A6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" symbolic="YES" id="0Fq-5d-7EW"/>
                     <constraint firstItem="fPO-DL-A6s" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5Tr-cM-DKN"/>
                     <constraint firstItem="2dQ-vy-eR4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" symbolic="YES" id="NTa-Ck-IQ2"/>
-                    <constraint firstItem="2dQ-vy-eR4" firstAttribute="leading" secondItem="fPO-DL-A6s" secondAttribute="trailing" constant="8" symbolic="YES" id="W69-j0-iqm"/>
+                    <constraint firstItem="2dQ-vy-eR4" firstAttribute="leading" secondItem="fPO-DL-A6s" secondAttribute="trailing" constant="20" id="W69-j0-iqm"/>
                     <constraint firstAttribute="trailing" secondItem="2dQ-vy-eR4" secondAttribute="trailing" constant="20" symbolic="YES" id="o5J-vr-iFO"/>
                     <constraint firstAttribute="bottom" secondItem="2dQ-vy-eR4" secondAttribute="bottom" constant="20" symbolic="YES" id="xWa-YI-89c"/>
                 </constraints>
