@@ -64,5 +64,18 @@ extension ThemesViewController: ThemePlaceholderDelegate {
         } else if let closure = selectThemeClosure {
             closure(themeName)
         }
+        
+        /*
+         В случае использования делегата, ThemesVC держит сильную ссылку на ConversationVC.
+         Однако, обратной ссылки нет, тк ThemesVC не сохраняется в ConversationVC и сразу передается NavigationController
+         Соответственно RC в данном случае не возникает
+         
+         В кейсе использования closure без захвата слабой ссылки (weak self), ThemesVC ссылается на ConversationVC по сильной ссылке через Swift closure context.
+         В кейсе с захватом слабой ссылкой на self, ссылок на ConversationVC через DebugMemoryGraph не обнаружено.
+         
+         В итоге, в любом из этих случает RC все равно не должен происходить т.к. ThemesVC держится в стеке NavigationController
+         И т.к. ThemesVC уничтожается раньше - никаких проблем замечено не было.
+         Этот вывод подтверждается так же при мониторинге использования приложения в инструменте Memory Leaks
+         */
     }
 }
