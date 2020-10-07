@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ThemePlaceholderDelegate {
-    func didTap(themeName: ThemeName) -> Void
+    func themePlaceholderDidTap(themeName: ThemeName) -> Void
 }

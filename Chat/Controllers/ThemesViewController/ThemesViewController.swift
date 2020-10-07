@@ -54,7 +54,7 @@ extension ThemesViewController {
 }
 
 extension ThemesViewController: ThemePlaceholderDelegate {
-    func didTap(themeName: ThemeName) {
+    func themePlaceholderDidTap(themeName: ThemeName) {
         // Common actions
         updateActive(for: themeName)
         updateColor(for: themeName)

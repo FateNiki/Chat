@@ -100,7 +100,7 @@ class ThemePlaceholderView: ThemedView {
     // MARK: - Actions
     @objc func selectTheme() -> Void {
         if let delegate = delegate, let themeName = themeName {
-            delegate.didTap(themeName: themeName)
+            delegate.themePlaceholderDidTap(themeName: themeName)
         }
     }
 }
