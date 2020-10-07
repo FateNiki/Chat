@@ -79,7 +79,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Theme name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MuX-JJ-LGp" userLabel="Theme Name">
-                    <rect key="frame" x="137.5" y="161.5" width="99.5" height="20.5"/>
+                    <rect key="frame" x="137.5" y="111" width="99.5" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -88,10 +88,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="MuX-JJ-LGp" secondAttribute="bottom" constant="5" id="2mA-iS-62Q"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="MuX-JJ-LGp" secondAttribute="bottom" constant="5" id="2mA-iS-62Q"/>
                 <constraint firstItem="cD4-xy-sAC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="PhS-b1-rcI"/>
                 <constraint firstItem="cD4-xy-sAC" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="UUR-Ur-xnI"/>
-                <constraint firstItem="MuX-JJ-LGp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cD4-xy-sAC" secondAttribute="bottom" constant="10" id="euz-Pa-ac5"/>
+                <constraint firstItem="MuX-JJ-LGp" firstAttribute="top" secondItem="cD4-xy-sAC" secondAttribute="bottom" constant="10" id="euz-Pa-ac5"/>
                 <constraint firstItem="cD4-xy-sAC" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="sSV-kX-TFZ"/>
                 <constraint firstItem="MuX-JJ-LGp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="v0p-JK-pRQ"/>
             </constraints>
