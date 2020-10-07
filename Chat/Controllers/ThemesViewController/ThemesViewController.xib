@@ -55,7 +55,7 @@
                     <constraints>
                         <constraint firstItem="L8K-Me-0By" firstAttribute="centerX" secondItem="TPU-Vq-Gwv" secondAttribute="centerX" id="8G2-FF-fXW"/>
                         <constraint firstItem="L8K-Me-0By" firstAttribute="top" secondItem="OiR-Db-302" secondAttribute="top" constant="20" id="JQs-kk-NSW"/>
-                        <constraint firstAttribute="trailing" secondItem="L8K-Me-0By" secondAttribute="trailing" constant="20" symbolic="YES" id="Ond-tZ-55g"/>
+                        <constraint firstItem="OiR-Db-302" firstAttribute="trailing" secondItem="L8K-Me-0By" secondAttribute="trailing" id="Ond-tZ-55g"/>
                         <constraint firstItem="OiR-Db-302" firstAttribute="bottom" secondItem="L8K-Me-0By" secondAttribute="bottom" constant="20" id="aZy-tj-GVG"/>
                         <constraint firstItem="L8K-Me-0By" firstAttribute="width" secondItem="TPU-Vq-Gwv" secondAttribute="width" multiplier="0.9" id="yBF-yn-IlF"/>
                     </constraints>
