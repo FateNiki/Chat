@@ -12,58 +12,31 @@ import AVFoundation
 class UserViewController: UIViewController {
     // MARK: - Interface constants
     private let saveButtonBackground = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
-    private let avatarBackground = UIColor(red: 0.89, green: 0.91, blue: 0.17, alpha: 1.00)
     private let saveButtonCornerRadius: CGFloat = 14
     
     // MARK: - Variables
-    public var currentUser: User = mockUser
+    var currentUser: User?
     fileprivate var imagePicker: UIImagePickerController!
 
     
     // MARK: - Outlets
-    @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var initialsLabel: UILabel!
+    @IBOutlet weak var userAvatarView: UserAvatarView!
+
+    
     
     // MARK: - Lifecycle
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        // print(saveButton.frame)
-        // Невозможно обратиться к saveButton (runtime failure). В данный момент он равен nil
-        // Кнопка инициализируется только после загрузки storyboard
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configAvatarImageView()
-        configSaveButton()
-        initUserFields()
-        
-        print(saveButton.frame)
-        // В данный момент View только загрузилась из связанного storyboard файла
-        // и frame указаны в соответствии с текущими значениями для выбранного в сториборд устройстве.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(saveButton.frame)
-        // В данный момент View уже отобразилась на экране устройства
-        // Уже отработал механизм autolayout для текущего устройства
-        // Так как в сториборд файле и эмуляторе выбраны устройства с разными экранами (iphone se 2 и iphone 11)
-        // то и фреймы saveButton в них разные
-        // viewDidLoad → (56.0, 597.0, 263.0, 40.0)
-        // viewDidAppear → (56.0, 792.0, 302.0, 40.0)
-
+        setupView()
     }
     
     // MARK: - Interface configuring
-    private func configAvatarImageView() -> Void {
-        let minSize = min(avatarImageView.layer.frame.width, avatarImageView.layer.frame.height)
-        avatarImageView.layer.cornerRadius = minSize / 2
-        avatarImageView.backgroundColor = avatarBackground
+    private func setupView() {
+        configSaveButton()
+        initUserFields()
     }
     
     private func configSaveButton() -> Void {
@@ -73,15 +46,11 @@ class UserViewController: UIViewController {
     }
     
     private func initUserFields() -> Void {
-        fullNameLabel.text = currentUser.fullName
-        descriptionLabel.text = currentUser.description
-        if let avatarImageData = currentUser.avatar {
-            avatarImageView.image = UIImage(data: avatarImageData)
-            initialsLabel.isHidden = true
-        } else {
-            initialsLabel.isHidden = false
-            initialsLabel.text = currentUser.initials
-        }
+        guard let user = currentUser else { return }
+        
+        fullNameLabel.text = user.fullName
+        descriptionLabel.text = user.description
+        userAvatarView.configure(with: user)
     }
     
     // MARK: - Inteface Actions
@@ -107,19 +76,13 @@ class UserViewController: UIViewController {
         }
         
         editAvatarDialog.addAction(UIAlertAction(title: "Отменить", style: .cancel))
-        present(editAvatarDialog, animated: true)        
+        present(editAvatarDialog, animated: true)
     }
 }
 
 // MARK: - Work with ImagePicker
 extension UserViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    enum ImageSource {
-        case photoLibrary
-        case camera
-    }
-    
-    
-    func selectImageFrom(_ source: ImageSource){
+    func selectImageFrom(_ source: UIImagePickerController.SourceType){
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         switch source {
@@ -132,6 +95,8 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             case .photoLibrary:
                 imagePicker.sourceType = .photoLibrary
                 present(imagePicker, animated: true)
+            default:
+                return
         }
     }
     
@@ -141,7 +106,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             openErrorAlert(title: "Изображение", message: "Image not found!")
             return
         }
-        currentUser.avatar = selectedImage.jpegData(compressionQuality: 1)
+        currentUser?.avatar = selectedImage.jpegData(compressionQuality: 1)
         initUserFields()
     }
         
