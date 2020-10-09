@@ -15,8 +15,8 @@ class ThemePlaceholderView: ThemedView {
     
     // MARK: - Outlets
     @IBOutlet weak var messagesContainer: UIView!
-    @IBOutlet weak var incomePlaceholderLabel: PaddingLabel!
-    @IBOutlet weak var outcomePlaceholderLabel: PaddingLabel!
+    @IBOutlet weak var incomeMessageView: MessageView!
+    @IBOutlet weak var outcomeMessageView: MessageView!
     @IBOutlet weak var themeNameLabel: UILabel!
     
     // MARK: - Variables
@@ -67,10 +67,8 @@ class ThemePlaceholderView: ThemedView {
         
         messagesContainer.layer.cornerRadius = 14
         messagesContainer.clipsToBounds = true
-        incomePlaceholderLabel.layer.cornerRadius = 10
-        incomePlaceholderLabel.clipsToBounds = true
-        outcomePlaceholderLabel.layer.cornerRadius = 10
-        outcomePlaceholderLabel.clipsToBounds = true
+        incomeMessageView.configure(with: MessageCellModel(text: "Income", date: Date(), income: true))
+        outcomeMessageView.configure(with: MessageCellModel(text: "Outcome", date: Date(), income: false))
         
         messagesContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
         themeNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
@@ -86,10 +84,14 @@ class ThemePlaceholderView: ThemedView {
         
         themeNameLabel.text = themeName?.rawValue
         messagesContainer.backgroundColor = theme.backgroundColor
-        incomePlaceholderLabel.backgroundColor = theme.incomeMessageCellColor
-        incomePlaceholderLabel.textColor = theme.incomeMessageTextColor
-        outcomePlaceholderLabel.backgroundColor = theme.outcomeMessageCellColor
-        outcomePlaceholderLabel.textColor = theme.outcomeMessageTextColor
+        
+        incomeMessageView.backgroundColor = theme.incomeMessageCellColor
+        incomeMessageView.textColor = theme.incomeMessageTextColor
+        incomeMessageView.dateColor = theme.incomeDateTextColor
+        
+        outcomeMessageView.backgroundColor = theme.outcomeMessageCellColor
+        outcomeMessageView.textColor = theme.outcomeMessageTextColor
+        outcomeMessageView.dateColor = theme.outcomeDateTextColor
     }
     
     private func updateActive() {
