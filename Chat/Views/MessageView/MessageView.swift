@@ -90,6 +90,7 @@ extension MessageView: ConfigurableView {
     func configure(with model: MessageCellModel?) {
         guard let message = model else {
             messageLabel.text = nil
+            dateLabel.text = nil
             return
         }
         messageLabel.text = message.text
