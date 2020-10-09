@@ -20,8 +20,11 @@ protocol Theme {
     // Message cell
     var incomeMessageCellColor: UIColor { get }
     var incomeMessageTextColor: UIColor { get }
+    var incomeDateTextColor: UIColor { get }
+    
     var outcomeMessageCellColor: UIColor { get }
     var outcomeMessageTextColor: UIColor { get }
+    var outcomeDateTextColor: UIColor { get }
 }
 
 extension Theme {
@@ -41,6 +44,8 @@ struct ClassicTheme: Theme {
     var outcomeMessageCellColor: UIColor = UIColor(red: 0.86, green: 0.97, blue: 0.77, alpha: 1.00)
     var incomeMessageTextColor: UIColor = .black
     var outcomeMessageTextColor: UIColor = .black
+    var incomeDateTextColor: UIColor = .lightGray
+    var outcomeDateTextColor: UIColor = .lightGray
 }
 
 struct DayTheme: Theme {
@@ -52,6 +57,8 @@ struct DayTheme: Theme {
     var outcomeMessageCellColor: UIColor = UIColor(red: 0.26, green: 0.54, blue: 0.98, alpha: 1.00)
     var incomeMessageTextColor: UIColor = .black
     var outcomeMessageTextColor: UIColor = .white
+    var incomeDateTextColor: UIColor = .lightGray
+    var outcomeDateTextColor: UIColor = .white
 }
 
 struct NightTheme: Theme {
@@ -63,6 +70,8 @@ struct NightTheme: Theme {
     var outcomeMessageCellColor: UIColor = UIColor(red: 0.36, green: 0.36, blue: 0.36, alpha: 1.00)
     var incomeMessageTextColor: UIColor = .white
     var outcomeMessageTextColor: UIColor = .white
+    var incomeDateTextColor: UIColor = .white
+    var outcomeDateTextColor: UIColor = .white
 }
 
 enum ThemeName: String, CaseIterable {
@@ -135,6 +144,8 @@ class ThemeManager {
         MessageTableViewCell.appearance().backgroundColor = theme.backgroundColor
         MessageTableViewCell.appearance().incomeMessageCellColor = theme.incomeMessageCellColor
         MessageTableViewCell.appearance().outcomeMessageCellColor = theme.outcomeMessageCellColor
+        MessageTableViewCell.appearance().incomeDateTextColor = theme.incomeDateTextColor
+        MessageTableViewCell.appearance().outcomeDateTextColor = theme.outcomeDateTextColor
         MessageTableViewCell.appearance().incomeMessageTextColor = theme.incomeMessageTextColor
         MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
     }
