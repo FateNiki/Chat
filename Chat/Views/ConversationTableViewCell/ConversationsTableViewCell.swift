@@ -88,11 +88,10 @@ extension ConversationsTableViewCell: ConfigurableView {
         }
         
         if (!model.message.isEmpty) {
-            let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
-            if let yesterday = yesterday, model.date.timeIntervalSince1970 < yesterday.timeIntervalSince1970 {
-                dateLabel.text = Self.dateFormatter.string(from: model.date)
-            } else {
+            if Calendar.current.isDateInToday(model.date) {
                 dateLabel.text = Self.timeFormatter.string(from: model.date)
+            } else {
+                dateLabel.text = Self.dateFormatter.string(from: model.date)
             }
         } else {
             dateLabel.text = nil
