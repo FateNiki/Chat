@@ -18,7 +18,8 @@ class MessageTableViewCell: UITableViewCell {
     private static let labelCornerRadius = CGFloat(10)
     
     // MARK: - Outlets
-    @IBOutlet weak var messageLabel: PaddingLabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageContainer: UIView!
     @IBOutlet weak var incomePadding: NSLayoutConstraint!
     @IBOutlet weak var outcomePadding: NSLayoutConstraint!
     
@@ -32,8 +33,9 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        messageLabel.layer.cornerRadius = Self.labelCornerRadius
-        messageLabel.clipsToBounds = true
+        messageContainer.layer.cornerRadius = Self.labelCornerRadius
+        messageContainer.clipsToBounds = true
+        messageLabel.backgroundColor = nil
     }
     
     override func prepareForReuse() {
@@ -49,7 +51,8 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Interface configuring
     private func updateView() -> Void {
         contentView.backgroundColor = backgroundColor
-        messageLabel.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor
+        
+        messageContainer.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor
         messageLabel.textColor = messageIsIncome ? incomeMessageTextColor : outcomeMessageTextColor
         
         incomePadding.isActive = messageIsIncome
