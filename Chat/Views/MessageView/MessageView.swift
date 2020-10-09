@@ -10,6 +10,13 @@ import UIKit
 
 class MessageView: UIView {
     // MARK: - Interface constants
+    private static var timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
+    
     private static let cornerRadius = CGFloat(10)
     var textColor: UIColor? {
         didSet {
@@ -85,6 +92,7 @@ extension MessageView: ConfigurableView {
             messageLabel.text = nil
             return
         }
-        messageLabel.text = "\(message.text) | \(message.income ? "income" : "outcome")"
+        messageLabel.text = message.text
+        dateLabel.text = Self.timeFormatter.string(from: message.date)
     }
 }
