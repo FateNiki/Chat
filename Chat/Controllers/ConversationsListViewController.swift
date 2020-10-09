@@ -11,8 +11,8 @@ import UIKit
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
-    private let conversations = conversationsMock
-    private let currentUser = mockUser
+    private let conversations: [Conversation] = MessagesMock.conversations
+    private let currentUser: User = UserMock.currentUser
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
