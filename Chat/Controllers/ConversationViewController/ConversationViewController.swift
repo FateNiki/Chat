@@ -22,6 +22,7 @@ class ConversationViewController: UIViewController {
         tableView.register(UINib(nibName: messageCellIdentifier, bundle: nil), forCellReuseIdentifier: messageCellIdentifier)
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
 
