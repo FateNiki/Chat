@@ -18,8 +18,7 @@ class MessageTableViewCell: UITableViewCell {
     private static let labelCornerRadius = CGFloat(10)
     
     // MARK: - Outlets
-    @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var messageContainer: UIView!
+    @IBOutlet weak var messageContainer: MessageView!
     @IBOutlet weak var incomePadding: NSLayoutConstraint!
     @IBOutlet weak var outcomePadding: NSLayoutConstraint!
     
@@ -31,16 +30,9 @@ class MessageTableViewCell: UITableViewCell {
     }
     
     // MARK: - Lifecycle
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        messageContainer.layer.cornerRadius = Self.labelCornerRadius
-        messageContainer.clipsToBounds = true
-        messageLabel.backgroundColor = nil
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        messageLabel.text = nil
+        messageContainer.configure(with: nil)
     }
     
     override func layoutSubviews() {
@@ -53,7 +45,7 @@ class MessageTableViewCell: UITableViewCell {
         contentView.backgroundColor = backgroundColor
         
         messageContainer.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor
-        messageLabel.textColor = messageIsIncome ? incomeMessageTextColor : outcomeMessageTextColor
+        messageContainer.textColor = messageIsIncome ? incomeMessageTextColor : outcomeMessageTextColor
         
         incomePadding.isActive = messageIsIncome
         outcomePadding.isActive = !messageIsIncome
@@ -62,7 +54,7 @@ class MessageTableViewCell: UITableViewCell {
 
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
-        messageLabel.text = "\(model.text) | \(model.income ? "income" : "outcome")"
+        messageContainer.configure(with: model)
         messageIsIncome = model.income
     }
 }

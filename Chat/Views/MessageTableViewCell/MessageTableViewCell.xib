@@ -18,24 +18,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="337" height="166"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EPt-OS-fnp" userLabel="Message Container">
+                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="125.5" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="EPt-OS-fnp" userLabel="Message Container" customClass="MessageView" customModule="Chat" customModuleProvider="target">
                         <rect key="frame" x="10" y="10" width="125.5" height="146"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4d-HB-qtz" userLabel="Message">
-                                <rect key="frame" x="10" y="10" width="105.5" height="126"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="T4d-HB-qtz" firstAttribute="top" secondItem="EPt-OS-fnp" secondAttribute="top" constant="10" id="2Sm-kV-P2i"/>
-                            <constraint firstItem="T4d-HB-qtz" firstAttribute="leading" secondItem="EPt-OS-fnp" secondAttribute="leading" constant="10" id="DfB-Yn-ojd"/>
-                            <constraint firstAttribute="trailing" secondItem="T4d-HB-qtz" secondAttribute="trailing" constant="10" id="Xl4-CO-XcC"/>
-                            <constraint firstAttribute="bottom" secondItem="T4d-HB-qtz" secondAttribute="bottom" constant="10" id="pCg-FA-rUO"/>
-                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
@@ -55,7 +40,6 @@
             <connections>
                 <outlet property="incomePadding" destination="ItB-GY-Mfk" id="2zM-BT-ZEm"/>
                 <outlet property="messageContainer" destination="EPt-OS-fnp" id="ddZ-pY-IuB"/>
-                <outlet property="messageLabel" destination="T4d-HB-qtz" id="NEU-XJ-vD2"/>
                 <outlet property="outcomePadding" destination="lMA-ue-NvH" id="Qg5-jg-Mid"/>
             </connections>
             <point key="canvasLocation" x="134.05797101449275" y="125.22321428571428"/>

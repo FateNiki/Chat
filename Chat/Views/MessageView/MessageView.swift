@@ -11,20 +11,41 @@ import UIKit
 class MessageView: UIView {
     // MARK: - Interface constants
     private static let cornerRadius = CGFloat(10)
-    var textColor: UIColor?
-    
-    // MARK: - Outlets
-    @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var view: UIView!
-
-    // MARK: - Create from xib
-    private func initViewFromXib() -> UIView? {
-        let xibName = String(describing: type(of: self))
-        let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: xibName, bundle: bundle)
-        return nib.instantiate(withOwner: self, options: nil).first as? UIView
+    var textColor: UIColor? {
+        didSet {
+            messageLabel.textColor = textColor
+        }
+    }
+    var dateColor: UIColor? {
+        didSet {
+            dateLabel.textColor = dateColor
+        }
     }
     
+    // MARK: - UI Elements
+    lazy var messageLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.setContentHuggingPriority(UILayoutPriority(rawValue: 251), for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriority(rawValue: 251), for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 749), for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .vertical)
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.setContentHuggingPriority(UILayoutPriority(rawValue: 252), for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriority(rawValue: 251), for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
+        label.font = UIFont.systemFont(ofSize: 11)
+        
+        label.text = "17:43"
+        return label
+    }()
+
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,26 +57,25 @@ class MessageView: UIView {
         setupView()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updateView()
-    }
-    
     
     // MARK: - Interface configuring
     private func setupView() {
-        guard let xibView = initViewFromXib() else { return }
-        xibView.frame = self.bounds
-        xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.addSubview(xibView)
+        self.addSubview(messageLabel)
+        self.addSubview(dateLabel)
         
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        messageLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -10).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: dateLabel.centerYAnchor).isActive = true
+        
+        dateLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
+        dateLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
+
         self.layer.cornerRadius = Self.cornerRadius
         self.clipsToBounds = true
-    }
-    
-    private func updateView() -> Void {
-        view.backgroundColor = backgroundColor
-        messageLabel.textColor = textColor        
     }
 }
 
@@ -66,6 +86,5 @@ extension MessageView: ConfigurableView {
             return
         }
         messageLabel.text = "\(message.text) | \(message.income ? "income" : "outcome")"
-        updateView()
     }
 }
