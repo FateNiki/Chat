@@ -51,9 +51,6 @@ class MessageView: UIView {
         
         self.layer.cornerRadius = Self.cornerRadius
         self.clipsToBounds = true
-        messageLabel.backgroundColor = nil
-        
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func updateView() -> Void {
