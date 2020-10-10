@@ -9,7 +9,7 @@
 import UIKit
 
 class UserMock {
-    static let currentUser = User(firstName: "Aleksey", lastName: "Nikitin", description: "Frontend developer, iOS Developer, Izhevsk, Russia")
+    static var currentUser = User(firstName: "Aleksey", lastName: "Nikitin", description: "Frontend developer, iOS Developer, Izhevsk, Russia")
 
     static let users: [User] = [
         User(firstName: "Ronald", lastName: "Robertson"),
