@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+fileprivate enum UserViewState {
+    case viewing, editing, saving
+}
+
 class UserViewController: UIViewController {
     // MARK: - Interface constants
     private let saveButtonBackground = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
@@ -17,12 +21,37 @@ class UserViewController: UIViewController {
     // MARK: - Variables
     var currentUser: User?
     fileprivate var imagePicker: UIImagePickerController!
+    private var state: UserViewState = .viewing {
+        didSet {
+            switch state {
+                case .viewing:
+                    editButton.isHidden = true
+                    saveButton.isEnabled = false
+                    fullNameTextField.inEditing = false
+                    descriptionTextView.isEditable = false
+                case .editing:
+                    editButton.isHidden = false
+                    editButton.isEnabled = true
+                    saveButton.isEnabled = true
+                    fullNameTextField.inEditing = true
+                    descriptionTextView.isEditable = true
+                case .saving:
+                    editButton.isHidden = false
+                    editButton.isEnabled = false
+                    saveButton.isEnabled = false
+                    fullNameTextField.inEditing = false
+                    descriptionTextView.isEditable = false
+            }
+        }
+    }
+    
 
     
     // MARK: - Outlets
     @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var fullNameTextField: TurnedOffTextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var userAvatarView: UserAvatarView!
 
     
@@ -35,14 +64,18 @@ class UserViewController: UIViewController {
     
     // MARK: - Interface configuring
     private func setupView() {
+        configNavigation()
         configSaveButton()
         initUserFields()
-        configNavigation()
+        
+        state = .viewing
+        fullNameTextField.delegate = self
     }
     
     private func configNavigation() {
         navigationItem.title = "My profile"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
+        navigationItem.rightBarButtonItem = editButtonItem
     }
     
     private func configSaveButton() -> Void {
@@ -54,8 +87,8 @@ class UserViewController: UIViewController {
     private func initUserFields() -> Void {
         guard let user = currentUser else { return }
         
-        fullNameLabel.text = user.fullName
-        descriptionLabel.text = user.description
+        fullNameTextField.text = user.fullName
+        descriptionTextView.text = user.description
         userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
     }
     
@@ -87,6 +120,21 @@ class UserViewController: UIViewController {
     
     @objc func closeModal() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        state = editing ? .editing : .viewing
+        initUserFields()
+    }
+}
+
+extension UserViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        return updatedText.count <= 24
     }
 }
 
