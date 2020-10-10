@@ -8,12 +8,19 @@
 
 import Foundation
 
-class GCDUserManager: DataManager {
-    struct UserData {
-        let fullName: String
-        let description: String
-        let avatar: Data?
-    }
+struct UserData {
+    let fullName: String
+    let description: String
+    let avatar: Data?
+}
+
+protocol UserManager: DataManager {
+    func saveToFile(data: UserData, completion: @escaping (User) -> Void)
+    func loadFromFile(completion: @escaping (User) -> Void)
+}
+
+class GCDUserManager: UserManager {
+    static let shared = GCDUserManager()
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
         UserMock.currentUser.avatar = data.avatar
@@ -28,4 +35,6 @@ class GCDUserManager: DataManager {
     func loadFromFile(completion: @escaping (User) -> Void) {
         completion(UserMock.currentUser)
     }
+    
+    private init() { }
 }
