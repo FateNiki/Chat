@@ -12,7 +12,7 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
     private let conversations: [Conversation] = MessagesMock.conversations
-    private let currentUser: User = UserMock.currentUser
+    private var currentUser: User?
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -27,7 +27,9 @@ class ConversationsListViewController: UIViewController {
         let uaView = UserAvatarView()
         uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        uaView.configure(with: UserAvatarModel(initials: currentUser.initials, avatar: currentUser.avatar))
+        if let user = currentUser {
+            uaView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+        }
         uaView.delegate = self
         return uaView
     }()
@@ -55,8 +57,11 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Config UI
     private func setupView() {
-        initTableView()
-        initNavigation()
+        GCDUserManager.shared.loadFromFile { user in
+            self.currentUser = user
+            self.initTableView()
+            self.initNavigation()
+        }
     }
     
     private func updateView() {
@@ -79,6 +84,8 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Actions
     func openUserEdit() -> Void {
+        guard let currentUser = currentUser else { return }
+        
         let userController = UserViewController()
         userController.currentUser = currentUser
         
