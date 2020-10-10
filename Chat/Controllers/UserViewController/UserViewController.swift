@@ -19,8 +19,9 @@ class UserViewController: UIViewController {
     private let saveButtonCornerRadius: CGFloat = 14
     
     // MARK: - Variables
-    var currentUser: User?
     fileprivate var imagePicker: UIImagePickerController!
+    var currentUser: User?
+    var delegate: UserViewDelegate?
     private var state: UserViewState = .viewing {
         didSet {
             switch state {
@@ -126,6 +127,20 @@ class UserViewController: UIViewController {
         super.setEditing(editing, animated: animated)
         state = editing ? .editing : .viewing
         initUserFields()
+    }
+    
+    @IBAction func saveUser() {
+        GCDUserManager.shared.saveToFile(
+            data: UserData(
+                fullName: fullNameTextField.text ?? "",
+                description: descriptionTextView.text,
+                avatar: userAvatarView.avatar
+            )
+        ) { user in
+            self.currentUser = user
+            self.delegate?.userDidChange(newUser: user)
+            self.setEditing(false, animated: true)
+        }
     }
 }
 

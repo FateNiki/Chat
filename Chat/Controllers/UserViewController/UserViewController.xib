@@ -38,6 +38,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                     <state key="normal" title="Save"/>
+                    <connections>
+                        <action selector="saveUser" destination="-1" eventType="touchUpInside" id="cIK-ON-Dc7"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWL-dn-fTG">
                     <rect key="frame" x="293.5" y="300" width="30" height="32"/>
