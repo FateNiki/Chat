@@ -14,6 +14,7 @@ class UserAvatarView: UIView {
     
     // MARK: - Variables
     var delegate: UserAvatarViewDelegate?
+    private(set) var avatar: Data?
     
     // MARK: - Outlets
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -74,6 +75,7 @@ extension UserAvatarView: ConfigurableView {
     func configure(with model: UserAvatarModelProtocol) {
         if let avatarImageData = model.avatar {
             avatarImageView.image = UIImage(data: avatarImageData)
+            avatar = model.avatar
             initialsLabel.isHidden = true
         } else {
             initialsLabel.isHidden = false
