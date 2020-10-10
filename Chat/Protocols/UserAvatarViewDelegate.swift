@@ -11,3 +11,7 @@ import Foundation
 protocol UserAvatarViewDelegate {
     func userAvatarDidTap() -> Void
 }
+
+protocol UserViewDelegate {
+    func userDidChange(newUser: User) -> Void
+}
