@@ -27,19 +27,19 @@ class UserViewController: UIViewController {
                 case .viewing:
                     editButton.isHidden = true
                     saveButton.isEnabled = false
-                    fullNameTextField.inEditing = false
+                    fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                 case .editing:
                     editButton.isHidden = false
                     editButton.isEnabled = true
                     saveButton.isEnabled = true
-                    fullNameTextField.inEditing = true
+                    fullNameTextField.isEnabled = true
                     descriptionTextView.isEditable = true
                 case .saving:
                     editButton.isHidden = false
                     editButton.isEnabled = false
                     saveButton.isEnabled = false
-                    fullNameTextField.inEditing = false
+                    fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
             }
         }

@@ -9,10 +9,9 @@
 import UIKit
 
 class TurnedOffTextField: UITextField {
-    var inEditing: Bool = true {
+    override var isEnabled: Bool {
         didSet {
-            borderStyle = inEditing ? .roundedRect : .none
-            isUserInteractionEnabled = inEditing
+            borderStyle = isEnabled ? .roundedRect : .none
         }
     }
 }
