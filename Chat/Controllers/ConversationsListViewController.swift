@@ -12,7 +12,14 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
     private let conversations: [Conversation] = MessagesMock.conversations
-    private var currentUser: User?
+    private var currentUser: User? {
+        didSet {
+            guard let user = currentUser else { return }
+            
+            userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+            userViewController.currentUser = user
+        }
+    }
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -27,11 +34,13 @@ class ConversationsListViewController: UIViewController {
         let uaView = UserAvatarView()
         uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        if let user = currentUser {
-            uaView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
-        }
         uaView.delegate = self
         return uaView
+    }()
+    private lazy var userViewController: UserViewController = {
+        let uvController = UserViewController()
+        uvController.delegate = self
+        return uvController
     }()
     private lazy var themesController: ThemesViewController = {
         let themesController = ThemesViewController()
@@ -84,13 +93,9 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Actions
     func openUserEdit() -> Void {
-        guard let currentUser = currentUser else { return }
+        guard currentUser != nil else { return }
         
-        let userController = UserViewController()
-        userController.currentUser = currentUser
-        
-        let userNavigationController = UINavigationController(rootViewController: userController)
-        
+        let userNavigationController = UINavigationController(rootViewController: userViewController)
         self.present(userNavigationController, animated: true, completion: nil)
     }
     
@@ -166,5 +171,11 @@ extension ConversationsListViewController: ThemePickerDelegate {
         let theme = name.theme
         navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+    }
+}
+
+extension ConversationsListViewController: UserViewDelegate {
+    func userDidChange(newUser: User) {
+        currentUser = newUser
     }
 }
