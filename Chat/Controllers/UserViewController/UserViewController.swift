@@ -27,19 +27,19 @@ class UserViewController: UIViewController {
             switch state {
                 case .viewing:
                     editButton.isHidden = true
-                    saveButton.isEnabled = false
+                    saveButtons.forEach { $0.isEnabled = false }
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                 case .editing:
                     editButton.isHidden = false
                     editButton.isEnabled = true
-                    saveButton.isEnabled = true
+                    saveButtons.forEach { $0.isEnabled = true }
                     fullNameTextField.isEnabled = true
                     descriptionTextView.isEditable = true
                 case .saving:
                     editButton.isHidden = false
                     editButton.isEnabled = false
-                    saveButton.isEnabled = false
+                    saveButtons.forEach { $0.isEnabled = false }
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
             }
@@ -49,7 +49,7 @@ class UserViewController: UIViewController {
 
     
     // MARK: - Outlets
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet var saveButtons: [UIButton]!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var fullNameTextField: TurnedOffTextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -80,9 +80,11 @@ class UserViewController: UIViewController {
     }
     
     private func configSaveButton() -> Void {
-        saveButton.backgroundColor = saveButtonBackground
-        saveButton.layer.cornerRadius = saveButtonCornerRadius
-        saveButton.clipsToBounds = true
+        for saveButton in saveButtons {
+            saveButton.backgroundColor = saveButtonBackground
+            saveButton.layer.cornerRadius = saveButtonCornerRadius
+            saveButton.clipsToBounds = true
+        }
     }
     
     private func initUserFields() -> Void {
@@ -129,8 +131,16 @@ class UserViewController: UIViewController {
         initUserFields()
     }
     
-    @IBAction func saveUser() {
-        GCDUserManager.shared.saveToFile(
+    @IBAction func saveByGCD() {
+        saveUser(by: GCDUserManager.shared)
+    }
+    
+    @IBAction func saveByOperations() {
+        saveUser(by: OperationsUserManager.shared)
+    }
+    
+    private func saveUser<M: UserManager>(by manager: M) {
+        manager.saveToFile(
             data: UserData(
                 fullName: fullNameTextField.text ?? "",
                 description: descriptionTextView.text,
