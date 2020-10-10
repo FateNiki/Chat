@@ -146,10 +146,12 @@ class UserViewController: UIViewController {
                 description: descriptionTextView.text,
                 avatar: userAvatarView.avatar
             )
-        ) { user in
-            self.currentUser = user
-            self.delegate?.userDidChange(newUser: user)
-            self.setEditing(false, animated: true)
+        ) { [weak self] user in
+            DispatchQueue.main.async {
+                self?.currentUser = user
+                self?.delegate?.userDidChange(newUser: user)
+                self?.setEditing(false, animated: true)
+            }
         }
     }
 }
