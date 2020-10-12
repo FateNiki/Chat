@@ -30,6 +30,7 @@ class UserViewController: UIViewController {
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                     activityIndicator.stopAnimating()
+                    editButtonItem.isEnabled = true
                 case .editing:
                     editButton.isHidden = false
                     editButton.isEnabled = true
@@ -37,6 +38,7 @@ class UserViewController: UIViewController {
                     fullNameTextField.isEnabled = true
                     descriptionTextView.isEditable = true
                     activityIndicator.stopAnimating()
+                    editButtonItem.isEnabled = true
                 case .saving:
                     editButton.isHidden = false
                     editButton.isEnabled = false
@@ -44,6 +46,7 @@ class UserViewController: UIViewController {
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                     activityIndicator.startAnimating()
+                    editButtonItem.isEnabled = false
             }
         }
     }
