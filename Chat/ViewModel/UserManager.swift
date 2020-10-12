@@ -14,26 +14,82 @@ struct UserData {
     let avatar: Data?
 }
 
+fileprivate enum FieldFileName: String {
+    case firstName = "userFirstName.txt"
+    case lastName = "userLastName.txt"
+    case description = "userDescription.txt"
+    case avatar = "userAvatar.txt"
+}
+
 protocol UserManager: DataManager where ManagerData == UserData, ManagerResult == User {
     var user: User { get }
 }
 
 extension UserManager {
+    
+    private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    fileprivate func loadUserFromFile() -> User {
+        let docsDirectory = getDocumentsDirectory()
+        let firstNameFile = docsDirectory.appendingPathComponent(FieldFileName.firstName.rawValue)
+        let lastNameFile = docsDirectory.appendingPathComponent(FieldFileName.lastName.rawValue)
+        let descFile = docsDirectory.appendingPathComponent(FieldFileName.description.rawValue)
+//        let avatarFile = docsDirectory.appendingPathComponent(FieldFileName.avatar.rawValue)
+        
+        let user = User(firstName: "", lastName: "")
+        
+        if let firstName = try? String(contentsOf: firstNameFile, encoding: .utf8) {
+            user.firstName = firstName
+        }
+        
+        if let lastName = try? String(contentsOf: lastNameFile, encoding: .utf8) {
+            user.lastName = lastName
+        }
+        
+        if let description = try? String(contentsOf: descFile, encoding: .utf8) {
+            user.description = description
+        }
+        
+        return user
+    }
+    
     fileprivate func save(firstName: String) {
         guard firstName != user.firstName else { return }
-        print(#function)
+        
+        let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.firstName.rawValue)
+        do {
+            try firstName.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print(error)
+        }
         user.firstName = firstName
     }
     
     fileprivate func save(lastName: String) {
         guard lastName != user.lastName else { return }
-        print(#function)
+        
+        let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.lastName.rawValue)
+        do {
+            try lastName.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print(error)
+        }
         user.lastName = lastName
     }
     
     fileprivate func save(description: String) {
         guard description != user.description else { return }
-        print(#function)
+
+        let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
+        do {
+            try description.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print(error)
+        }
+
         user.description = description
     }
     
@@ -84,6 +140,7 @@ class GCDUserManager: UserManager {
     }
     
     func loadFromFile(completion: @escaping (User) -> Void) {
+        user = loadUserFromFile()
         completion(user)
     }
     
