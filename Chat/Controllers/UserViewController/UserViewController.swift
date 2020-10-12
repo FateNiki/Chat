@@ -19,7 +19,6 @@ class UserViewController: UIViewController {
     private let saveButtonCornerRadius: CGFloat = 14
     
     // MARK: - Variables
-    fileprivate var imagePicker: UIImagePickerController!
     var currentUser: User?
     var delegate: UserViewDelegate?
     private var state: UserViewState = .viewing {
@@ -30,18 +29,21 @@ class UserViewController: UIViewController {
                     saveButtons.forEach { $0.isEnabled = false }
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
+                    activityIndicator.stopAnimating()
                 case .editing:
                     editButton.isHidden = false
                     editButton.isEnabled = true
                     saveButtons.forEach { $0.isEnabled = true }
                     fullNameTextField.isEnabled = true
                     descriptionTextView.isEditable = true
+                    activityIndicator.stopAnimating()
                 case .saving:
                     editButton.isHidden = false
                     editButton.isEnabled = false
                     saveButtons.forEach { $0.isEnabled = false }
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
+                    activityIndicator.startAnimating()
             }
         }
     }
@@ -54,6 +56,17 @@ class UserViewController: UIViewController {
     @IBOutlet weak var fullNameTextField: TurnedOffTextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var userAvatarView: UserAvatarView!
+    
+    // MARK: - UI Variables
+    fileprivate var imagePicker: UIImagePickerController!
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        indicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return indicator
+    }()
 
     
     
@@ -67,6 +80,7 @@ class UserViewController: UIViewController {
     private func setupView() {
         configNavigation()
         configSaveButton()
+        addActivityIndicator()
         initUserFields()
         
         state = .viewing
@@ -77,6 +91,12 @@ class UserViewController: UIViewController {
         navigationItem.title = "My profile"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
         navigationItem.rightBarButtonItem = editButtonItem
+    }
+    
+    private func addActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func configSaveButton() -> Void {
@@ -140,6 +160,7 @@ class UserViewController: UIViewController {
     }
     
     private func saveUser<M: UserManager>(by manager: M) {
+        state = .saving
         manager.saveToFile(
             data: UserData(
                 fullName: fullNameTextField.text ?? "",
