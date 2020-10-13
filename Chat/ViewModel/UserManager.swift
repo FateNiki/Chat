@@ -37,7 +37,7 @@ extension UserManager {
         let firstNameFile = docsDirectory.appendingPathComponent(FieldFileName.firstName.rawValue)
         let lastNameFile = docsDirectory.appendingPathComponent(FieldFileName.lastName.rawValue)
         let descFile = docsDirectory.appendingPathComponent(FieldFileName.description.rawValue)
-//        let avatarFile = docsDirectory.appendingPathComponent(FieldFileName.avatar.rawValue)
+        let avatarFile = docsDirectory.appendingPathComponent(FieldFileName.avatar.rawValue)
         
         let user = User(firstName: "", lastName: "")
         
@@ -53,6 +53,10 @@ extension UserManager {
             user.description = description
         }
         
+        if let avatar = try? Data(contentsOf: avatarFile) {
+            user.avatar = avatar
+        }
+        
         return user
     }
     
@@ -62,10 +66,10 @@ extension UserManager {
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.firstName.rawValue)
         do {
             try firstName.write(to: url, atomically: true, encoding: .utf8)
+            user.firstName = firstName
         } catch {
             print(error)
         }
-        user.firstName = firstName
     }
     
     fileprivate func save(lastName: String) {
@@ -74,10 +78,10 @@ extension UserManager {
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.lastName.rawValue)
         do {
             try lastName.write(to: url, atomically: true, encoding: .utf8)
+            user.lastName = lastName
         } catch {
             print(error)
         }
-        user.lastName = lastName
     }
     
     fileprivate func save(description: String) {
@@ -86,17 +90,32 @@ extension UserManager {
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
         do {
             try description.write(to: url, atomically: true, encoding: .utf8)
+            user.description = description
         } catch {
             print(error)
         }
-
-        user.description = description
     }
     
     fileprivate func save(avatar: Data?) {
-        guard avatar != user.avatar else { return }
-        print(#function)
-        user.avatar = avatar
+        guard avatar != user.avatar else {
+            return
+        }
+        let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.avatar.rawValue)
+        if let avatarData = avatar {
+            do {
+                try avatarData.write(to: url)
+                user.avatar = avatarData
+            } catch {
+                print(error)
+            }
+        } else {
+            do {
+                try FileManager.default.removeItem(at: url)
+                user.avatar = nil
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
@@ -134,7 +153,7 @@ class GCDUserManager: UserManager {
             group.leave()
         }
         
-        group.notify(queue: .main) {
+        group.notify(queue: .global()) {
             completion(self.user)
         }
     }

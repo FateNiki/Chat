@@ -215,8 +215,8 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             openErrorAlert(title: "Изображение", message: "Image not found!")
             return
         }
-        currentUser?.avatar = selectedImage.jpegData(compressionQuality: 1)
-        initUserFields()
+        guard let user = currentUser else { return }
+        userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: selectedImage.jpegData(compressionQuality: 1)))
     }
         
     private func requestCameraPermission(_ openImagePicker: @escaping () -> Void) {
