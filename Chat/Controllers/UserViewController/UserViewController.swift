@@ -147,7 +147,8 @@ class UserViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.currentUser = result.user
                 self?.delegate?.userDidChange(newUser: result.user)
-                if result.errors.count > 0 {
+                
+                if result.withErrors {
                     let messages = result.errors.joined(separator: "\r\n")
                     let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
                         self?.setEditing(false, animated: true)

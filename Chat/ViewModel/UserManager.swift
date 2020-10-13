@@ -17,6 +17,8 @@ struct UserManagerData {
 struct UserManagerResult {
     let user: User
     let errors: [String]
+    
+    var withErrors: Bool { errors.count > 0 }
 }
 
 fileprivate enum FieldFileName: String {
