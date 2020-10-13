@@ -138,15 +138,15 @@ class UserViewController: UIViewController {
     private func saveUser<M: UserManager>(by manager: M) {
         state = .saving
         manager.saveToFile(
-            data: UserData(
+            data: .init(
                 fullName: fullNameTextField.text ?? "",
                 description: descriptionTextView.text,
                 avatar: userAvatarView.avatar
             )
-        ) { [weak self] user in
+        ) { [weak self] result in
             DispatchQueue.main.async {
-                self?.currentUser = user
-                self?.delegate?.userDidChange(newUser: user)
+                self?.currentUser = result.user
+                self?.delegate?.userDidChange(newUser: result.user)
                 self?.setEditing(false, animated: true)
             }
         }

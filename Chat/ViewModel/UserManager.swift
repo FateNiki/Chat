@@ -8,10 +8,15 @@
 
 import Foundation
 
-struct UserData {
+struct UserManagerData {
     let fullName: String
     let description: String
     let avatar: Data?
+}
+
+struct UserManagerResult {
+    let user: User
+    let errors: [String]?
 }
 
 fileprivate enum FieldFileName: String {
@@ -21,7 +26,27 @@ fileprivate enum FieldFileName: String {
     case avatar = "userAvatar.txt"
 }
 
-protocol UserManager: DataManager where ManagerData == UserData, ManagerResult == User {
+enum UserSaveError: Error {
+    case firstName(String)
+    case lastName(String)
+    case description(String)
+    case avatar(String)
+    
+    var errorMessage: String {
+        switch self {
+            case let .firstName(message):
+                return "Имя: \(message)"
+            case let .lastName(message):
+                return "Фамилия: \(message)"
+            case let .description(message):
+                return "Описание: \(message)"
+            case let .avatar(message):
+                return "Аватар: \(message)"
+        }
+    }
+}
+
+protocol UserManager: DataManager where ManagerData == UserManagerData, ManagerResult == UserManagerResult {
     var user: User { get }
 }
 
@@ -57,12 +82,12 @@ extension UserManager {
             user.avatar = avatar
         }
         
-        sleep(5)
+        sleep(2)
         
         return user
     }
     
-    fileprivate func save(firstName: String) {
+    fileprivate func save(firstName: String) throws {
         guard firstName != user.firstName else { return }
         print(#function)
         
@@ -71,11 +96,11 @@ extension UserManager {
             try firstName.write(to: url, atomically: true, encoding: .utf8)
             user.firstName = firstName
         } catch {
-            print(error)
+            throw UserSaveError.firstName(error.localizedDescription)
         }
     }
     
-    fileprivate func save(lastName: String) {
+    fileprivate func save(lastName: String) throws {
         guard lastName != user.lastName else { return }
         print(#function)
         
@@ -84,11 +109,11 @@ extension UserManager {
             try lastName.write(to: url, atomically: true, encoding: .utf8)
             user.lastName = lastName
         } catch {
-            print(error)
+            throw UserSaveError.lastName(error.localizedDescription)
         }
     }
     
-    fileprivate func save(description: String) {
+    fileprivate func save(description: String) throws {
         guard description != user.description else { return }
         print(#function)
 
@@ -97,11 +122,11 @@ extension UserManager {
             try description.write(to: url, atomically: true, encoding: .utf8)
             user.description = description
         } catch {
-            print(error)
+            throw UserSaveError.description(error.localizedDescription)
         }
     }
     
-    fileprivate func save(avatar: Data?) {
+    fileprivate func save(avatar: Data?) throws {
         guard avatar != user.avatar else { return }
         print(#function)
         
@@ -111,14 +136,14 @@ extension UserManager {
                 try avatarData.write(to: url)
                 user.avatar = avatarData
             } catch {
-                print(error)
+                throw UserSaveError.avatar(error.localizedDescription)
             }
         } else {
             do {
                 try FileManager.default.removeItem(at: url)
                 user.avatar = nil
             } catch {
-                print(error)
+                throw UserSaveError.avatar(error.localizedDescription)
             }
         }
     }
@@ -127,48 +152,75 @@ extension UserManager {
 class GCDUserManager: UserManager {
     static let shared = GCDUserManager()
     
+    private var errorArray = SafeArray<String>()
     var user: User = User(firstName: "Unknow", lastName: "Person")
     
-    func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
+    func saveToFile(data: UserManagerData, completion: @escaping (UserManagerResult) -> Void) {
         let group = DispatchGroup()
         let queue = DispatchQueue.global(qos: .userInitiated)
         
         let names = data.fullName.split(separator: Character(" "), maxSplits: 2, omittingEmptySubsequences: true)
         
+        errorArray.reset()
         group.enter()
         queue.async {
-            self.save(firstName: names.count > 0 ? String(names[0]) : "")
+            do {
+                try self.save(firstName: names.count > 0 ? String(names[0]) : "")
+            } catch let error as UserSaveError {
+                self.errorArray.append(error.errorMessage)
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
             group.leave()
         }
         
         group.enter()
         queue.async {
-            self.save(lastName: names.count > 1 ? String(names[1]) : "")
+            do {
+                try self.save(lastName: names.count > 1 ? String(names[1]) : "")
+            } catch let error as UserSaveError {
+                self.errorArray.append(error.errorMessage)
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
             group.leave()
         }
         
         group.enter()
         queue.async {
-            self.save(description: data.description)
+            do {
+                try self.save(description: data.description)
+            } catch let error as UserSaveError {
+                self.errorArray.append(error.errorMessage)
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
             group.leave()
         }
         
         group.enter()
         queue.async {
-            self.save(avatar: data.avatar)
+            do {
+                try self.save(avatar: data.avatar)
+            } catch let error as UserSaveError {
+                self.errorArray.append(error.errorMessage)
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
             group.leave()
         }
         
         group.notify(queue: queue) {
-            self.loadFromFile(completion: completion)
+            let result = UserManagerResult(user: self.user, errors: self.errorArray.value)
+            completion(result)
         }
     }
     
-    func loadFromFile(completion: @escaping (User) -> Void) {
+    func loadFromFile(completion: @escaping (UserManagerResult) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.user = self.loadUserFromFile()
             OperationsUserManager.shared.user = self.user
-            completion(self.user)
+            completion(UserManagerResult(user: self.user, errors: nil))
         }
     }
     
@@ -180,11 +232,18 @@ class OperationsUserManager: UserManager {
     
     private class FieldSaveOperation<T>: Operation {
         var field: T?
-        var saveClosure: ((T) -> Void)?
+        var saveClosure: ((T) throws -> Void)?
+        var errorMessage: String?
         
         override func main() {
             guard let field = field, let saveClosure = saveClosure else { return }
-            saveClosure(field)
+            do {
+                try saveClosure(field)
+            } catch let error as UserSaveError {
+                errorMessage = error.errorMessage
+            } catch {
+                errorMessage = error.localizedDescription
+            }
         }
     }
     
@@ -197,10 +256,36 @@ class OperationsUserManager: UserManager {
             result = loadClosure()
         }
     }
+    
+    private class SaveOperation: Operation {
+        var firstNameError: String? {
+            let operation = dependencies[0] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        var lastNameError: String? {
+            let operation = dependencies[1] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        var descriptionError: String? {
+            let operation = dependencies[2] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        var avatarError: String? {
+            let operation = dependencies[3] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
         
+        var errors: [String] {
+            if let errors = [firstNameError, lastNameError, descriptionError, avatarError].filter({ $0 != nil }) as? [String] {
+                return errors
+            }
+            return []
+        }
+    }
+    
     var user: User = User(firstName: "Unknow", lastName: "Person")
     
-    func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
+    func saveToFile(data: UserManagerData, completion: @escaping (UserManagerResult) -> Void) {
         let names = data.fullName.split(separator: Character(" "), maxSplits: 2, omittingEmptySubsequences: true)
         
         let firstNameOperation = FieldSaveOperation<String>()
@@ -219,9 +304,9 @@ class OperationsUserManager: UserManager {
         avatarOperation.field = data.avatar
         avatarOperation.saveClosure = save(avatar: )
         
-        let saveOperation = Operation()
+        let saveOperation = SaveOperation()
         saveOperation.completionBlock = {
-            self.loadFromFile(completion: completion)
+            completion(UserManagerResult(user: self.user, errors: saveOperation.errors))
         }
         
         saveOperation.addDependency(firstNameOperation)
@@ -235,13 +320,13 @@ class OperationsUserManager: UserManager {
         queue.addOperations([firstNameOperation, lastNameOperation, descrOperation, avatarOperation, saveOperation], waitUntilFinished: false)
     }
     
-    func loadFromFile(completion: @escaping (User) -> Void) {
+    func loadFromFile(completion: @escaping (UserManagerResult) -> Void) {
         let loadOperation = LoadOperation()
         loadOperation.loadClosure = loadUserFromFile
         loadOperation.completionBlock = {
             guard let user = loadOperation.result else { return }
             self.user = user
-            completion(user)
+            completion(UserManagerResult(user: user, errors: nil))
         }
         
         let queue = OperationQueue()

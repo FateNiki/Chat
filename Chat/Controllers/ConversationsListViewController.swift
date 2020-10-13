@@ -68,9 +68,9 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        GCDUserManager.shared.loadFromFile { user in
+        GCDUserManager.shared.loadFromFile { result in
             DispatchQueue.main.async {
-                self.currentUser = user
+                self.currentUser = result.user
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.userAvatarView)
             }
         }
