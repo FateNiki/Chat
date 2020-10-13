@@ -8,6 +8,12 @@
 
 import Foundation
 
+struct TestError: LocalizedError {
+    var message: String
+    
+    var errorDescription: String? { message }
+}
+
 struct UserManagerData {
     let fullName: String
     let description: String
@@ -112,6 +118,7 @@ extension UserManager {
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.lastName.rawValue)
         do {
+//            throw TestError(message: "Test error \(Int.random(in: 0...10))")
             try lastName.write(to: url, atomically: true, encoding: .utf8)
             user.lastName = lastName
         } catch {
@@ -125,6 +132,7 @@ extension UserManager {
 
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
         do {
+//            throw TestError(message: "Test error \(Int.random(in: 0...10))")
             try description.write(to: url, atomically: true, encoding: .utf8)
             user.description = description
         } catch {
