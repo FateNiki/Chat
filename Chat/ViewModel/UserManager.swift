@@ -57,11 +57,14 @@ extension UserManager {
             user.avatar = avatar
         }
         
+        sleep(5)
+        
         return user
     }
     
     fileprivate func save(firstName: String) {
         guard firstName != user.firstName else { return }
+        print(#function)
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.firstName.rawValue)
         do {
@@ -74,6 +77,7 @@ extension UserManager {
     
     fileprivate func save(lastName: String) {
         guard lastName != user.lastName else { return }
+        print(#function)
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.lastName.rawValue)
         do {
@@ -86,6 +90,7 @@ extension UserManager {
     
     fileprivate func save(description: String) {
         guard description != user.description else { return }
+        print(#function)
 
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
         do {
@@ -97,9 +102,9 @@ extension UserManager {
     }
     
     fileprivate func save(avatar: Data?) {
-        guard avatar != user.avatar else {
-            return
-        }
+        guard avatar != user.avatar else { return }
+        print(#function)
+        
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.avatar.rawValue)
         if let avatarData = avatar {
             do {
@@ -161,7 +166,6 @@ class GCDUserManager: UserManager {
     
     func loadFromFile(completion: @escaping (User) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            sleep(3)
             self.user = self.loadUserFromFile()
             completion(self.user)
         }
