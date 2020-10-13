@@ -14,9 +14,7 @@ class ThemeManager: DataManager {
     
     private(set) var currentThemeName: ThemeName = .classic {
         didSet {
-            DispatchQueue.main.async {
-                self.apply()
-            }
+            self.apply()
         }
     }
     
@@ -56,6 +54,9 @@ class ThemeManager: DataManager {
         // NavigationBar
         UINavigationBar.appearance().barTintColor = theme.secondBackgroundColor
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.textColor]
+        
+        //
+//        UITextField.appearance()
         
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor
