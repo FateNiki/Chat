@@ -57,11 +57,8 @@
                     </connections>
                 </textField>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r0x-1M-5mL">
-                    <rect key="frame" x="87" y="426.5" width="218" height="90.5"/>
+                    <rect key="frame" x="32" y="426.5" width="328" height="90.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="218" id="DA8-vZ-ex9"/>
-                    </constraints>
                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                     <color key="textColor" systemColor="labelColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -79,6 +76,7 @@
             <viewLayoutGuide key="safeArea" id="Wrv-eh-TC6"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="r0x-1M-5mL" firstAttribute="leading" secondItem="Wrv-eh-TC6" secondAttribute="leading" constant="32" id="0oS-Od-0ZM"/>
                 <constraint firstItem="Wrv-eh-TC6" firstAttribute="trailing" secondItem="KVc-Cr-ned" secondAttribute="trailing" constant="32" id="1ss-5f-Q1l"/>
                 <constraint firstItem="wWL-dn-fTG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wrv-eh-TC6" secondAttribute="leading" symbolic="YES" id="8hu-oe-tIl"/>
                 <constraint firstItem="wWL-dn-fTG" firstAttribute="trailing" secondItem="kBf-Ar-aAQ" secondAttribute="trailing" id="B7q-Ik-qsF"/>
@@ -93,6 +91,7 @@
                 <constraint firstItem="KVc-Cr-ned" firstAttribute="top" secondItem="r0x-1M-5mL" secondAttribute="bottom" constant="32" id="f8G-al-Thr"/>
                 <constraint firstItem="kBf-Ar-aAQ" firstAttribute="top" secondItem="Wrv-eh-TC6" secondAttribute="top" constant="25" id="iRW-KE-fOS"/>
                 <constraint firstItem="Ach-Rm-0yT" firstAttribute="top" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="32" id="ud4-O1-xvG"/>
+                <constraint firstItem="Wrv-eh-TC6" firstAttribute="trailing" secondItem="r0x-1M-5mL" secondAttribute="trailing" constant="32" id="v1z-C1-LOS"/>
                 <constraint firstItem="vj1-Am-8OI" firstAttribute="width" secondItem="KVc-Cr-ned" secondAttribute="width" multiplier="0.8" id="vdh-8R-rKq"/>
                 <constraint firstItem="kBf-Ar-aAQ" firstAttribute="centerX" secondItem="3bR-df-QtI" secondAttribute="centerX" id="xWD-O6-gqx"/>
                 <constraint firstItem="Ach-Rm-0yT" firstAttribute="leading" secondItem="Wrv-eh-TC6" secondAttribute="leading" constant="32" id="z2I-SH-XTM"/>
