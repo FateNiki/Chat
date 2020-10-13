@@ -16,7 +16,7 @@ struct UserManagerData {
 
 struct UserManagerResult {
     let user: User
-    let errors: [String]?
+    let errors: [String]
 }
 
 fileprivate enum FieldFileName: String {
@@ -216,7 +216,7 @@ class GCDUserManager: UserManager {
         DispatchQueue.global(qos: .userInitiated).async {
             self.user = self.loadUserFromFile()
             OperationsUserManager.shared.user = self.user
-            completion(UserManagerResult(user: self.user, errors: nil))
+            completion(UserManagerResult(user: self.user, errors: []))
         }
     }
     
@@ -320,7 +320,7 @@ class OperationsUserManager: UserManager {
         loadOperation.completionBlock = {
             guard let user = loadOperation.result else { return }
             self.user = user
-            completion(UserManagerResult(user: user, errors: nil))
+            completion(UserManagerResult(user: user, errors: []))
         }
         
         let queue = OperationQueue()
