@@ -147,7 +147,23 @@ class UserViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.currentUser = result.user
                 self?.delegate?.userDidChange(newUser: result.user)
-                self?.setEditing(false, animated: true)
+                if result.errors.count > 0 {
+                    let messages = result.errors.joined(separator: "\r\n")
+                    let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
+                        self?.setEditing(false, animated: true)
+                    })
+                    let repeatButton = UIAlertAction(title: "Повторить", style: .default, handler: {_ in
+                        self?.saveUser(by: manager)
+                    })
+
+                    self?.openErrorAlert(title: "Ошибка сохранения", message: messages, buttons: [
+                        okButton,
+                        repeatButton
+                    ])
+                } else {
+                    self?.openErrorAlert(title: "Сохранено успешно", message: "")
+                    self?.setEditing(false, animated: true)
+                }
             }
         }
     }
