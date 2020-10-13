@@ -169,12 +169,15 @@ extension ConversationsListViewController: UserAvatarViewDelegate {
 
 extension ConversationsListViewController: ThemePickerDelegate {
     func pickTheme(with name: ThemeName) {
-        ThemeManager.shared.saveTheme(with: name)
-        tableView.reloadData()
-        
-        let theme = name.theme
-        navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+        ThemeManager.shared.saveToFile(data: name) { savedTheme in
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+                
+                let theme = savedTheme.theme
+                self?.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+                self?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+            }
+        }
     }
 }
 
