@@ -173,7 +173,7 @@ class GCDUserManager: UserManager {
         let group = DispatchGroup()
         let queue = DispatchQueue.global(qos: .userInitiated)
         
-        let names = data.fullName.split(separator: Character(" "), maxSplits: 2, omittingEmptySubsequences: true)
+        let names = data.fullName.split(separator: Character(" "), maxSplits: 1, omittingEmptySubsequences: true)
         
         errorArray.reset()
         group.enter()
@@ -290,7 +290,7 @@ class OperationsUserManager: UserManager {
     var user: User = User(firstName: "Unknow", lastName: "Person")
     
     func saveToFile(data: UserManagerData, completion: @escaping (UserManagerResult) -> Void) {
-        let names = data.fullName.split(separator: Character(" "), maxSplits: 2, omittingEmptySubsequences: true)
+        let names = data.fullName.split(separator: Character(" "), maxSplits: 1, omittingEmptySubsequences: true)
         
         let firstNameOperation = FieldSaveOperation<String>()
         firstNameOperation.field = names.count > 0 ? String(names[0]) : ""
