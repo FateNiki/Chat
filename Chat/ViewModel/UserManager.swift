@@ -26,13 +26,13 @@ fileprivate enum FieldFileName: String {
     case avatar = "userAvatar.txt"
 }
 
-enum UserSaveError: Error {
+enum UserSaveError: LocalizedError {
     case firstName(String)
     case lastName(String)
     case description(String)
     case avatar(String)
     
-    var errorMessage: String {
+    private var errorMessage: String {
         switch self {
             case let .firstName(message):
                 return "Имя: \(message)"
@@ -43,6 +43,10 @@ enum UserSaveError: Error {
             case let .avatar(message):
                 return "Аватар: \(message)"
         }
+    }
+    
+    var errorDescription: String? {
+        return errorMessage
     }
 }
 
@@ -166,8 +170,6 @@ class GCDUserManager: UserManager {
         queue.async {
             do {
                 try self.save(firstName: names.count > 0 ? String(names[0]) : "")
-            } catch let error as UserSaveError {
-                self.errorArray.append(error.errorMessage)
             } catch {
                 self.errorArray.append(error.localizedDescription)
             }
@@ -178,8 +180,6 @@ class GCDUserManager: UserManager {
         queue.async {
             do {
                 try self.save(lastName: names.count > 1 ? String(names[1]) : "")
-            } catch let error as UserSaveError {
-                self.errorArray.append(error.errorMessage)
             } catch {
                 self.errorArray.append(error.localizedDescription)
             }
@@ -190,8 +190,6 @@ class GCDUserManager: UserManager {
         queue.async {
             do {
                 try self.save(description: data.description)
-            } catch let error as UserSaveError {
-                self.errorArray.append(error.errorMessage)
             } catch {
                 self.errorArray.append(error.localizedDescription)
             }
@@ -202,8 +200,6 @@ class GCDUserManager: UserManager {
         queue.async {
             do {
                 try self.save(avatar: data.avatar)
-            } catch let error as UserSaveError {
-                self.errorArray.append(error.errorMessage)
             } catch {
                 self.errorArray.append(error.localizedDescription)
             }
@@ -239,8 +235,6 @@ class OperationsUserManager: UserManager {
             guard let field = field, let saveClosure = saveClosure else { return }
             do {
                 try saveClosure(field)
-            } catch let error as UserSaveError {
-                errorMessage = error.errorMessage
             } catch {
                 errorMessage = error.localizedDescription
             }
