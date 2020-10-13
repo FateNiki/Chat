@@ -127,7 +127,7 @@ extension UserManager {
 class GCDUserManager: UserManager {
     static let shared = GCDUserManager()
     
-    private(set) var user: User = User(firstName: "Unknow", lastName: "Person")
+    var user: User = User(firstName: "Unknow", lastName: "Person")
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
         let group = DispatchGroup()
@@ -167,6 +167,7 @@ class GCDUserManager: UserManager {
     func loadFromFile(completion: @escaping (User) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.user = self.loadUserFromFile()
+            OperationsUserManager.shared.user = self.user
             completion(self.user)
         }
     }
@@ -177,20 +178,74 @@ class GCDUserManager: UserManager {
 class OperationsUserManager: UserManager {
     static let shared = OperationsUserManager()
     
+    private class FieldSaveOperation<T>: Operation {
+        var field: T?
+        var saveClosure: ((T) -> Void)?
+        
+        override func main() {
+            guard let field = field, let saveClosure = saveClosure else { return }
+            saveClosure(field)
+        }
+    }
+    
+    private class LoadOperation: Operation {
+        var loadClosure: (() -> User)?
+        var result: User?
+        
+        override func main() {
+            guard let loadClosure = loadClosure else { return }
+            result = loadClosure()
+        }
+    }
+        
     var user: User = User(firstName: "Unknow", lastName: "Person")
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
-        self.user.avatar = data.avatar
-        self.user.description = data.description
         let names = data.fullName.split(separator: Character(" "), maxSplits: 2, omittingEmptySubsequences: true)
-        self.user.firstName = names.count > 0 ? String(names[0]) : ""
-        self.user.lastName = names.count > 1 ? String(names[1]) : ""
         
-        completion(self.user)
+        let firstNameOperation = FieldSaveOperation<String>()
+        firstNameOperation.field = names.count > 0 ? String(names[0]) : ""
+        firstNameOperation.saveClosure = save(firstName:)
+        
+        let lastNameOperation = FieldSaveOperation<String>()
+        lastNameOperation.field = names.count > 1 ? String(names[1]) : ""
+        lastNameOperation.saveClosure = save(lastName:)
+        
+        let descrOperation = FieldSaveOperation<String>()
+        descrOperation.field = data.description
+        descrOperation.saveClosure = save(description:)
+        
+        let avatarOperation = FieldSaveOperation<Data?>()
+        avatarOperation.field = data.avatar
+        avatarOperation.saveClosure = save(avatar: )
+        
+        let saveOperation = Operation()
+        saveOperation.completionBlock = {
+            self.loadFromFile(completion: completion)
+        }
+        
+        saveOperation.addDependency(firstNameOperation)
+        saveOperation.addDependency(lastNameOperation)
+        saveOperation.addDependency(descrOperation)
+        saveOperation.addDependency(avatarOperation)
+        
+        let queue = OperationQueue()
+        queue.qualityOfService = .userInitiated
+        queue.maxConcurrentOperationCount = 4
+        queue.addOperations([firstNameOperation, lastNameOperation, descrOperation, avatarOperation, saveOperation], waitUntilFinished: false)
     }
     
     func loadFromFile(completion: @escaping (User) -> Void) {
-        completion(user)
+        let loadOperation = LoadOperation()
+        loadOperation.loadClosure = loadUserFromFile
+        loadOperation.completionBlock = {
+            guard let user = loadOperation.result else { return }
+            self.user = user
+            completion(user)
+        }
+        
+        let queue = OperationQueue()
+        queue.addOperations([loadOperation], waitUntilFinished: false)
     }
     
     private init() { }
