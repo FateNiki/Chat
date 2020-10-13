@@ -135,6 +135,15 @@ class UserViewController: UIViewController {
         saveButtons.forEach { $0.isEnabled = isEnabled }
     }
     
+    private func loadUser<M: UserManager>(by manager: M) {
+        manager.loadFromFile {[weak self] result in
+            DispatchQueue.main.async {
+                self?.currentUser = result.user
+                self?.delegate?.userDidChange(newUser: result.user)
+            }
+        }
+    }
+
     private func saveUser<M: UserManager>(by manager: M) {
         state = .saving
         manager.saveToFile(
@@ -152,6 +161,7 @@ class UserViewController: UIViewController {
                     let messages = result.errors.joined(separator: "\r\n")
                     let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
                         self?.setEditing(false, animated: true)
+                        self?.loadUser(by: manager)
                     })
                     let repeatButton = UIAlertAction(title: "Повторить", style: .default, handler: {_ in
                         self?.saveUser(by: manager)
@@ -164,6 +174,7 @@ class UserViewController: UIViewController {
                 } else {
                     self?.openAlert(title: "Сохранено успешно", message: "")
                     self?.setEditing(false, animated: true)
+                    self?.loadUser(by: manager)
                 }
             }
         }
