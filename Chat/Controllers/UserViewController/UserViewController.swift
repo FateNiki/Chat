@@ -157,12 +157,12 @@ class UserViewController: UIViewController {
                         self?.saveUser(by: manager)
                     })
 
-                    self?.openErrorAlert(title: "Ошибка сохранения", message: messages, buttons: [
+                    self?.openAlert(title: "Ошибка сохранения", message: messages, buttons: [
                         okButton,
                         repeatButton
                     ])
                 } else {
-                    self?.openErrorAlert(title: "Сохранено успешно", message: "")
+                    self?.openAlert(title: "Сохранено успешно", message: "")
                     self?.setEditing(false, animated: true)
                 }
             }
@@ -255,7 +255,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
         imagePicker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[.originalImage] as? UIImage else {
-            openErrorAlert(title: "Изображение", message: "Image not found!")
+            openAlert(title: "Изображение", message: "Image not found!")
             return
         }
         guard let user = currentUser else { return }
@@ -274,13 +274,13 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
                         if granted {
                             openImagePicker()
                         } else {
-                            self.openErrorAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+                            self.openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
                         }
                     }
                 }
             
             default:
-                openErrorAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+                openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
                 return
         }
     }
