@@ -80,6 +80,7 @@ extension UserAvatarView: ConfigurableView {
         } else {
             initialsLabel.isHidden = false
             initialsLabel.text = model.initials
+            avatarImageView.image = nil
         }
     }
 }
