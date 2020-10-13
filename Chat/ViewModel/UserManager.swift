@@ -122,7 +122,7 @@ extension UserManager {
 class GCDUserManager: UserManager {
     static let shared = GCDUserManager()
     
-    var user: User = User(firstName: "Unknow", lastName: "Persone")
+    private(set) var user: User = User(firstName: "Unknow", lastName: "Persone")
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
         let group = DispatchGroup()
