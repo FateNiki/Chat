@@ -13,7 +13,7 @@ class User: Codable, Identifiable {
     
     var firstName: String
     var lastName: String
-    var description: String?
+    var description: String
     var avatar: Data?
     
     var fullName: String {
@@ -27,7 +27,7 @@ class User: Codable, Identifiable {
         return String(nameArray.map { $0[$0.startIndex] })
     }
     
-    init(firstName: String, lastName: String, description: String? = nil, avatar: Data? = nil, id: UUID? = nil) {
+    init(firstName: String, lastName: String, description: String = "", avatar: Data? = nil, id: UUID? = nil) {
         self.firstName = firstName
         self.lastName = lastName
         self.description = description
