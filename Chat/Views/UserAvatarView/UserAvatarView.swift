@@ -73,13 +73,14 @@ class UserAvatarView: UIView {
 
 extension UserAvatarView: ConfigurableView {
     func configure(with model: UserAvatarModelProtocol) {
+        initialsLabel.text = model.initials
+        avatar = model.avatar
+        
         if let avatarImageData = model.avatar {
             avatarImageView.image = UIImage(data: avatarImageData)
-            avatar = model.avatar
             initialsLabel.isHidden = true
         } else {
             initialsLabel.isHidden = false
-            initialsLabel.text = model.initials
             avatarImageView.image = nil
         }
     }
