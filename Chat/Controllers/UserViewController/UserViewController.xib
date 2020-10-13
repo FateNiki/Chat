@@ -29,7 +29,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gU-ZE-DJ0" userLabel="Scroll">
                     <rect key="frame" x="0.0" y="0.0" width="458" height="604"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NyS-ZK-vBT" userLabel="Container">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NyS-ZK-vBT" userLabel="Container" customClass="ThemedView" customModule="Chat" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="458" height="644"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBf-Ar-aAQ" customClass="UserAvatarView" customModule="Chat" customModuleProvider="target">
