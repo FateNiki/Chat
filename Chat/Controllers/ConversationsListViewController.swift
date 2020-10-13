@@ -71,6 +71,7 @@ class ConversationsListViewController: UIViewController {
         GCDUserManager.shared.loadFromFile { user in
             DispatchQueue.main.async {
                 self.currentUser = user
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.userAvatarView)
             }
         }
     }
@@ -86,8 +87,9 @@ class ConversationsListViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = "Tinkoff Chat"
         
-        let userButton = UIBarButtonItem(customView: userAvatarView)
-        navigationItem.rightBarButtonItem = userButton
+        let userLoadingView = UIActivityIndicatorView()
+        userLoadingView.startAnimating()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: userLoadingView)
         
         let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openThemeChoice))
         navigationItem.leftBarButtonItem = settingButton
