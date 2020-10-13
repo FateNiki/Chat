@@ -154,7 +154,8 @@ class GCDUserManager: UserManager {
         }
         
         group.notify(queue: .global()) {
-            completion(self.user)
+            sleep(3)
+            self.loadFromFile(completion: completion)
         }
     }
     
