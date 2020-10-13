@@ -126,34 +126,35 @@ class GCDUserManager: UserManager {
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
         let group = DispatchGroup()
+        let queue = DispatchQueue.global(qos: .userInitiated)
         
         let names = data.fullName.split(separator: Character(" "), maxSplits: 2, omittingEmptySubsequences: true)
         
         group.enter()
-        DispatchQueue.global().async {
+        queue.async {
             self.save(firstName: names.count > 0 ? String(names[0]) : "")
             group.leave()
         }
         
         group.enter()
-        DispatchQueue.global().async {
+        queue.async {
             self.save(lastName: names.count > 1 ? String(names[1]) : "")
             group.leave()
         }
         
         group.enter()
-        DispatchQueue.global().async {
+        queue.async {
             self.save(description: data.description)
             group.leave()
         }
         
         group.enter()
-        DispatchQueue.global().async {
+        queue.async {
             self.save(avatar: data.avatar)
             group.leave()
         }
         
-        group.notify(queue: .global()) {
+        group.notify(queue: queue) {
             sleep(3)
             self.loadFromFile(completion: completion)
         }
