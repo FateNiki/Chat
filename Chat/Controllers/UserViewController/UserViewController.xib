@@ -52,6 +52,9 @@
                     <rect key="frame" x="32" y="356" width="328" height="38.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="fullNameDidChange:" destination="-1" eventType="editingChanged" id="jKp-CG-onu"/>
+                    </connections>
                 </textField>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r0x-1M-5mL">
                     <rect key="frame" x="87" y="426.5" width="218" height="90.5"/>

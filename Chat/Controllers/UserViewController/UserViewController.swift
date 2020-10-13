@@ -21,12 +21,19 @@ class UserViewController: UIViewController {
     // MARK: - Variables
     var currentUser: User?
     var delegate: UserViewDelegate?
+    private var saveIsRequired: Bool {
+        guard let user = currentUser else { return false }
+        let equal = fullNameTextField.text == user.fullName &&
+            descriptionTextView.text == user.description &&
+            userAvatarView.avatar == user.avatar
+        return !equal
+    }
+    
     private var state: UserViewState = .viewing {
         didSet {
             switch state {
                 case .viewing:
                     editButton.isHidden = true
-                    saveButtons.forEach { $0.isEnabled = false }
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                     activityIndicator.stopAnimating()
@@ -34,7 +41,6 @@ class UserViewController: UIViewController {
                 case .editing:
                     editButton.isHidden = false
                     editButton.isEnabled = true
-                    saveButtons.forEach { $0.isEnabled = true }
                     fullNameTextField.isEnabled = true
                     descriptionTextView.isEditable = true
                     activityIndicator.stopAnimating()
@@ -42,12 +48,12 @@ class UserViewController: UIViewController {
                 case .saving:
                     editButton.isHidden = false
                     editButton.isEnabled = false
-                    saveButtons.forEach { $0.isEnabled = false }
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                     activityIndicator.startAnimating()
                     editButtonItem.isEnabled = false
             }
+            updateSaveButtons()
         }
     }
     
@@ -92,6 +98,7 @@ class UserViewController: UIViewController {
         
         state = .viewing
         fullNameTextField.delegate = self
+        descriptionTextView.delegate = self
     }
     
     private func configNavigation() {
@@ -121,6 +128,30 @@ class UserViewController: UIViewController {
         descriptionTextView.text = user.description
         userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
     }
+    
+    // MARK: - Helpers
+    private func updateSaveButtons() {
+        let isEnabled = state == .editing ? saveIsRequired : false
+        saveButtons.forEach { $0.isEnabled = isEnabled }
+    }
+    
+    private func saveUser<M: UserManager>(by manager: M) {
+        state = .saving
+        manager.saveToFile(
+            data: UserData(
+                fullName: fullNameTextField.text ?? "",
+                description: descriptionTextView.text,
+                avatar: userAvatarView.avatar
+            )
+        ) { [weak self] user in
+            DispatchQueue.main.async {
+                self?.currentUser = user
+                self?.delegate?.userDidChange(newUser: user)
+                self?.setEditing(false, animated: true)
+            }
+        }
+    }
+    
     
     // MARK: - Inteface Actions
     @IBAction func editAvatarButtonDidTap(_ sender: UIButton) {
@@ -166,30 +197,21 @@ class UserViewController: UIViewController {
         saveUser(by: OperationsUserManager.shared)
     }
     
-    private func saveUser<M: UserManager>(by manager: M) {
-        state = .saving
-        manager.saveToFile(
-            data: UserData(
-                fullName: fullNameTextField.text ?? "",
-                description: descriptionTextView.text,
-                avatar: userAvatarView.avatar
-            )
-        ) { [weak self] user in
-            DispatchQueue.main.async {
-                self?.currentUser = user
-                self?.delegate?.userDidChange(newUser: user)
-                self?.setEditing(false, animated: true)
-            }
-        }
+    @IBAction func fullNameDidChange(_ sender: Any) {
+        updateSaveButtons()
     }
 }
 
-extension UserViewController: UITextFieldDelegate {
+extension UserViewController: UITextFieldDelegate, UITextViewDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         return updatedText.count <= 24
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        updateSaveButtons()
     }
 }
 
@@ -221,6 +243,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
         }
         guard let user = currentUser else { return }
         userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: selectedImage.jpegData(compressionQuality: 1)))
+        updateSaveButtons()
     }
         
     private func requestCameraPermission(_ openImagePicker: @escaping () -> Void) {
