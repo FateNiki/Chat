@@ -55,8 +55,14 @@ class ThemeManager: DataManager {
         UINavigationBar.appearance().barTintColor = theme.secondBackgroundColor
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.textColor]
         
-        //
-//        UITextField.appearance()
+        // UITextView
+        UITextView.appearance().backgroundColor = theme.backgroundColor
+        UITextView.appearance().textColor = theme.textColor
+        
+        // UITextField
+        UITextField.appearance().backgroundColor = theme.backgroundColor
+        UITextField.appearance().textColor = theme.textColor
+        
         
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor
