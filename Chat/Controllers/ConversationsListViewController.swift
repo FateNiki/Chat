@@ -66,10 +66,12 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Config UI
     private func setupView() {
+        self.initTableView()
+        self.initNavigation()
         GCDUserManager.shared.loadFromFile { user in
-            self.currentUser = user
-            self.initTableView()
-            self.initNavigation()
+            DispatchQueue.main.async {
+                self.currentUser = user
+            }
         }
     }
     

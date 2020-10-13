@@ -122,7 +122,7 @@ extension UserManager {
 class GCDUserManager: UserManager {
     static let shared = GCDUserManager()
     
-    private(set) var user: User = User(firstName: "Unknow", lastName: "Persone")
+    private(set) var user: User = User(firstName: "Unknow", lastName: "Person")
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
         let group = DispatchGroup()
@@ -155,14 +155,16 @@ class GCDUserManager: UserManager {
         }
         
         group.notify(queue: queue) {
-            sleep(3)
             self.loadFromFile(completion: completion)
         }
     }
     
     func loadFromFile(completion: @escaping (User) -> Void) {
-        user = loadUserFromFile()
-        completion(user)
+        DispatchQueue.global(qos: .userInitiated).async {
+            sleep(3)
+            self.user = self.loadUserFromFile()
+            completion(self.user)
+        }
     }
     
     private init() { }
@@ -171,7 +173,7 @@ class GCDUserManager: UserManager {
 class OperationsUserManager: UserManager {
     static let shared = OperationsUserManager()
     
-    var user: User = User(firstName: "Unknow", lastName: "Persone")
+    var user: User = User(firstName: "Unknow", lastName: "Person")
     
     func saveToFile(data: UserData, completion: @escaping (User) -> Void) {
         self.user.avatar = data.avatar
