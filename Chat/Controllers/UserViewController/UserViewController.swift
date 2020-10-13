@@ -79,12 +79,16 @@ class UserViewController: UIViewController {
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initUserFields()
+    }
+    
     // MARK: - Interface configuring
     private func setupView() {
         configNavigation()
         configSaveButton()
         addActivityIndicator()
-        initUserFields()
         
         state = .viewing
         fullNameTextField.delegate = self
