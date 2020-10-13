@@ -127,6 +127,7 @@ class UserViewController: UIViewController {
         fullNameTextField.text = user.fullName
         descriptionTextView.text = user.description
         userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+        print(#function, Date())
     }
     
     // MARK: - Helpers
@@ -140,6 +141,7 @@ class UserViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.currentUser = result.user
                 self?.delegate?.userDidChange(newUser: result.user)
+                self?.initUserFields()
             }
         }
     }
