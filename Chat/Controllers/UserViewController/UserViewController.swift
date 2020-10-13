@@ -102,7 +102,7 @@ class UserViewController: UIViewController {
     
     private func addActivityIndicator() {
         view.addSubview(activityIndicator)
-        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30).isActive = true
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
