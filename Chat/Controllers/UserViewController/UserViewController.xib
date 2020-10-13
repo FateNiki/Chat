@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
@@ -14,91 +14,119 @@
                 <outlet property="descriptionTextView" destination="r0x-1M-5mL" id="k5R-te-DUB"/>
                 <outlet property="editButton" destination="wWL-dn-fTG" id="aCr-5o-2r2"/>
                 <outlet property="fullNameTextField" destination="Ach-Rm-0yT" id="0Fc-VN-QrG"/>
+                <outlet property="scrollView" destination="8gU-ZE-DJ0" id="qOP-4f-ko0"/>
                 <outlet property="userAvatarView" destination="kBf-Ar-aAQ" id="4sD-R2-fgf"/>
                 <outlet property="view" destination="3bR-df-QtI" id="ziZ-5Z-y1Y"/>
-                <outletCollection property="saveButtons" destination="KVc-Cr-ned" collectionClass="NSMutableArray" id="JWi-Ql-YeN"/>
                 <outletCollection property="saveButtons" destination="vj1-Am-8OI" collectionClass="NSMutableArray" id="4yh-ud-x4E"/>
+                <outletCollection property="saveButtons" destination="KVc-Cr-ned" collectionClass="NSMutableArray" id="JWi-Ql-YeN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="3bR-df-QtI" customClass="ThemedView" customModule="Chat" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="392" height="616"/>
+            <rect key="frame" x="0.0" y="0.0" width="458" height="604"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBf-Ar-aAQ" customClass="UserAvatarView" customModule="Chat" customModuleProvider="target">
-                    <rect key="frame" x="68.5" y="69" width="255" height="255"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gU-ZE-DJ0" userLabel="Scroll">
+                    <rect key="frame" x="0.0" y="0.0" width="458" height="604"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NyS-ZK-vBT" userLabel="Container">
+                            <rect key="frame" x="0.0" y="0.0" width="458" height="644"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBf-Ar-aAQ" customClass="UserAvatarView" customModule="Chat" customModuleProvider="target">
+                                    <rect key="frame" x="80" y="25" width="298" height="297.5"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="kBf-Ar-aAQ" secondAttribute="height" multiplier="1:1" id="ZHH-Ry-ZYS"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vj1-Am-8OI">
+                                    <rect key="frame" x="32" y="577" width="170.5" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                    <state key="normal" title="Save GCD"/>
+                                    <connections>
+                                        <action selector="saveByGCD" destination="-1" eventType="touchUpInside" id="lU3-4X-ivA"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWL-dn-fTG">
+                                    <rect key="frame" x="348" y="298.5" width="30" height="32"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                    <state key="normal" title="Edit"/>
+                                    <connections>
+                                        <action selector="editAvatarButtonDidTap:" destination="-1" eventType="touchUpInside" id="2zt-Tw-EFf"/>
+                                    </connections>
+                                </button>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ach-Rm-0yT" userLabel="Full Name Text Field" customClass="TurnedOffTextField" customModule="Chat" customModuleProvider="target">
+                                    <rect key="frame" x="32" y="354.5" width="394" height="38.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <action selector="fullNameDidChange:" destination="-1" eventType="editingChanged" id="jKp-CG-onu"/>
+                                    </connections>
+                                </textField>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r0x-1M-5mL">
+                                    <rect key="frame" x="32" y="425" width="394" height="120"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="120" id="qxx-tY-VkU"/>
+                                    </constraints>
+                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                    <color key="textColor" systemColor="labelColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KVc-Cr-ned">
+                                    <rect key="frame" x="212.5" y="577" width="213.5" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                    <state key="normal" title="Save Operation"/>
+                                    <connections>
+                                        <action selector="saveByOperations" destination="-1" eventType="touchUpInside" id="eve-in-5R5"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="wWL-dn-fTG" firstAttribute="bottom" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="8" id="2xE-wB-aki"/>
+                                <constraint firstItem="vj1-Am-8OI" firstAttribute="leading" secondItem="NyS-ZK-vBT" secondAttribute="leading" constant="32" id="9Om-FV-NMj"/>
+                                <constraint firstAttribute="trailing" secondItem="r0x-1M-5mL" secondAttribute="trailing" constant="32" id="BlT-pe-UXp"/>
+                                <constraint firstItem="r0x-1M-5mL" firstAttribute="leading" secondItem="NyS-ZK-vBT" secondAttribute="leading" constant="32" id="Fno-Jq-AcP"/>
+                                <constraint firstItem="Ach-Rm-0yT" firstAttribute="top" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="32" id="QbP-DK-TcH"/>
+                                <constraint firstItem="wWL-dn-fTG" firstAttribute="trailing" secondItem="kBf-Ar-aAQ" secondAttribute="trailing" id="RHJ-n1-08H"/>
+                                <constraint firstAttribute="trailing" secondItem="KVc-Cr-ned" secondAttribute="trailing" constant="32" id="a3h-S9-xRH"/>
+                                <constraint firstItem="Ach-Rm-0yT" firstAttribute="leading" secondItem="NyS-ZK-vBT" secondAttribute="leading" constant="32" id="axj-F6-1Fn"/>
+                                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="centerX" secondItem="NyS-ZK-vBT" secondAttribute="centerX" id="cWa-H9-pvw"/>
+                                <constraint firstItem="KVc-Cr-ned" firstAttribute="leading" secondItem="vj1-Am-8OI" secondAttribute="trailing" constant="10" id="fSF-a6-FSk"/>
+                                <constraint firstItem="vj1-Am-8OI" firstAttribute="top" secondItem="r0x-1M-5mL" secondAttribute="bottom" constant="32" id="nJr-qr-bGB"/>
+                                <constraint firstItem="KVc-Cr-ned" firstAttribute="centerY" secondItem="vj1-Am-8OI" secondAttribute="centerY" id="vtS-iX-RgM"/>
+                                <constraint firstAttribute="bottom" secondItem="vj1-Am-8OI" secondAttribute="bottom" constant="32" id="vzj-xl-ZLm"/>
+                                <constraint firstAttribute="trailing" secondItem="Ach-Rm-0yT" secondAttribute="trailing" constant="32" id="wPw-Ec-emO"/>
+                                <constraint firstItem="r0x-1M-5mL" firstAttribute="top" secondItem="Ach-Rm-0yT" secondAttribute="bottom" constant="32" id="xZ9-gX-0Hl"/>
+                                <constraint firstItem="vj1-Am-8OI" firstAttribute="width" secondItem="KVc-Cr-ned" secondAttribute="width" multiplier="0.8" id="yCL-Pv-Kaw"/>
+                                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="top" secondItem="NyS-ZK-vBT" secondAttribute="top" constant="25" id="yJM-gI-pNN"/>
+                            </constraints>
+                        </view>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="kBf-Ar-aAQ" secondAttribute="height" multiplier="1:1" id="ZHH-Ry-ZYS"/>
+                        <constraint firstItem="NyS-ZK-vBT" firstAttribute="leading" secondItem="8gU-ZE-DJ0" secondAttribute="leading" id="4pp-Yg-X0t"/>
+                        <constraint firstItem="NyS-ZK-vBT" firstAttribute="centerX" secondItem="8gU-ZE-DJ0" secondAttribute="centerX" id="EoC-xm-oxM"/>
+                        <constraint firstItem="NyS-ZK-vBT" firstAttribute="top" secondItem="8gU-ZE-DJ0" secondAttribute="top" id="GAQ-iL-Oco"/>
+                        <constraint firstItem="kBf-Ar-aAQ" firstAttribute="width" secondItem="8gU-ZE-DJ0" secondAttribute="width" multiplier="0.65" id="sfi-nD-PvL"/>
+                        <constraint firstAttribute="trailing" secondItem="NyS-ZK-vBT" secondAttribute="trailing" id="yTh-Uh-GcO"/>
+                        <constraint firstAttribute="bottom" secondItem="NyS-ZK-vBT" secondAttribute="bottom" id="z93-Eg-RHi"/>
                     </constraints>
-                </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vj1-Am-8OI">
-                    <rect key="frame" x="32" y="549" width="141.5" height="35"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
-                    <state key="normal" title="Save GCD"/>
-                    <connections>
-                        <action selector="saveByGCD" destination="-1" eventType="touchUpInside" id="lU3-4X-ivA"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWL-dn-fTG">
-                    <rect key="frame" x="293.5" y="300" width="30" height="32"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                    <state key="normal" title="Edit"/>
-                    <connections>
-                        <action selector="editAvatarButtonDidTap:" destination="-1" eventType="touchUpInside" id="2zt-Tw-EFf"/>
-                    </connections>
-                </button>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ach-Rm-0yT" userLabel="Full Name Text Field" customClass="TurnedOffTextField" customModule="Chat" customModuleProvider="target">
-                    <rect key="frame" x="32" y="356" width="328" height="38.5"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <action selector="fullNameDidChange:" destination="-1" eventType="editingChanged" id="jKp-CG-onu"/>
-                    </connections>
-                </textField>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r0x-1M-5mL">
-                    <rect key="frame" x="32" y="426.5" width="328" height="90.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <color key="textColor" systemColor="labelColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KVc-Cr-ned">
-                    <rect key="frame" x="183.5" y="549" width="176.5" height="35"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
-                    <state key="normal" title="Save Operation"/>
-                    <connections>
-                        <action selector="saveByOperations" destination="-1" eventType="touchUpInside" id="eve-in-5R5"/>
-                    </connections>
-                </button>
+                    <viewLayoutGuide key="contentLayoutGuide" id="psi-Ih-Ke4"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="jtx-8y-wfE"/>
+                </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Wrv-eh-TC6"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="r0x-1M-5mL" firstAttribute="leading" secondItem="Wrv-eh-TC6" secondAttribute="leading" constant="32" id="0oS-Od-0ZM"/>
-                <constraint firstItem="Wrv-eh-TC6" firstAttribute="trailing" secondItem="KVc-Cr-ned" secondAttribute="trailing" constant="32" id="1ss-5f-Q1l"/>
-                <constraint firstItem="wWL-dn-fTG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wrv-eh-TC6" secondAttribute="leading" symbolic="YES" id="8hu-oe-tIl"/>
-                <constraint firstItem="wWL-dn-fTG" firstAttribute="trailing" secondItem="kBf-Ar-aAQ" secondAttribute="trailing" id="B7q-Ik-qsF"/>
-                <constraint firstItem="KVc-Cr-ned" firstAttribute="leading" secondItem="vj1-Am-8OI" secondAttribute="trailing" constant="10" id="CXN-Jh-3pk"/>
-                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="width" secondItem="3bR-df-QtI" secondAttribute="width" multiplier="0.65" id="Fdu-Kc-271"/>
-                <constraint firstItem="r0x-1M-5mL" firstAttribute="centerX" secondItem="3bR-df-QtI" secondAttribute="centerX" id="I7K-nh-LtR"/>
-                <constraint firstItem="vj1-Am-8OI" firstAttribute="leading" secondItem="Wrv-eh-TC6" secondAttribute="leading" constant="32" id="Iay-c2-MQx"/>
-                <constraint firstItem="wWL-dn-fTG" firstAttribute="bottom" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="8" id="RGK-33-AvX"/>
-                <constraint firstItem="Wrv-eh-TC6" firstAttribute="trailing" secondItem="Ach-Rm-0yT" secondAttribute="trailing" constant="32" id="WLJ-vc-LOd"/>
-                <constraint firstItem="Wrv-eh-TC6" firstAttribute="bottom" secondItem="vj1-Am-8OI" secondAttribute="bottom" constant="32" id="aUq-dD-F5w"/>
-                <constraint firstItem="r0x-1M-5mL" firstAttribute="top" secondItem="Ach-Rm-0yT" secondAttribute="bottom" constant="32" id="cAu-ay-QiL"/>
-                <constraint firstItem="KVc-Cr-ned" firstAttribute="top" secondItem="r0x-1M-5mL" secondAttribute="bottom" constant="32" id="f8G-al-Thr"/>
-                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="top" secondItem="Wrv-eh-TC6" secondAttribute="top" constant="25" id="iRW-KE-fOS"/>
-                <constraint firstItem="Ach-Rm-0yT" firstAttribute="top" secondItem="kBf-Ar-aAQ" secondAttribute="bottom" constant="32" id="ud4-O1-xvG"/>
-                <constraint firstItem="Wrv-eh-TC6" firstAttribute="trailing" secondItem="r0x-1M-5mL" secondAttribute="trailing" constant="32" id="v1z-C1-LOS"/>
-                <constraint firstItem="vj1-Am-8OI" firstAttribute="width" secondItem="KVc-Cr-ned" secondAttribute="width" multiplier="0.8" id="vdh-8R-rKq"/>
-                <constraint firstItem="kBf-Ar-aAQ" firstAttribute="centerX" secondItem="3bR-df-QtI" secondAttribute="centerX" id="xWD-O6-gqx"/>
-                <constraint firstItem="Ach-Rm-0yT" firstAttribute="leading" secondItem="Wrv-eh-TC6" secondAttribute="leading" constant="32" id="z2I-SH-XTM"/>
-                <constraint firstItem="Wrv-eh-TC6" firstAttribute="bottom" secondItem="KVc-Cr-ned" secondAttribute="bottom" constant="32" id="zpZ-PH-nou"/>
+                <constraint firstAttribute="bottom" secondItem="8gU-ZE-DJ0" secondAttribute="bottom" id="5vu-Ib-WyS"/>
+                <constraint firstAttribute="trailing" secondItem="8gU-ZE-DJ0" secondAttribute="trailing" id="cUf-0o-6A9"/>
+                <constraint firstItem="8gU-ZE-DJ0" firstAttribute="leading" secondItem="3bR-df-QtI" secondAttribute="leading" id="nI9-N5-0QJ"/>
+                <constraint firstItem="8gU-ZE-DJ0" firstAttribute="top" secondItem="3bR-df-QtI" secondAttribute="top" id="sgl-t7-S7i"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-197.10144927536234" y="17.410714285714285"/>
+            <point key="canvasLocation" x="-149.27536231884059" y="13.392857142857142"/>
         </view>
     </objects>
     <resources>
