@@ -169,7 +169,7 @@ class GCDUserManager: UserManager {
     private var errorArray = SafeArray<String>()
     var user: User = User(firstName: "Unknow", lastName: "Person")
     
-    func saveToFile(data: UserManagerData, completion: @escaping (UserManagerResult) -> Void) {
+    func saveToFile(data: UserManagerData, completion: ((UserManagerResult) -> Void)?) {
         let group = DispatchGroup()
         let queue = DispatchQueue.global(qos: .userInitiated)
         
@@ -218,15 +218,15 @@ class GCDUserManager: UserManager {
         
         group.notify(queue: queue) {
             let result = UserManagerResult(user: self.user, errors: self.errorArray.value)
-            completion(result)
+            completion?(result)
         }
     }
     
-    func loadFromFile(completion: @escaping (UserManagerResult) -> Void) {
+    func loadFromFile(completion: ((UserManagerResult) -> Void)?) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.user = self.loadUserFromFile()
             OperationsUserManager.shared.user = self.user
-            completion(UserManagerResult(user: self.user, errors: []))
+            completion?(UserManagerResult(user: self.user, errors: []))
         }
     }
     
@@ -289,7 +289,7 @@ class OperationsUserManager: UserManager {
     
     var user: User = User(firstName: "Unknow", lastName: "Person")
     
-    func saveToFile(data: UserManagerData, completion: @escaping (UserManagerResult) -> Void) {
+    func saveToFile(data: UserManagerData, completion: ((UserManagerResult) -> Void)?) {
         let names = data.fullName.split(separator: Character(" "), maxSplits: 1, omittingEmptySubsequences: true)
         
         let firstNameOperation = FieldSaveOperation<String>()
@@ -310,7 +310,7 @@ class OperationsUserManager: UserManager {
         
         let saveOperation = SaveOperation()
         saveOperation.completionBlock = {
-            completion(UserManagerResult(user: self.user, errors: saveOperation.errors))
+            completion?(UserManagerResult(user: self.user, errors: saveOperation.errors))
         }
         
         saveOperation.addDependency(firstNameOperation)
@@ -324,13 +324,13 @@ class OperationsUserManager: UserManager {
         queue.addOperations([firstNameOperation, lastNameOperation, descrOperation, avatarOperation, saveOperation], waitUntilFinished: false)
     }
     
-    func loadFromFile(completion: @escaping (UserManagerResult) -> Void) {
+    func loadFromFile(completion: ((UserManagerResult) -> Void)?) {
         let loadOperation = LoadOperation()
         loadOperation.loadClosure = loadUserFromFile
         loadOperation.completionBlock = {
             guard let user = loadOperation.result else { return }
             self.user = user
-            completion(UserManagerResult(user: user, errors: []))
+            completion?(UserManagerResult(user: user, errors: []))
         }
         
         let queue = OperationQueue()

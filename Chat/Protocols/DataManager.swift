@@ -12,6 +12,6 @@ protocol DataManager {
     associatedtype ManagerData
     associatedtype ManagerResult
     
-    func loadFromFile(completion: @escaping (ManagerResult) -> Void)
-    func saveToFile(data: ManagerData, completion: @escaping (ManagerResult) -> Void)
+    func loadFromFile(completion: ((ManagerResult) -> Void)?)
+    func saveToFile(data: ManagerData, completion: ((ManagerResult) -> Void)?)
 }
