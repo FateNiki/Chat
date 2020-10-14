@@ -94,8 +94,11 @@ extension UserManager {
             user.avatar = avatar
         }
         
-//        sleep(2)
-        
+        // NOTES
+        // Слип для эмуляции долгого чтения из файла
+        // Пока идет первая загрузка пользователя - отображается UIActivityIndicatorView
+        // Можно закомментировать
+        sleep(2)
         return user
     }
     
@@ -132,8 +135,13 @@ extension UserManager {
 
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
         do {
-//            throw TestError(message: "Test error \(Int.random(in: 0...10))")
-//            sleep(3)
+            // NOTES: Эти строка можно удалить
+            // sleep для эмуляции долгого сохраненеия
+            // Далее - рандомная ошибка
+            sleep(3)
+            if Bool.random() {
+                throw TestError(message: "Test error \(Int.random(in: 0...10))")
+            }
             try description.write(to: url, atomically: true, encoding: .utf8)
             user.description = description
         } catch {
