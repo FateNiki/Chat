@@ -22,9 +22,13 @@ class ConversationsTableViewCell: UITableViewCell {
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
-    private static let onlineColor = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
-    private static let fontSize: CGFloat = 15
-    private static let nameTextColorForDarkTheme = UIColor.black
+    
+    // MARK: - Interface constants
+    @objc dynamic var onlineBackgroundColor: UIColor? = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
+    @objc dynamic var primaryTextColor = UIColor.black
+    @objc dynamic var onlineNameTextColor = UIColor.black
+    static let secondaryTextColor = UIColor.lightGray
+    static let fontSize: CGFloat = 15
     
     // MARK: - Variables
     private var userIsOnline: Bool = false {
@@ -38,6 +42,7 @@ class ConversationsTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
+    @IBOutlet weak var avatarView: UserAvatarView!
     
     // MARK: - Lifecycle
     override func prepareForReuse() {
@@ -45,6 +50,7 @@ class ConversationsTableViewCell: UITableViewCell {
         nameLabel.text = nil
         dateLabel.text = nil
         lastMessageLabel.text = nil
+        avatarView.avatarImageView.image = nil
     }
     
     override func layoutSubviews() {
@@ -56,12 +62,14 @@ class ConversationsTableViewCell: UITableViewCell {
     // MARK: - Interface configuring
     private func updateViewColors() -> Void {
         if (userIsOnline) {
-            contentView.backgroundColor = Self.onlineColor
-            nameLabel.textColor = Self.nameTextColorForDarkTheme
+            contentView.backgroundColor = onlineBackgroundColor
+            nameLabel.textColor = onlineNameTextColor
         } else {
-            contentView.backgroundColor = .none
-            nameLabel.textColor = .none
+            contentView.backgroundColor = backgroundColor
+            nameLabel.textColor = primaryTextColor
         }
+        lastMessageLabel.textColor = Self.secondaryTextColor
+        dateLabel.textColor = Self.secondaryTextColor
     }
 }
 
@@ -69,6 +77,7 @@ extension ConversationsTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
         userIsOnline = model.isOnline
         nameLabel.text = model.name
+        avatarView.configure(with: model)
         
         if model.message.isEmpty {
             lastMessageLabel.text =  "No messages yet"

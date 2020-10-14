@@ -10,9 +10,11 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
     // MARK: - Interface constants
-    private static let labelBackgroundForIncome = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00)
-    private static let labelBackgroundForOutcome = UIColor(red: 0.86, green: 0.97, blue: 0.77, alpha: 1.00)
-    private static let labelTextColor = UIColor.black
+    @objc dynamic var incomeMessageCellColor: UIColor?
+    @objc dynamic var incomeMessageTextColor: UIColor?
+    @objc dynamic var outcomeMessageCellColor: UIColor?
+    @objc dynamic var outcomeMessageTextColor: UIColor?
+
     private static let labelCornerRadius = CGFloat(10)
     
     // MARK: - Outlets
@@ -31,7 +33,6 @@ class MessageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         messageLabel.layer.cornerRadius = Self.labelCornerRadius
-        messageLabel.textColor = Self.labelTextColor
         messageLabel.clipsToBounds = true
     }
     
@@ -47,7 +48,10 @@ class MessageTableViewCell: UITableViewCell {
     
     // MARK: - Interface configuring
     private func updateView() -> Void {
-        messageLabel.backgroundColor = messageIsIncome ? Self.labelBackgroundForIncome : Self.labelBackgroundForOutcome
+        contentView.backgroundColor = backgroundColor
+        messageLabel.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor
+        messageLabel.textColor = messageIsIncome ? incomeMessageTextColor : outcomeMessageTextColor
+        
         incomePadding.isActive = messageIsIncome
         outcomePadding.isActive = !messageIsIncome
     }

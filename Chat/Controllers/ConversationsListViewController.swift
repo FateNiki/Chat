@@ -27,9 +27,17 @@ class ConversationsListViewController: UIViewController {
         let uaView = UserAvatarView()
         uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        uaView.configure(with: currentUser)
+        uaView.configure(with: UserAvatarModel(initials: currentUser.initials, avatar: currentUser.avatar))
         uaView.delegate = self
         return uaView
+    }()
+    private lazy var themesController: ThemesViewController = {
+        let themesController = ThemesViewController()
+//        themesController.delegate = self
+        themesController.selectThemeClosure = { [weak self] (themeName) in
+            self?.pickTheme(with: themeName)
+        }
+        return themesController
     }()
     
     
@@ -64,19 +72,29 @@ class ConversationsListViewController: UIViewController {
         
         let userButton = UIBarButtonItem(customView: userAvatarView)
         navigationItem.rightBarButtonItem = userButton
+        
+        let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openThemeChoice))
+        navigationItem.leftBarButtonItem = settingButton
     }
     
     // MARK: - Actions
     func openUserEdit() -> Void {
         let userController = UserViewController()
         userController.currentUser = currentUser
-        self.present(userController, animated: true, completion: nil)
+        
+        let userNavigationController = UINavigationController(rootViewController: userController)
+        
+        self.present(userNavigationController, animated: true, completion: nil)
     }
     
     func openConversation(with conversation: Conversation) -> Void {
         let conversationController = ConversationViewController()
         conversationController.conversation = conversation
         navigationController?.pushViewController(conversationController, animated: true)
+    }
+    
+    @objc func openThemeChoice() -> Void {
+        navigationController?.pushViewController(themesController, animated: true)
     }
 
 }
@@ -104,12 +122,14 @@ extension ConversationsListViewController: UITableViewDataSource {
         if let conversationCell = cell as? ConversationsTableViewCell {
             let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
             conversationCell.configure(with: .init(
-                            name: conversation.user.fullName,
-                            message: conversation.lastMessage.text,
-                            date: conversation.lastMessage.date,
-                            isOnline: conversation.isOnline,
-                            hasUnreadMessage: !conversation.lastMessage.isRead)
-            )
+                name: conversation.user.fullName,
+                message: conversation.lastMessage.text,
+                date: conversation.lastMessage.date,
+                isOnline: conversation.isOnline,
+                hasUnreadMessage: !conversation.lastMessage.isRead,
+                initials: conversation.user.initials,
+                avatar: conversation.user.avatar
+            ))
         }
         return cell
     }
@@ -128,5 +148,16 @@ extension ConversationsListViewController: UITableViewDataSource {
 extension ConversationsListViewController: UserAvatarViewDelegate {
     func userAvatarDidTap() {
         openUserEdit()
+    }
+}
+
+extension ConversationsListViewController: ThemePickerDelegate {
+    func pickTheme(with name: ThemeName) {
+        ThemeManager.shared.saveTheme(with: name)
+        tableView.reloadData()
+        
+        let theme = name.theme
+        navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
     }
 }

@@ -37,6 +37,12 @@ class UserViewController: UIViewController {
     private func setupView() {
         configSaveButton()
         initUserFields()
+        configNavigation()
+    }
+    
+    private func configNavigation() {
+        navigationItem.title = "My profile"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
     }
     
     private func configSaveButton() -> Void {
@@ -50,7 +56,7 @@ class UserViewController: UIViewController {
         
         fullNameLabel.text = user.fullName
         descriptionLabel.text = user.description
-        userAvatarView.configure(with: user)
+        userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
     }
     
     // MARK: - Inteface Actions
@@ -77,6 +83,10 @@ class UserViewController: UIViewController {
         
         editAvatarDialog.addAction(UIAlertAction(title: "Отменить", style: .cancel))
         present(editAvatarDialog, animated: true)
+    }
+    
+    @objc func closeModal() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
