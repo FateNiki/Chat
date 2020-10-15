@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ThemePlaceholderDelegate {
+protocol ThemePlaceholderDelegate: class {
     func themePlaceholderDidTap(themeName: ThemeName) -> Void
 }
