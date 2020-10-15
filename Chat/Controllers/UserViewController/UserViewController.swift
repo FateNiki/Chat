@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 fileprivate enum UserViewState {
-    case viewing, editing, saving
+    case viewing, editing, saving, loading
 }
 
 class UserViewController: UIViewController {
@@ -55,7 +55,7 @@ class UserViewController: UIViewController {
                     if #available(iOS 13, *) {
                         isModalInPresentation = false
                     }
-                case .saving:
+                case .saving, .loading:
                     editButton.isHidden = false
                     editButton.isEnabled = false
                     fullNameTextField.isEnabled = false
@@ -100,7 +100,6 @@ class UserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        initUserFields()
     }
     
     // MARK: - Interface configuring
@@ -110,10 +109,11 @@ class UserViewController: UIViewController {
         configKeyboard()
         addActivityIndicator()
         
-        state = .viewing
         fullNameTextField.delegate = self
         descriptionTextView.delegate = self
         
+        initUserFields()
+        loadUser(by: GCDUserManager.shared)
     }
     
     private func configKeyboard() {
@@ -158,11 +158,15 @@ class UserViewController: UIViewController {
     }
     
     private func loadUser<M: UserManager>(by manager: M) {
+        state = .loading
         manager.loadFromFile {[weak self] result in
             DispatchQueue.main.async {
-                self?.currentUser = result.user
-                self?.delegate?.userDidChange(newUser: result.user)
-                self?.initUserFields()
+                guard let controller = self else { return }
+                
+                controller.currentUser = result.user
+                controller.delegate?.userDidChange(newUser: result.user)
+                controller.initUserFields()
+                controller.state = .viewing
             }
         }
     }
@@ -177,27 +181,27 @@ class UserViewController: UIViewController {
             )
         ) { [weak self] result in
             DispatchQueue.main.async {
-                self?.currentUser = result.user
-                self?.delegate?.userDidChange(newUser: result.user)
+                guard let controller = self else { return }
+
+                controller.currentUser = result.user
+                controller.delegate?.userDidChange(newUser: result.user)
                 
                 if result.withErrors {
                     let messages = result.errors.joined(separator: "\r\n")
                     let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
-                        self?.setEditing(false, animated: true)
-                        self?.loadUser(by: manager)
+                        controller.setEditing(false, animated: true)
                     })
                     let repeatButton = UIAlertAction(title: "Повторить", style: .default, handler: {_ in
-                        self?.saveUser(by: manager)
+                        controller.saveUser(by: manager)
                     })
 
-                    self?.openAlert(title: "Ошибка сохранения", message: messages, buttons: [
+                    controller.openAlert(title: "Ошибка сохранения", message: messages, buttons: [
                         okButton,
                         repeatButton
                     ])
                 } else {
-                    self?.openAlert(title: "Сохранено успешно", message: "")
-                    self?.setEditing(false, animated: true)
-                    self?.loadUser(by: manager)
+                    controller.openAlert(title: "Сохранено успешно", message: "")
+                    controller.setEditing(false, animated: true)
                 }
             }
         }
