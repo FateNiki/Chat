@@ -20,7 +20,7 @@ class UserViewController: UIViewController {
     
     // MARK: - Variables
     var currentUser: User?
-    var delegate: UserViewDelegate?
+    weak var delegate: UserViewDelegate?
     private var saveIsRequired: Bool {
         guard let user = currentUser else { return false }
         let equal = fullNameTextField.text == user.fullName &&

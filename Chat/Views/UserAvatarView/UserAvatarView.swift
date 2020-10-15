@@ -13,7 +13,7 @@ class UserAvatarView: UIView {
     private let avatarBackground = UIColor(red: 0.89, green: 0.91, blue: 0.17, alpha: 1.00)
     
     // MARK: - Variables
-    var delegate: UserAvatarViewDelegate?
+    weak var delegate: UserAvatarViewDelegate?
     private(set) var avatar: Data?
     
     // MARK: - Outlets
