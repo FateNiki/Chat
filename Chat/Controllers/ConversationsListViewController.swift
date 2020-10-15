@@ -15,9 +15,7 @@ class ConversationsListViewController: UIViewController {
     private var currentUser: User? {
         didSet {
             guard let user = currentUser else { return }
-            
             userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
-            userViewController.currentUser = user
         }
     }
     
@@ -37,19 +35,22 @@ class ConversationsListViewController: UIViewController {
         uaView.delegate = self
         return uaView
     }()
-    private lazy var userViewController: UserViewController = {
+    
+    // MARK: - Controllers
+    private var userViewController: UserViewController {
         let uvController = UserViewController()
         uvController.delegate = self
+        uvController.currentUser = currentUser
         return uvController
-    }()
-    private lazy var themesController: ThemesViewController = {
+    }
+    private var themesController: ThemesViewController {
         let themesController = ThemesViewController()
 //        themesController.delegate = self
         themesController.selectThemeClosure = { [weak self] (themeName) in
             self?.pickTheme(with: themeName)
         }
         return themesController
-    }()
+    }
     
     
     // MARK: - Lifecycle
