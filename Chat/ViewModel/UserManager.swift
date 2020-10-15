@@ -58,8 +58,8 @@ enum UserSaveError: LocalizedError {
     }
 }
 
-protocol UserManager: DataManager where ManagerData == UserManagerData, ManagerResult == UserManagerResult {
-    var user: User { get }
+protocol UserManager: class, DataManager where ManagerData == UserManagerData, ManagerResult == UserManagerResult {
+    var user: User { get set }
 }
 
 extension UserManager {
@@ -76,7 +76,7 @@ extension UserManager {
         let descFile = docsDirectory.appendingPathComponent(FieldFileName.description.rawValue)
         let avatarFile = docsDirectory.appendingPathComponent(FieldFileName.avatar.rawValue)
         
-        let user = User(firstName: "", lastName: "")
+        var user = User(firstName: "", lastName: "")
         
         if let firstName = try? String(contentsOf: firstNameFile, encoding: .utf8) {
             user.firstName = firstName
@@ -156,6 +156,7 @@ extension UserManager {
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.avatar.rawValue)
         if let avatarData = avatar {
             do {
+                sleep(5)
                 try avatarData.write(to: url)
                 user.avatar = avatarData
             } catch {
