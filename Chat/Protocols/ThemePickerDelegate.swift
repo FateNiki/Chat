@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ThemePickerDelegate {
+protocol ThemePickerDelegate: class {
     func pickTheme(with name: ThemeName) -> Void
 }
