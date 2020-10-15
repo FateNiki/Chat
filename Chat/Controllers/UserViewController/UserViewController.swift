@@ -37,21 +37,36 @@ class UserViewController: UIViewController {
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                     activityIndicator.stopAnimating()
+                    
                     editButtonItem.isEnabled = true
+                    navigationItem.leftBarButtonItem?.isEnabled = true
+                    if #available(iOS 13, *) {
+                        isModalInPresentation = false
+                    }
                 case .editing:
                     editButton.isHidden = false
                     editButton.isEnabled = true
                     fullNameTextField.isEnabled = true
                     descriptionTextView.isEditable = true
                     activityIndicator.stopAnimating()
+                    
                     editButtonItem.isEnabled = true
+                    navigationItem.leftBarButtonItem?.isEnabled = true
+                    if #available(iOS 13, *) {
+                        isModalInPresentation = false
+                    }
                 case .saving:
                     editButton.isHidden = false
                     editButton.isEnabled = false
                     fullNameTextField.isEnabled = false
                     descriptionTextView.isEditable = false
                     activityIndicator.startAnimating()
+                    
                     editButtonItem.isEnabled = false
+                    navigationItem.leftBarButtonItem?.isEnabled = false
+                    if #available(iOS 13, *) {
+                        isModalInPresentation = true
+                    }
             }
             updateSaveButtons()
         }
