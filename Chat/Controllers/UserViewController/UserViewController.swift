@@ -142,7 +142,7 @@ class UserViewController: UIViewController {
         
         fullNameTextField.text = user.fullName
         descriptionTextView.text = user.description
-        userAvatarView.configure(with: user.avatarModel)
+        userAvatarView.configure(with: user.avatarModel())
         print(#function, Date())
     }
     
@@ -305,7 +305,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             return
         }
         guard let user = currentUser else { return }
-        userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: selectedImage.jpegData(compressionQuality: 1)))
+        userAvatarView.configure(with: user.avatarModel(with: selectedImage.jpegData(compressionQuality: 1)))
         updateSaveButtons()
     }
         

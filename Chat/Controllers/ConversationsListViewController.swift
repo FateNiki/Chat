@@ -15,7 +15,7 @@ class ConversationsListViewController: UIViewController {
     private var currentUser: User? {
         didSet {
             guard let user = currentUser else { return }
-            userAvatarView.configure(with: user.avatarModel)
+            userAvatarView.configure(with: user.avatarModel())
         }
     }
     
@@ -129,7 +129,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
         
         if let conversationCell = cell as? ConversationsTableViewCell, let channel = channels?[indexPath.row] {
-            conversationCell.configure(with: channel.viewModel)
+            conversationCell.configure(with: channel.cellModel())
         }
         return cell
     }

@@ -67,7 +67,7 @@ extension ConversationViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
         
         if let messageCell = cell as? MessageTableViewCell, let message = messages?[indexPath.row] {
-            messageCell.configure(with: message.getViewModel(currentUser: currentUser))
+            messageCell.configure(with: message.cellModel(for: currentUser))
         }
         
         return cell

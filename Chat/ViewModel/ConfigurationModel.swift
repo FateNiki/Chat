@@ -15,8 +15,8 @@ struct MessageCellModel {
 }
 
 extension Message {
-    func getViewModel(currentUser: User) -> MessageCellModel {
-        return MessageCellModel(text: content, date: created, income: senderId != currentUser.id)
+    func cellModel(for user: User) -> MessageCellModel {
+        return MessageCellModel(text: content, date: created, income: senderId != user.id)
     }
 }
 
@@ -38,7 +38,7 @@ extension Channel {
         return String(nameArray.map { $0[$0.startIndex] })
     }
     
-    var viewModel: ChannelCellModel {
+    func cellModel() -> ChannelCellModel {
         return ChannelCellModel(
             name: name,
             message: lastMessage,
@@ -60,7 +60,7 @@ protocol UserAvatarModelProtocol {
 }
 
 extension User {
-    var avatarModel: UserAvatarModel {
-        return UserAvatarModel(initials: initials, avatar: avatar)
+    func avatarModel(with imageData: Data? = nil) -> UserAvatarModel {
+        return UserAvatarModel(initials: initials, avatar: imageData ?? avatar)
     }
 }
