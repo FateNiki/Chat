@@ -13,7 +13,8 @@ class ConversationViewController: UIViewController {
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
 
     // MARK: - Variables
-    var channel: Channel?
+    var currentUser: User!
+    var channel: Channel!
     var messages: [Message]?
     
     // MARK: - UI Variables
@@ -53,7 +54,7 @@ class ConversationViewController: UIViewController {
     }
     
     private func initNavigation() {
-        navigationItem.title = channel?.name ?? "Untitled"
+        navigationItem.title = channel.name
     }
 }
 
@@ -66,14 +67,7 @@ extension ConversationViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
         
         if let messageCell = cell as? MessageTableViewCell, let message = messages?[indexPath.row] {
-            messageCell.configure(
-                with: MessageCellModel(
-                    text: message.content,
-                    date: message.created,
-                    // TODO: Calculate
-                    income: true
-                )
-            )
+            messageCell.configure(with: message.getViewModel(currentUser: currentUser))
         }
         
         return cell

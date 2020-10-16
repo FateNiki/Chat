@@ -14,6 +14,12 @@ struct MessageCellModel {
     let income: Bool
 }
 
+extension Message {
+    func getViewModel(currentUser: User) -> MessageCellModel {
+        return MessageCellModel(text: content, date: created, income: senderId != currentUser.id)
+    }
+}
+
 // TODO refactor
 struct ConversationCellModel: UserAvatarModelProtocol {
     let name: String

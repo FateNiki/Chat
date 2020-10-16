@@ -9,8 +9,7 @@
 import Foundation
 
 struct User: Codable, Identifiable {
-    let id: UUID
-    
+    let id: String
     var firstName: String
     var lastName: String
     var description: String
@@ -27,11 +26,11 @@ struct User: Codable, Identifiable {
         return String(nameArray.map { $0[$0.startIndex] })
     }
     
-    init(firstName: String, lastName: String, description: String = "", avatar: Data? = nil, id: UUID? = nil) {
+    init(firstName: String, lastName: String, description: String = "", avatar: Data? = nil, id: String? = nil) {
         self.firstName = firstName
         self.lastName = lastName
         self.description = description
         self.avatar = avatar
-        self.id = id ?? UUID()
+        self.id = id ?? UUID().uuidString
     }
 }
