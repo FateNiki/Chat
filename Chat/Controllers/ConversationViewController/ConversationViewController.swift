@@ -13,8 +13,8 @@ class ConversationViewController: UIViewController {
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
 
     // MARK: - Variables
-    var conversation: Conversation?
-    var messages: [Message] = MessagesMock.messages
+    var channel: Channel?
+    var messages: [Message]?
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -53,25 +53,25 @@ class ConversationViewController: UIViewController {
     }
     
     private func initNavigation() {
-        navigationItem.title = conversation?.user.fullName ?? "Untitled"
+        navigationItem.title = channel?.name ?? "Untitled"
     }
 }
 
 extension ConversationViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int { 1 }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messages.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messages?.count ?? 0 }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
         
-        if let messageCell = cell as? MessageTableViewCell {
-            let message = messages[indexPath.row]
+        if let messageCell = cell as? MessageTableViewCell, let message = messages?[indexPath.row] {
             messageCell.configure(
                 with: MessageCellModel(
-                    text: message.text,
-                    date: message.date,
-                    income: message.direction == .income
+                    text: message.content,
+                    date: message.created,
+                    // TODO: Calculate
+                    income: true
                 )
             )
         }

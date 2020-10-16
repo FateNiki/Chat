@@ -1,0 +1,16 @@
+//
+//  Channel.swift
+//  Chat
+//
+//  Created by Алексей Никитин on 16.10.2020.
+//  Copyright © 2020 Алексей Никитин. All rights reserved.
+//
+
+import Foundation
+
+struct Channel {
+    let identifier: String
+    let name: String
+    let lastMessage: String?
+    let lastActivity: Date?
+}

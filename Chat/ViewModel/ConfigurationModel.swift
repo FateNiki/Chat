@@ -14,12 +14,11 @@ struct MessageCellModel {
     let income: Bool
 }
 
+// TODO refactor
 struct ConversationCellModel: UserAvatarModelProtocol {
     let name: String
-    let message: String
-    let date: Date
-    let isOnline: Bool
-    let hasUnreadMessage: Bool
+    let message: String?
+    let date: Date?
     
     // For Avatar
     let initials: String

@@ -9,13 +9,8 @@
 import Foundation
 
 struct Message {
-    enum Direction {
-        case income
-        case outcome
-    }
-    
-    let text: String
-    let date: Date
-    let direction: Direction
-    var isRead: Bool
+    let content: String
+    let created: Date
+    let senderId: String
+    let senderName: String
 }
