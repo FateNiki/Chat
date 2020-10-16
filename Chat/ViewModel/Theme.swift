@@ -79,12 +79,12 @@ enum ThemeName: String, CaseIterable {
     
     var theme: Theme {
         switch self {
-            case .classic:
-                return ClassicTheme()
-            case .night:
-                return NightTheme()
-            case .day:
-                return DayTheme()
+        case .classic:
+            return ClassicTheme()
+        case .night:
+            return NightTheme()
+        case .day:
+            return DayTheme()
         }
     }
 }

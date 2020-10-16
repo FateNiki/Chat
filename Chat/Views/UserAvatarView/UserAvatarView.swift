@@ -44,7 +44,6 @@ class UserAvatarView: UIView {
         updateView()
     }
     
-    
     // MARK: - Interface configuring
     private func setupView() {
         guard let xibView = initViewFromXib() else { return }
@@ -58,14 +57,14 @@ class UserAvatarView: UIView {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(avaratDidTap)))
     }
     
-    private func updateView() -> Void {
+    private func updateView() {
         let minSize = min(self.bounds.width, self.bounds.height)
         self.layer.cornerRadius = minSize / 2
-        initialsLabel.font = initialsLabel.font.withSize(minSize/3)
+        initialsLabel.font = initialsLabel.font.withSize(minSize / 3)
     }
     
     // MARK: - Action
-    @objc func avaratDidTap(_ gestureRecognizer : UITapGestureRecognizer ) {
+    @objc func avaratDidTap(_: UITapGestureRecognizer ) {
         delegate?.userAvatarDidTap()
     }
 

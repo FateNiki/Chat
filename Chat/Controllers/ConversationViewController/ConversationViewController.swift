@@ -55,10 +55,7 @@ class ConversationViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = conversation?.user.fullName ?? "Untitled"
     }
-    
-    
 }
-
 
 extension ConversationViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int { 1 }

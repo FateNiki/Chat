@@ -31,6 +31,6 @@ class UserMock {
         User(firstName: "Test", lastName: "User 2"),
         User(firstName: "Test", lastName: "User 3"),
         User(firstName: "Test", lastName: "User 4"),
-        User(firstName: "Test very long name", lastName: "User with very long surname"),
+        User(firstName: "Test very long name", lastName: "User with very long surname")
     ]
 }

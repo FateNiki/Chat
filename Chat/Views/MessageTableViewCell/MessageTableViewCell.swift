@@ -43,7 +43,7 @@ class MessageTableViewCell: UITableViewCell {
     }
     
     // MARK: - Interface configuring
-    private func updateView() -> Void {
+    private func updateView() {
         contentView.backgroundColor = backgroundColor
         
         messageContainer.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor

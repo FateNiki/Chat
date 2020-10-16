@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-fileprivate enum UserViewState {
+private enum UserViewState {
     case viewing, editing, saving, loading
 }
 
@@ -32,47 +32,45 @@ class UserViewController: UIViewController {
     private var state: UserViewState = .viewing {
         didSet {
             switch state {
-                case .viewing:
-                    editButton.isHidden = true
-                    fullNameTextField.isEnabled = false
-                    descriptionTextView.isEditable = false
-                    activityIndicator.stopAnimating()
-                    
-                    editButtonItem.isEnabled = true
-                    navigationItem.leftBarButtonItem?.isEnabled = true
-                    if #available(iOS 13, *) {
-                        isModalInPresentation = false
-                    }
-                case .editing:
-                    editButton.isHidden = false
-                    editButton.isEnabled = true
-                    fullNameTextField.isEnabled = true
-                    descriptionTextView.isEditable = true
-                    activityIndicator.stopAnimating()
-                    
-                    editButtonItem.isEnabled = true
-                    navigationItem.leftBarButtonItem?.isEnabled = true
-                    if #available(iOS 13, *) {
-                        isModalInPresentation = false
-                    }
-                case .saving, .loading:
-                    editButton.isHidden = false
-                    editButton.isEnabled = false
-                    fullNameTextField.isEnabled = false
-                    descriptionTextView.isEditable = false
-                    activityIndicator.startAnimating()
-                    
-                    editButtonItem.isEnabled = false
-                    navigationItem.leftBarButtonItem?.isEnabled = false
-                    if #available(iOS 13, *) {
-                        isModalInPresentation = true
-                    }
+            case .viewing:
+                editButton.isHidden = true
+                fullNameTextField.isEnabled = false
+                descriptionTextView.isEditable = false
+                activityIndicator.stopAnimating()
+                
+                editButtonItem.isEnabled = true
+                navigationItem.leftBarButtonItem?.isEnabled = true
+                if #available(iOS 13, *) {
+                    isModalInPresentation = false
+                }
+            case .editing:
+                editButton.isHidden = false
+                editButton.isEnabled = true
+                fullNameTextField.isEnabled = true
+                descriptionTextView.isEditable = true
+                activityIndicator.stopAnimating()
+                
+                editButtonItem.isEnabled = true
+                navigationItem.leftBarButtonItem?.isEnabled = true
+                if #available(iOS 13, *) {
+                    isModalInPresentation = false
+                }
+            case .saving, .loading:
+                editButton.isHidden = false
+                editButton.isEnabled = false
+                fullNameTextField.isEnabled = false
+                descriptionTextView.isEditable = false
+                activityIndicator.startAnimating()
+                
+                editButtonItem.isEnabled = false
+                navigationItem.leftBarButtonItem?.isEnabled = false
+                if #available(iOS 13, *) {
+                    isModalInPresentation = true
+                }
             }
             updateSaveButtons()
         }
     }
-    
-
     
     // MARK: - Outlets
     @IBOutlet var saveButtons: [UIButton]!
@@ -82,7 +80,6 @@ class UserViewController: UIViewController {
     @IBOutlet weak var userAvatarView: UserAvatarView!
     @IBOutlet weak var scrollView: UIScrollView!
 
-    
     // MARK: - UI Variables
     fileprivate var imagePicker: UIImagePickerController!
     lazy var activityIndicator: UIActivityIndicatorView = {
@@ -93,8 +90,6 @@ class UserViewController: UIViewController {
         indicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return indicator
     }()
-
-    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -134,7 +129,7 @@ class UserViewController: UIViewController {
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    private func configSaveButton() -> Void {
+    private func configSaveButton() {
         for saveButton in saveButtons {
             saveButton.backgroundColor = saveButtonBackground
             saveButton.layer.cornerRadius = saveButtonCornerRadius
@@ -142,7 +137,7 @@ class UserViewController: UIViewController {
         }
     }
     
-    private func initUserFields() -> Void {
+    private func initUserFields() {
         guard let user = currentUser else { return }
         
         fullNameTextField.text = user.fullName
@@ -207,7 +202,6 @@ class UserViewController: UIViewController {
         }
     }
     
-    
     // MARK: - Inteface Actions
     @IBAction func editAvatarButtonDidTap(_ sender: UIButton) {
         let editAvatarDialog = UIAlertController(title: "Выбрать аватар", message: nil, preferredStyle: .actionSheet)
@@ -219,7 +213,7 @@ class UserViewController: UIViewController {
             editAvatarDialog.addAction(photoLibraryAction)
         }
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera)  {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { _ in
                 self.selectImageFrom(.camera)
             }
@@ -285,25 +279,26 @@ extension UserViewController: UITextFieldDelegate, UITextViewDelegate {
 
 // MARK: - Work with ImagePicker
 extension UserViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    func selectImageFrom(_ source: UIImagePickerController.SourceType){
+    func selectImageFrom(_ source: UIImagePickerController.SourceType) {
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         switch source {
-            case .camera:
-                imagePicker.sourceType = .camera
-                imagePicker.cameraCaptureMode = .photo
-                requestCameraPermission {
-                    self.present(self.imagePicker, animated: true)
-                }
-            case .photoLibrary:
-                imagePicker.sourceType = .photoLibrary
-                present(imagePicker, animated: true)
-            default:
-                return
+        case .camera:
+            imagePicker.sourceType = .camera
+            imagePicker.cameraCaptureMode = .photo
+            requestCameraPermission {
+                self.present(self.imagePicker, animated: true)
+            }
+        case .photoLibrary:
+            imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true)
+        default:
+            return
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imagePicker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[.originalImage] as? UIImage else {
             openAlert(title: "Изображение", message: "Image not found!")
@@ -317,23 +312,21 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
     private func requestCameraPermission(_ openImagePicker: @escaping () -> Void) {
         let permission = AVCaptureDevice.authorizationStatus(for: .video)
         switch permission {
-            case .authorized:
-                openImagePicker()
-            case .notDetermined:
-                AVCaptureDevice.requestAccess(for: .video) { granted in
-                    DispatchQueue.main.async {
-                        if granted {
-                            openImagePicker()
-                        } else {
-                            self.openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
-                        }
+        case .authorized:
+            openImagePicker()
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        openImagePicker()
+                    } else {
+                        self.openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
                     }
                 }
-            
-            default:
-                openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
-                return
+            }
+        default:
+            openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+            return
         }
     }
 }
-

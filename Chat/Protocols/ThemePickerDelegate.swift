@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ThemePickerDelegate: class {
-    func pickTheme(with name: ThemeName) -> Void
+    func pickTheme(with name: ThemeName)
 }

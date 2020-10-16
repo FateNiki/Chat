@@ -40,7 +40,7 @@ class ThemeManager: DataManager {
         }
     }
     
-    private func apply() -> Void {
+    private func apply() {
         let theme = currentThemeName.theme
         
         // ThemedView
@@ -62,7 +62,6 @@ class ThemeManager: DataManager {
         // UITextField
         UITextField.appearance().backgroundColor = theme.backgroundColor
         UITextField.appearance().textColor = theme.textColor
-        
         
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor

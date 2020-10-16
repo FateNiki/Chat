@@ -64,7 +64,6 @@ class MessageView: UIView {
         setupView()
     }
     
-    
     // MARK: - Interface configuring
     private func setupView() {
         self.addSubview(messageLabel)

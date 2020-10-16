@@ -51,8 +51,7 @@ class ConversationsListViewController: UIViewController {
         }
         return themesController
     }
-    
-    
+        
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,20 +96,20 @@ class ConversationsListViewController: UIViewController {
     }
     
     // MARK: - Actions
-    func openUserEdit() -> Void {
+    func openUserEdit() {
         guard currentUser != nil else { return }
         
         let userNavigationController = UINavigationController(rootViewController: userViewController)
         self.present(userNavigationController, animated: true, completion: nil)
     }
     
-    func openConversation(with conversation: Conversation) -> Void {
+    func openConversation(with conversation: Conversation) {
         let conversationController = ConversationViewController()
         conversationController.conversation = conversation
         navigationController?.pushViewController(conversationController, animated: true)
     }
     
-    @objc func openThemeChoice() -> Void {
+    @objc func openThemeChoice() {
         navigationController?.pushViewController(themesController, animated: true)
     }
 
@@ -153,9 +152,9 @@ extension ConversationsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-            case 0: return "Online"
-            case 1: return "History"
-            default: return nil
+        case 0: return "Online"
+        case 1: return "History"
+        default: return nil
         }
         
     }

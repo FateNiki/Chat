@@ -31,7 +31,6 @@ class ThemePlaceholderView: ThemedView {
             updateTheme()
         }
     }
-
     
     // MARK: - Create from xib
     private func initViewFromXib() -> UIView? {
@@ -57,7 +56,6 @@ class ThemePlaceholderView: ThemedView {
         updateView()
     }
     
-    
     // MARK: - Interface configuring
     private func setupView() {
         guard let xibView = initViewFromXib() else { return }
@@ -74,7 +72,7 @@ class ThemePlaceholderView: ThemedView {
         themeNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
     }
     
-    private func updateView() -> Void {
+    private func updateView() {
         updateActive()
         updateTheme()
     }
@@ -100,7 +98,7 @@ class ThemePlaceholderView: ThemedView {
     }
     
     // MARK: - Actions
-    @objc func selectTheme() -> Void {
+    @objc func selectTheme() {
         if let delegate = delegate, let themeName = themeName {
             delegate.themePlaceholderDidTap(themeName: themeName)
         }

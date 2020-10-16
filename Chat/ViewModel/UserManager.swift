@@ -27,7 +27,7 @@ struct UserManagerResult {
     var withErrors: Bool { errors.count > 0 }
 }
 
-fileprivate enum FieldFileName: String {
+private enum FieldFileName: String {
     case firstName = "userFirstName.txt"
     case lastName = "userLastName.txt"
     case description = "userDescription.txt"
@@ -42,14 +42,14 @@ enum UserSaveError: LocalizedError {
     
     private var errorMessage: String {
         switch self {
-            case let .firstName(message):
-                return "Имя: \(message)"
-            case let .lastName(message):
-                return "Фамилия: \(message)"
-            case let .description(message):
-                return "Описание: \(message)"
-            case let .avatar(message):
-                return "Аватар: \(message)"
+        case let .firstName(message):
+            return "Имя: \(message)"
+        case let .lastName(message):
+            return "Фамилия: \(message)"
+        case let .description(message):
+            return "Описание: \(message)"
+        case let .avatar(message):
+            return "Аватар: \(message)"
         }
     }
     
@@ -349,5 +349,3 @@ class OperationsUserManager: UserManager {
     
     private init() { }
 }
-
-

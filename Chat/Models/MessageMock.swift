@@ -77,10 +77,3 @@ nVis cu magna altera, ex his vivendo atomorum. An suas viderer pro.
         )
     }
 }
-
-
-
-
-
-
-

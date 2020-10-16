@@ -36,7 +36,6 @@ class ConversationsTableViewCell: UITableViewCell {
             updateViewColors()
         }
     }
-
     
     // MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
@@ -58,10 +57,9 @@ class ConversationsTableViewCell: UITableViewCell {
         updateViewColors()
     }
     
-    
     // MARK: - Interface configuring
-    private func updateViewColors() -> Void {
-        if (userIsOnline) {
+    private func updateViewColors() {
+        if userIsOnline {
             contentView.backgroundColor = onlineBackgroundColor
             nameLabel.textColor = onlineNameTextColor
         } else {
@@ -87,7 +85,7 @@ extension ConversationsTableViewCell: ConfigurableView {
             lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         }
         
-        if (!model.message.isEmpty) {
+        if !model.message.isEmpty {
             if Calendar.current.isDateInToday(model.date) {
                 dateLabel.text = Self.timeFormatter.string(from: model.date)
             } else {
