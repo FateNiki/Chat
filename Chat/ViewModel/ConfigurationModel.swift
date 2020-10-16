@@ -20,7 +20,6 @@ extension Message {
     }
 }
 
-// TODO refactor
 struct ChannelCellModel: UserAvatarModelProtocol {
     let name: String
     let message: String?
@@ -58,4 +57,10 @@ struct UserAvatarModel: UserAvatarModelProtocol {
 protocol UserAvatarModelProtocol {
     var initials: String { get }
     var avatar: Data? { get }
+}
+
+extension User {
+    var avatarModel: UserAvatarModel {
+        return UserAvatarModel(initials: initials, avatar: avatar)
+    }
 }

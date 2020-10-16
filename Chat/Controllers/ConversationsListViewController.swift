@@ -15,7 +15,7 @@ class ConversationsListViewController: UIViewController {
     private var currentUser: User? {
         didSet {
             guard let user = currentUser else { return }
-            userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+            userAvatarView.configure(with: user.avatarModel)
         }
     }
     
