@@ -35,7 +35,11 @@ class MessagesMock {
         "Test message 10",
         "Test message 11",
         "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
-        "Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro. \nVis cu magna altera, ex his vivendo atomorum. An suas viderer pro.\nVis cu magna altera, ex his vivendo atomorum. An suas viderer pro.",
+        """
+Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro.
+Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro.
+nVis cu magna altera, ex his vivendo atomorum. An suas viderer pro.
+"""
     ]
     
     private static func randomDate() -> Date {
@@ -43,9 +47,9 @@ class MessagesMock {
         let now = Date()
         var component: Calendar.Component
         switch Int.random(in: 0...2) {
-            case 0: component = .day
-            case 1: component = .hour
-            default: component = .minute
+        case 0: component = .day
+        case 1: component = .hour
+        default: component = .minute
         }
         return Calendar.current.date(byAdding: component, value: delta, to: now) ?? now
     }
