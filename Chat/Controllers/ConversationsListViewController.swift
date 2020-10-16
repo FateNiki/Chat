@@ -129,13 +129,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
         
         if let conversationCell = cell as? ConversationsTableViewCell, let channel = channels?[indexPath.row] {
-            conversationCell.configure(with: ConversationCellModel(
-                name: channel.name,
-                message: channel.lastMessage,
-                date: channel.lastActivity,
-                initials: "??",
-                avatar: nil // TODO: from Channel to ConversationCellModel
-            ))
+            conversationCell.configure(with: channel.viewModel)
         }
         return cell
     }

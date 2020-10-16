@@ -58,7 +58,7 @@ class ConversationsTableViewCell: UITableViewCell {
 }
 
 extension ConversationsTableViewCell: ConfigurableView {
-    func configure(with model: ConversationCellModel) {
+    func configure(with model: ChannelCellModel) {
         nameLabel.text = model.name
         avatarView.configure(with: model)
         

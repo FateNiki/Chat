@@ -21,7 +21,7 @@ extension Message {
 }
 
 // TODO refactor
-struct ConversationCellModel: UserAvatarModelProtocol {
+struct ChannelCellModel: UserAvatarModelProtocol {
     let name: String
     let message: String?
     let date: Date?
@@ -29,6 +29,25 @@ struct ConversationCellModel: UserAvatarModelProtocol {
     // For Avatar
     let initials: String
     let avatar: Data?
+}
+
+extension Channel {
+    private var initials: String {
+        let nameArray = name.split(separator: "0", maxSplits: 1).filter { !$0.isEmpty }
+        guard nameArray.count > 0 else { return "?" }
+        
+        return String(nameArray.map { $0[$0.startIndex] })
+    }
+    
+    var viewModel: ChannelCellModel {
+        return ChannelCellModel(
+            name: name,
+            message: lastMessage,
+            date: lastActivity,
+            initials: initials,
+            avatar: nil
+        )
+    }
 }
 
 struct UserAvatarModel: UserAvatarModelProtocol {
