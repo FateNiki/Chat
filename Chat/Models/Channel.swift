@@ -9,6 +9,8 @@
 import Foundation
 
 struct Channel {
+    static let firebaseCollectionName = "channels"
+    
     let identifier: String
     let name: String
     let lastMessage: String?
