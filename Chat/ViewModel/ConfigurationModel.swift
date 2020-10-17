@@ -32,7 +32,7 @@ struct ChannelCellModel: UserAvatarModelProtocol {
 
 extension Channel {
     private var initials: String {
-        let nameArray = name.split(separator: "0", maxSplits: 1).filter { !$0.isEmpty }
+        let nameArray = name.split(separator: " ", maxSplits: 1).filter { !$0.isEmpty }
         guard nameArray.count > 0 else { return "?" }
         
         return String(nameArray.map { $0[$0.startIndex] })
