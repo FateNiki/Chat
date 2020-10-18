@@ -18,7 +18,9 @@ class ConversationsListViewController: UIViewController {
             userAvatarView.configure(with: user.avatarModel())
         }
     }
-    private lazy var channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: Channel.firebaseCollectionName)
+    private lazy var db = Firestore.firestore()
+    private lazy var query = db.collection(Channel.firebaseCollectionName).order(by: "lastActivity", descending: true)
+    private var channelDataSource: FirebaseDataSource<Channel>!
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -69,6 +71,7 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
+        channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: query)
         GCDUserManager.shared.loadFromFile { result in
             DispatchQueue.main.async {
                 self.currentUser = result.user

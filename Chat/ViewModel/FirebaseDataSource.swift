@@ -15,7 +15,6 @@ protocol FromData {
 extension Channel: FromData {
     init?(_ id: String, from data: [String: Any]) {
         guard let name = data["name"] as? String else {
-            print(data)
             return nil
         }
         self.name = name
@@ -26,21 +25,20 @@ extension Channel: FromData {
 }
 
 class FirebaseDataSource<Element> where Element: FromData {
-    private let db = Firestore.firestore()
-    private let collectionsReference: Query
-    
+    private let collectionsQuery: Query    
     private weak var tableView: UITableView!
     private(set) var elements = [Element?]()
     private var listener: ListenerRegistration?
     
-    init(for tableView: UITableView, with collectionPath: String) {
+    init(for tableView: UITableView, with query: Query) {
         self.tableView = tableView
-        self.collectionsReference = db.collection(collectionPath).order(by: "lastActivity")
+        collectionsQuery = query
         createListener()
     }
     
     private func createListener() {
-        listener = collectionsReference.addSnapshotListener { [weak self] (docsSnapshot, _) in
+        listener = collectionsQuery.addSnapshotListener { [weak self] (docsSnapshot, _) in
+            print("UPDATE")
             guard let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
             guard let tableView = self?.tableView else { return }
             
