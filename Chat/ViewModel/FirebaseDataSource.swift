@@ -35,6 +35,7 @@ extension Message: FromData {
               let senderId = data["senderId"] as? String,
               let senderName = data["senderName"] as? String
         else { return nil }
+        self.id = id
         self.content = content
         self.created = created.dateValue()
         self.senderId = senderId
