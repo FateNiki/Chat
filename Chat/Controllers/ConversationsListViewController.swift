@@ -12,17 +12,13 @@ import Firebase
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
-    private var channels: [Channel]?
     private var currentUser: User? {
         didSet {
             guard let user = currentUser else { return }
             userAvatarView.configure(with: user.avatarModel())
         }
     }
-    private lazy var channelsReference: CollectionReference = {
-        let db = Firestore.firestore()
-        return db.collection(Channel.firebaseCollectionName)
-    }()
+    private lazy var channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: Channel.firebaseCollectionName)
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -73,7 +69,6 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        self.addDatabaseListener()
         GCDUserManager.shared.loadFromFile { result in
             DispatchQueue.main.async {
                 self.currentUser = result.user
@@ -124,7 +119,7 @@ class ConversationsListViewController: UIViewController {
 
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let channel = channels?[indexPath.row] else { return }
+        guard let channel = channelDataSource.elements[indexPath.row] else { return }
         openChannel(channel)
     }
     
@@ -134,31 +129,13 @@ extension ConversationsListViewController: UITableViewDelegate {
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
-    func addDatabaseListener() {
-        channelsReference.addSnapshotListener { [weak self] (docsSnapshot, _) in
-            guard let documents = docsSnapshot?.documents else { return }
-            self?.channels = documents.compactMap({ queryDocumentSnapshot -> Channel? in
-                let data = queryDocumentSnapshot.data()
-                guard let name = data["name"] as? String else { return nil }
-                let lastMessage = data["lastMessage"] as? String
-                let lastActivity = data["lastActivity"] as? Date
-                return Channel(
-                    identifier: queryDocumentSnapshot.documentID,
-                    name: name,
-                    lastMessage: lastMessage,
-                    lastActivity: lastActivity
-                )
-            })
-            self?.tableView.reloadData()
-        }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        channelDataSource.elements.count
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { channels?.count ?? 0 }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
-        
-        if let conversationCell = cell as? ConversationsTableViewCell, let channel = channels?[indexPath.row] {
+        if let conversationCell = cell as? ConversationsTableViewCell, let channel = channelDataSource.elements[indexPath.row] {
             conversationCell.configure(with: channel.cellModel())
         }
         return cell
