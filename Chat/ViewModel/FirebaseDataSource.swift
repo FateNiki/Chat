@@ -85,6 +85,10 @@ class FirebaseDataSource<Element> where Element: FromData {
                     tableView.moveRow(at: IndexPath(for: diff.oldIndex), to: IndexPath(for: diff.newIndex))
                 }
             }
+            print("addedIndeces", addedIndeces)
+            print("updatedIndeces", updatedIndeces)
+            print("removedIndeces", removedIndeces)
+
             tableView.endUpdates()
         }
     }
