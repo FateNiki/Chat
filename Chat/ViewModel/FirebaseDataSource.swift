@@ -20,7 +20,11 @@ extension Channel: FromData {
         self.name = name
         self.identifier = id
         lastMessage = data["lastMessage"] as? String
-        lastActivity = data["lastActivity"] as? Date
+        if let timestamp = data["lastActivity"] as? Timestamp {
+            lastActivity = timestamp.dateValue()
+        } else {
+            lastActivity = nil
+        }
     }
 }
 
