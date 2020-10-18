@@ -75,6 +75,11 @@ class FirebaseDataSource<Element> where Element: FromData {
                 tableView.deleteRows(at: removedIndeces, with: .automatic)
             }
             
+            let updatedIndeces = snapshot.documentChanges.filter({ $0.type == .modified }).map({ IndexPath(for: $0.newIndex) })
+            if updatedIndeces.count > 0 {
+                tableView.reloadRows(at: updatedIndeces, with: .automatic)
+            }
+            
             snapshot.documentChanges.forEach { diff in
                 if diff.type == .modified && diff.newIndex != diff.oldIndex {
                     tableView.moveRow(at: IndexPath(for: diff.oldIndex), to: IndexPath(for: diff.newIndex))
