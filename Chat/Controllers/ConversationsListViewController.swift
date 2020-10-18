@@ -22,7 +22,7 @@ class ConversationsListViewController: UIViewController {
         let db = Firestore.firestore()
         return db.collection(Channel.firebaseCollectionName)
     }()
-    private lazy var channelsQuery = channelsRef.order(by: "lastActivity", descending: true)
+    private lazy var channelsQuery = channelsRef
     private var channelDataSource: FirebaseDataSource<Channel>!
     
     // MARK: - UI Variables
