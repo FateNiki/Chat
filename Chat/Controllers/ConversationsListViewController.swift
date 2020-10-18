@@ -152,7 +152,7 @@ class ConversationsListViewController: UIViewController {
 
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let channel = channelDataSource.elements[indexPath.row] else { return }
+        let channel = channelDataSource.elements[indexPath.row]
         openChannel(channel)
     }
     
@@ -168,7 +168,8 @@ extension ConversationsListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
-        if let conversationCell = cell as? ConversationsTableViewCell, let channel = channelDataSource.elements[indexPath.row] {
+        if let conversationCell = cell as? ConversationsTableViewCell {
+            let channel = channelDataSource.elements[indexPath.row]
             conversationCell.configure(with: channel.cellModel())
         }
         return cell

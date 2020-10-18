@@ -77,11 +77,8 @@ extension ConversationViewController: UITableViewDataSource {
             return cell
         }
         
-        if let message = messageDataSource.elements[indexPath.row] {
-            messageCell.configure(with: message.cellModel(for: currentUser))
-        } else {
-            messageCell.configure(with: MessageCellModel(text: "ERROR", date: Date(), income: false))
-        }
+        let message = messageDataSource.elements[indexPath.row]
+        messageCell.configure(with: message.cellModel(for: currentUser))
         
         return messageCell
     }        

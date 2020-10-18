@@ -8,11 +8,12 @@
 
 import Firebase
 
-protocol FromData {
+protocol DataSourceElement {
     init?(from data: [String: Any], id: String)
+    var timestamp: Double { get }
 }
 
-extension Channel: FromData {
+extension Channel: DataSourceElement {
     init?(from data: [String: Any], id: String) {
         guard let name = data["name"] as? String else {
             return nil
@@ -26,9 +27,11 @@ extension Channel: FromData {
             lastActivity = nil
         }
     }
+    
+    var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? Double.infinity }
 }
 
-extension Message: FromData {
+extension Message: DataSourceElement {
     init?(from data: [String: Any], id: String) {
         guard let content = data["content"] as? String,
               let created = data["created"] as? Timestamp,
@@ -41,12 +44,14 @@ extension Message: FromData {
         self.senderId = senderId
         self.senderName = senderName
     }
+    
+    var timestamp: Double { -created.timeIntervalSince1970 }
 }
 
-class FirebaseDataSource<Element> where Element: FromData {
+class FirebaseDataSource<Element> where Element: DataSourceElement {
     private let collectionsQuery: Query    
     private weak var tableView: UITableView!
-    private(set) var elements = [Element?]()
+    private(set) var elements = [Element]()
     private var listener: ListenerRegistration?
     
     init(for tableView: UITableView, with query: Query) {
@@ -57,40 +62,14 @@ class FirebaseDataSource<Element> where Element: FromData {
     
     private func createListener() {
         listener = collectionsQuery.addSnapshotListener { [weak self] (docsSnapshot, _) in
-            print("UPDATE \(String(describing: type(of: Element.self)))")
             guard let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
-            guard let tableView = self?.tableView else { return }
             
-            self?.elements = snapshot.documents.map { docSnapshot in
+            self?.elements = snapshot.documents.compactMap { docSnapshot in
                 Element(from: docSnapshot.data(), id: docSnapshot.documentID)
             }
             
-            tableView.beginUpdates()
-            let addedIndeces = snapshot.documentChanges.filter({ $0.type == .added }).map({ IndexPath(for: $0.newIndex) })
-            if addedIndeces.count > 0 {
-                tableView.insertRows(at: addedIndeces, with: .automatic)
-            }
-            
-            let removedIndeces = snapshot.documentChanges.filter({ $0.type == .removed }).map({ IndexPath(for: $0.newIndex) })
-            if removedIndeces.count > 0 {
-                tableView.deleteRows(at: removedIndeces, with: .automatic)
-            }
-            
-            let updatedIndeces = snapshot.documentChanges.filter({ $0.type == .modified }).map({ IndexPath(for: $0.newIndex) })
-            if updatedIndeces.count > 0 {
-                tableView.reloadRows(at: updatedIndeces, with: .automatic)
-            }
-            
-            snapshot.documentChanges.forEach { diff in
-                if diff.type == .modified && diff.newIndex != diff.oldIndex {
-                    tableView.moveRow(at: IndexPath(for: diff.oldIndex), to: IndexPath(for: diff.newIndex))
-                }
-            }
-            print("addedIndeces", addedIndeces)
-            print("updatedIndeces", updatedIndeces)
-            print("removedIndeces", removedIndeces)
-
-            tableView.endUpdates()
+//            self?.updateTable(by: snapshot)
+            self?.updateTable()
         }
     }
         
@@ -100,10 +79,42 @@ class FirebaseDataSource<Element> where Element: FromData {
         listener = nil
     }
     
-    private func indexPath(for index: UInt) -> IndexPath {
-        IndexPath(row: Int(index), section: 0)
+    // Для обновления без полной перзагрузки
+    private func updateTable(by snapshot: QuerySnapshot) {
+        print("UPDATE \(String(describing: type(of: Element.self)))")
+        tableView.beginUpdates()
+        let addedIndeces = snapshot.documentChanges.filter({ $0.type == .added }).map({ IndexPath(for: $0.newIndex) })
+        if addedIndeces.count > 0 {
+            tableView.insertRows(at: addedIndeces, with: .automatic)
+        }
+        
+        let removedIndeces = snapshot.documentChanges.filter({ $0.type == .removed }).map({ IndexPath(for: $0.newIndex) })
+        if removedIndeces.count > 0 {
+            tableView.deleteRows(at: removedIndeces, with: .automatic)
+        }
+        
+        let updatedIndeces = snapshot.documentChanges.filter({ $0.type == .modified }).map({ IndexPath(for: $0.newIndex) })
+        if updatedIndeces.count > 0 {
+            tableView.reloadRows(at: updatedIndeces, with: .automatic)
+        }
+        
+        snapshot.documentChanges.forEach { diff in
+            if diff.type == .modified && diff.newIndex != diff.oldIndex {
+                tableView.moveRow(at: IndexPath(for: diff.oldIndex), to: IndexPath(for: diff.newIndex))
+            }
+        }
+        print("addedIndeces", addedIndeces)
+        print("updatedIndeces", updatedIndeces)
+        print("removedIndeces", removedIndeces)
+
+        tableView.endUpdates()
     }
-}
+    
+    private func updateTable() {
+        elements.sort { $0.timestamp > $1.timestamp }
+        tableView.reloadData()
+    }
+    }
 
 fileprivate extension IndexPath {
     init(for index: UInt) {
