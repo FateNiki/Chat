@@ -12,14 +12,14 @@ import Firebase
 class ConversationViewController: UIViewController {
     // MARK: - Constants
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
-    private var messageDataSource: FirebaseDataSource<Message>!
-    private lazy var messagesQuery: Query = {
+    private lazy var messagesRef: CollectionReference = {
         let db = Firestore.firestore()
         return db.collection(Channel.firebaseCollectionName)
             .document(channel.identifier)
             .collection(Message.firebaseCollectionName)
-            .order(by: "created", descending: false)
     }()
+    private lazy var messagesQuery: Query = messagesRef.order(by: "created", descending: false)
+    private var messageDataSource: FirebaseDataSource<Message>!
 
     // MARK: - Variables
     var currentUser: User!
