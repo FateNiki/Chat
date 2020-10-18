@@ -108,6 +108,14 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Helpers
     private func createChannel(with name: String) {
         print(#function, name)
+        var ref: DocumentReference?
+        ref = channelsRef.addDocument(data: ["name": name]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+            }
+        }
     }
     
     // MARK: - Interface Actions
