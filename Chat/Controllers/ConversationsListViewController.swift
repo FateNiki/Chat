@@ -75,7 +75,10 @@ class ConversationsListViewController: UIViewController {
         GCDUserManager.shared.loadFromFile { result in
             DispatchQueue.main.async {
                 self.currentUser = result.user
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.userAvatarView)
+                self.navigationItem.rightBarButtonItems = [
+                    UIBarButtonItem(customView: self.userAvatarView),
+                    UIBarButtonItem(title: "➕", style: .plain, target: self, action: #selector(self.openCreateChannelAlert))
+                ]
             }
         }
     }
@@ -99,7 +102,12 @@ class ConversationsListViewController: UIViewController {
         navigationItem.leftBarButtonItem = settingButton
     }
     
-    // MARK: - Actions
+    // MARK: - Helpers
+    private func createChannel(with name: String) {
+        print(#function, name)
+    }
+    
+    // MARK: - Interface Actions
     func openUserEdit() {
         guard currentUser != nil else { return }
         
@@ -116,6 +124,17 @@ class ConversationsListViewController: UIViewController {
     
     @objc func openThemeChoice() {
         navigationController?.pushViewController(themesController, animated: true)
+    }
+    
+    @objc func openCreateChannelAlert() {
+        let createAlert = UIAlertController(title: "Новый канал", message: "Введите название нового канала", preferredStyle: .alert)
+        createAlert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
+        createAlert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak createAlert] (_) in
+            guard let textField = createAlert?.textFields?[0], let text = textField.text else { return }
+            self.createChannel(with: text)
+        })
+        createAlert.addTextField(configurationHandler: nil)
+        present(createAlert, animated: true, completion: nil)
     }
 
 }
