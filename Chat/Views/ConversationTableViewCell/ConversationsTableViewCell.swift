@@ -38,14 +38,12 @@ class ConversationsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setViewColors()
+        resetView()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        nameLabel.text = nil
-        dateLabel.text = nil
-        lastMessageLabel.text = nil
-        avatarView.avatarImageView.image = nil
+        resetView()
     }
     
     // MARK: - Interface configuring
@@ -54,6 +52,13 @@ class ConversationsTableViewCell: UITableViewCell {
         nameLabel.textColor = primaryTextColor
         lastMessageLabel.textColor = Self.secondaryTextColor
         dateLabel.textColor = Self.secondaryTextColor
+    }
+    
+    private func resetView() {
+        nameLabel.text = nil
+        dateLabel.text = nil
+        lastMessageLabel.text = nil
+        avatarView.configure(with: UserAvatarModel(initials: "", avatar: nil))
     }
 }
 
