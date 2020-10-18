@@ -9,18 +9,32 @@
 import Firebase
 
 protocol FromData {
-    init?(_ id: String, from data: [String: Any])
+    init?(from data: [String: Any], id: String)
 }
 
 extension Channel: FromData {
-    init?(_ id: String, from data: [String: Any]) {
+    init?(from data: [String: Any], id: String) {
         guard let name = data["name"] as? String else {
             return nil
         }
         self.name = name
-        identifier = id
+        self.identifier = id
         lastMessage = data["lastMessage"] as? String
         lastActivity = data["lastActivity"] as? Date
+    }
+}
+
+extension Message: FromData {
+    init?(from data: [String: Any], id: String) {
+        guard let content = data["content"] as? String,
+              let created = data["created"] as? Timestamp,
+              let senderId = data["senderId"] as? String,
+              let senderName = data["senderName"] as? String
+        else { return nil }
+        self.content = content
+        self.created = created.dateValue()
+        self.senderId = senderId
+        self.senderName = senderName
     }
 }
 
@@ -38,12 +52,12 @@ class FirebaseDataSource<Element> where Element: FromData {
     
     private func createListener() {
         listener = collectionsQuery.addSnapshotListener { [weak self] (docsSnapshot, _) in
-            print("UPDATE")
+            print("UPDATE \(String(describing: type(of: Element.self)))")
             guard let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
             guard let tableView = self?.tableView else { return }
             
             self?.elements = snapshot.documents.map { docSnapshot in
-                Element(docSnapshot.documentID, from: docSnapshot.data())
+                Element(from: docSnapshot.data(), id: docSnapshot.documentID)
             }
             
             tableView.beginUpdates()
@@ -67,7 +81,7 @@ class FirebaseDataSource<Element> where Element: FromData {
     }
         
     deinit {
-        print("REMOVE")
+        print("REMOVE \(String(describing: type(of: Element.self)))")
         listener?.remove()
         listener = nil
     }
