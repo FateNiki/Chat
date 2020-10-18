@@ -10,6 +10,12 @@ import UIKit
 
 class MessageView: UIView {
     // MARK: - Interface constants
+    private static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateFormat = "dd MMM"
+        return formatter
+    }()
     private static var timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
@@ -93,6 +99,10 @@ extension MessageView: ConfigurableView {
             return
         }
         messageLabel.text = message.text
-        dateLabel.text = Self.timeFormatter.string(from: message.date)
+        if Calendar.current.isDateInToday(message.date) {
+            dateLabel.text = Self.timeFormatter.string(from: message.date)
+        } else {
+            dateLabel.text = Self.dateFormatter.string(from: message.date)
+        }
     }
 }
