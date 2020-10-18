@@ -67,7 +67,9 @@ class FirebaseDataSource<Element> where Element: FromData {
     }
         
     deinit {
+        print("REMOVE")
         listener?.remove()
+        listener = nil
     }
     
     private func indexPath(for index: UInt) -> IndexPath {
