@@ -112,6 +112,7 @@ class ConversationsListViewController: UIViewController {
     func openChannel(_ channel: Channel) {
         let conversationController = ConversationViewController()
         conversationController.channel = channel
+        conversationController.currentUser = currentUser
         navigationController?.pushViewController(conversationController, animated: true)
     }
     
@@ -125,6 +126,10 @@ extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let channel = channels?[indexPath.row] else { return }
         openChannel(channel)
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return currentUser == nil ? nil : indexPath
     }
 }
 

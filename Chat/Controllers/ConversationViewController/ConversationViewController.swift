@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationViewController: UIViewController {
     // MARK: - Constants
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
+    private lazy var messagesReference: CollectionReference = {
+        let db = Firestore.firestore()
+        return db.collection(Channel.firebaseCollectionName).document(channel.identifier).collection(Message.firebaseCollectionName)
+    }()
 
     // MARK: - Variables
     var currentUser: User!
@@ -43,6 +48,7 @@ class ConversationViewController: UIViewController {
     private func setupView() {
         initTableView()
         initNavigation()
+        addDatabaseListener()
     }
     
     private func updateView() {
@@ -59,8 +65,22 @@ class ConversationViewController: UIViewController {
 }
 
 extension ConversationViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int { 1 }
-    
+    func addDatabaseListener() {
+        messagesReference.addSnapshotListener { [weak self] (docsSnapshot, _) in
+            guard let documents = docsSnapshot?.documents else { return }
+            self?.messages = documents.compactMap({ queryDocumentSnapshot -> Message? in
+                let data = queryDocumentSnapshot.data()
+                guard let content = data["content"] as? String,
+                      let created = data["created"] as? Timestamp,
+                      let senderId = data["senderId"] as? String,
+                      let senderName = data["senderName"] as? String
+                else { return nil }
+                return Message(content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
+            })
+            self?.tableView.reloadData()
+        }
+    }
+        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messages?.count ?? 0 }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
