@@ -72,8 +72,9 @@ class ConversationViewController: UIViewController {
         view.addSubview(sendMessageView)
         sendMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         sendMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        messageViewBottom = sendMessageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        messageViewBottom = sendMessageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         messageViewBottom!.isActive = true
+        view.backgroundColor = SendMessageView.appearance().backgroundColor
     }
     
     private func initTableView() {
