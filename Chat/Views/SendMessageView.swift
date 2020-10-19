@@ -32,12 +32,12 @@ class SendMessageView: UIView {
         let messageView = UITextView()
         messageView.text = "placeholder"
         messageView.translatesAutoresizingMaskIntoConstraints = false
-        messageView.font = UIFont.systemFont(ofSize: 17)
+        messageView.font = UIFont.systemFont(ofSize: 16)
         return messageView
     }()
     private lazy var sendButton: UIButton = {
-        let sendButton = UIButton()
-        sendButton.titleLabel?.text = "Send"
+        let sendButton = UIButton(type: .custom)
+        sendButton.setImage(UIImage(named: "icon_send"), for: .normal)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         return sendButton
     }()
@@ -67,8 +67,8 @@ class SendMessageView: UIView {
     private func setupView() {
         self.addSubview(divider)
         self.addSubview(containerView)
-        self.addSubview(messageView)
-        self.addSubview(sendButton)
+        containerView.addSubview(messageView)
+        containerView.addSubview(sendButton)
         
         divider.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         divider.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
