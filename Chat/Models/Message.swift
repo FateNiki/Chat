@@ -15,4 +15,11 @@ struct Message {
     let created: Date
     let senderId: String
     let senderName: String
+    
+    init(content: String, created: Date = Date(), senderId: String, senderName: String) {
+        self.content = content
+        self.created = created
+        self.senderId = senderId
+        self.senderName = senderName
+    }
 }
