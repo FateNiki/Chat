@@ -39,7 +39,6 @@ class ConversationViewController: UIViewController {
     lazy var sendMessageView: SendMessageView = {
         let smView = SendMessageView()
         smView.translatesAutoresizingMaskIntoConstraints = false
-        smView.heightAnchor.constraint(equalToConstant: 80).isActive = true
         smView.delegate = self
         return smView
     }()
