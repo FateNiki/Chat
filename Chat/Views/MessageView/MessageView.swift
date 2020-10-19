@@ -12,8 +12,7 @@ class MessageView: UIView {
     // MARK: - Interface constants
     private static var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateFormat = "dd MMM"
+        formatter.dateFormat = "dd MMM, HH:mm"
         return formatter
     }()
     private static var timeFormatter: DateFormatter = {
