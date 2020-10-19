@@ -97,11 +97,17 @@ class ConversationViewController: UIViewController {
             messageViewBottom?.constant = 0
         } else {
             messageViewBottom?.constant = -keyboardScreenEndFrame.height
+            self.scrollToBottom()
         }
         
         UIView.animate(withDuration: keyboardDuration) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    private func scrollToBottom() {
+        let lastIndex = IndexPath(row: tableView.numberOfRows(inSection: 0) - 1, section: 0)
+        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: true)
     }
 }
 
@@ -118,7 +124,7 @@ extension ConversationViewController: UITableViewDataSource {
         messageCell.configure(with: message.cellModel(for: currentUser))
         
         return messageCell
-    }        
+    }
 }
 
 extension ConversationViewController: SendMessageViewDelegate {
