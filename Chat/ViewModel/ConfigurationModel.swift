@@ -11,12 +11,13 @@ import Foundation
 struct MessageCellModel {
     let text: String
     let date: Date
+    let senderName: String
     let income: Bool
 }
 
 extension Message {
     func cellModel(for user: User) -> MessageCellModel {
-        return MessageCellModel(text: content, date: created, income: senderId != user.id)
+        return MessageCellModel(text: content, date: created, senderName: senderName, income: senderId != user.id)
     }
 }
 

@@ -36,6 +36,12 @@ class MessageView: UIView {
     }
     
     // MARK: - UI Elements
+    lazy var senderNameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
     lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -74,13 +80,19 @@ class MessageView: UIView {
     private func setupView() {
         self.addSubview(messageLabel)
         self.addSubview(dateLabel)
+        self.addSubview(senderNameLabel)
         
+        senderNameLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        senderNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        senderNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        senderNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        
         messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -10).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: senderNameLabel.bottomAnchor, constant: 10).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: dateLabel.centerYAnchor).isActive = true
         
         dateLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
@@ -96,6 +108,7 @@ extension MessageView: ConfigurableView {
         guard let message = model else {
             messageLabel.text = nil
             dateLabel.text = nil
+            senderNameLabel.text = nil
             return
         }
         messageLabel.text = message.text
@@ -104,5 +117,6 @@ extension MessageView: ConfigurableView {
         } else {
             dateLabel.text = Self.dateFormatter.string(from: message.date)
         }
+        senderNameLabel.text = message.income ? message.senderName : nil
     }
 }

@@ -65,8 +65,8 @@ class ThemePlaceholderView: ThemedView {
         
         messagesContainer.layer.cornerRadius = 14
         messagesContainer.clipsToBounds = true
-        incomeMessageView.configure(with: MessageCellModel(text: "Income", date: Date(), income: true))
-        outcomeMessageView.configure(with: MessageCellModel(text: "Outcome", date: Date(), income: false))
+        incomeMessageView.configure(with: MessageCellModel(text: "Income", date: Date(), senderName: "Sender", income: true))
+        outcomeMessageView.configure(with: MessageCellModel(text: "Outcome", date: Date(), senderName: "", income: false))
         
         messagesContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
         themeNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
