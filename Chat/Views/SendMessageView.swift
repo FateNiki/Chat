@@ -9,20 +9,19 @@
 import UIKit
 
 class SendMessageView: UIView {            
-    // MARK: - UI Variables
-    private let borderColor = UIColor(red: 0.56, green: 0.56, blue: 0.58, alpha: 1.00)
+    // MARK: - Interface constants
+    @objc dynamic var borderColor: UIColor?
     
+    // MARK: - UI Variables
     private lazy var divider: UIView = {
         let divider = UIView()
         divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        divider.backgroundColor = borderColor
         divider.translatesAutoresizingMaskIntoConstraints = false
         return divider
     }()
     private lazy var containerView: ThemedView = {
         let containerView = ThemedView()
         containerView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        containerView.layer.borderColor = borderColor.cgColor
         containerView.layer.borderWidth = 0.5
         containerView.layer.cornerRadius = 16
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +51,16 @@ class SendMessageView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateColor()
+    }
+    
+    private func updateColor() {
+        divider.backgroundColor = borderColor
+        containerView.layer.borderColor = borderColor?.cgColor
     }
     
     // MARK: - Interface configuring

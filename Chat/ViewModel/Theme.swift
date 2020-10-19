@@ -17,6 +17,7 @@ protocol Theme {
     var sendMessageBackground: UIColor { get }
     var sendMessageSecondBackground: UIColor { get }
     var sendMessageTextColor: UIColor { get }
+    var sendMessageBorder: UIColor { get }
     
     // Message cell
     var incomeMessageCellColor: UIColor { get }
@@ -37,6 +38,7 @@ struct ClassicTheme: Theme {
     var sendMessageBackground: UIColor { secondBackgroundColor }
     var sendMessageSecondBackground: UIColor { .white }
     var sendMessageTextColor: UIColor { .black }
+    var sendMessageBorder: UIColor { UIColor(red: 0.56, green: 0.56, blue: 0.58, alpha: 1.00) }
     
     var incomeMessageCellColor: UIColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00)
     var outcomeMessageCellColor: UIColor = UIColor(red: 0.86, green: 0.97, blue: 0.77, alpha: 1.00)
@@ -55,6 +57,7 @@ struct DayTheme: Theme {
     var sendMessageBackground: UIColor { secondBackgroundColor }
     var sendMessageSecondBackground: UIColor { .white }
     var sendMessageTextColor: UIColor { .black }
+    var sendMessageBorder: UIColor { UIColor(red: 0.56, green: 0.56, blue: 0.58, alpha: 1.00) }
     
     var incomeMessageCellColor: UIColor = UIColor(red: 0.92, green: 0.92, blue: 0.93, alpha: 1.00)
     var outcomeMessageCellColor: UIColor = UIColor(red: 0.26, green: 0.54, blue: 0.98, alpha: 1.00)
@@ -73,6 +76,7 @@ struct NightTheme: Theme {
     var sendMessageBackground: UIColor { backgroundColor }
     var sendMessageSecondBackground: UIColor { UIColor(red: 0.23, green: 0.23, blue: 0.23, alpha: 1.00) }
     var sendMessageTextColor: UIColor { .white }
+    var sendMessageBorder: UIColor { sendMessageSecondBackground }
     
     var incomeMessageCellColor: UIColor = UIColor(red: 0.18, green: 0.18, blue: 0.18, alpha: 1.00)
     var outcomeMessageCellColor: UIColor = UIColor(red: 0.36, green: 0.36, blue: 0.36, alpha: 1.00)

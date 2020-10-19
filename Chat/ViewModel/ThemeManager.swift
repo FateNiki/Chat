@@ -65,6 +65,7 @@ class ThemeManager: DataManager {
         
         // SendMessageView
         SendMessageView.appearance().backgroundColor = theme.sendMessageBackground
+        SendMessageView.appearance().borderColor = theme.sendMessageBorder
         ThemedView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).backgroundColor = theme.sendMessageSecondBackground
         UITextView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).backgroundColor = theme.sendMessageSecondBackground
         UITextView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).textColor = theme.sendMessageTextColor
