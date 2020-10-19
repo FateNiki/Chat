@@ -10,11 +10,20 @@ import UIKit
 
 class SendMessageView: UIView {            
     // MARK: - UI Variables
+    private let borderColor = UIColor(red: 0.56, green: 0.56, blue: 0.58, alpha: 1.00)
+    
+    private lazy var divider: UIView = {
+        let divider = UIView()
+        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        divider.backgroundColor = borderColor
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        return divider
+    }()
     private lazy var containerView: ThemedView = {
         let containerView = ThemedView()
         containerView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        containerView.layer.borderColor = UIColor(red: 0.23, green: 0.23, blue: 0.23, alpha: 1.00).cgColor
-        containerView.layer.borderWidth = 1
+        containerView.layer.borderColor = borderColor.cgColor
+        containerView.layer.borderWidth = 0.5
         containerView.layer.cornerRadius = 16
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.clipsToBounds = true
@@ -47,9 +56,14 @@ class SendMessageView: UIView {
     
     // MARK: - Interface configuring
     private func setupView() {
+        self.addSubview(divider)
         self.addSubview(containerView)
         self.addSubview(messageView)
         self.addSubview(sendButton)
+        
+        divider.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        divider.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        divider.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         
         containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18).isActive = true
         containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 18).isActive = true
