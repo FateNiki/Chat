@@ -11,7 +11,6 @@ import Foundation
 struct Message {
     static let firebaseCollectionName = "messages"
 
-    let id: String
     let content: String
     let created: Date
     let senderId: String
