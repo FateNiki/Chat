@@ -88,17 +88,19 @@ class ConversationViewController: UIViewController {
     
     // MARK: - Inteface Actions
     @objc func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
 
         let keyboardScreenEndFrame: CGRect = keyboardValue.cgRectValue
-        let keyboardViewEndFrame: CGRect = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
-            tableView.contentInset = .zero
             messageViewBottom?.constant = 0
         } else {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
-            messageViewBottom?.constant = -keyboardViewEndFrame.height
+            messageViewBottom?.constant = -keyboardScreenEndFrame.height
+        }
+        
+        UIView.animate(withDuration: keyboardDuration) {
+            self.view.layoutIfNeeded()
         }
     }
 }
