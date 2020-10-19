@@ -8,14 +8,12 @@
 
 import UIKit
 
-class SendMessageView: UIView {
-    
-    
+class SendMessageView: UIView {            
     // MARK: - UI Variables
-    private lazy var containerView: UIView = {
-        let containerView = UIView()
+    private lazy var containerView: ThemedView = {
+        let containerView = ThemedView()
         containerView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        containerView.layer.borderColor = UIColor.lightGray.cgColor
+        containerView.layer.borderColor = UIColor(red: 0.23, green: 0.23, blue: 0.23, alpha: 1.00).cgColor
         containerView.layer.borderWidth = 1
         containerView.layer.cornerRadius = 16
         containerView.translatesAutoresizingMaskIntoConstraints = false

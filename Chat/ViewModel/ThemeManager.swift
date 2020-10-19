@@ -63,6 +63,12 @@ class ThemeManager: DataManager {
         UITextField.appearance().backgroundColor = theme.backgroundColor
         UITextField.appearance().textColor = theme.textColor
         
+        // SendMessageView
+        SendMessageView.appearance().backgroundColor = theme.sendMessageBackground
+        ThemedView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).backgroundColor = theme.sendMessageSecondBackground
+        UITextView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).backgroundColor = theme.sendMessageSecondBackground
+        UITextView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).textColor = theme.sendMessageTextColor
+        
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor
         ConversationsTableViewCell.appearance().primaryTextColor = theme.textColor
