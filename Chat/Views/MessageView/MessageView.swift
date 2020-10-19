@@ -27,6 +27,7 @@ class MessageView: UIView {
     var textColor: UIColor? {
         didSet {
             messageLabel.textColor = textColor
+            senderNameLabel.textColor = textColor
         }
     }
     var dateColor: UIColor? {
