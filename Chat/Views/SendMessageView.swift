@@ -38,9 +38,13 @@ class SendMessageView: UIView {
     private lazy var sendButton: UIButton = {
         let sendButton = UIButton(type: .custom)
         sendButton.setImage(UIImage(named: "icon_send"), for: .normal)
+        sendButton.addTarget(self, action: #selector(sendButtonDidTap), for: .touchUpInside)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         return sendButton
     }()
+    
+    // MARK: - Variables
+    weak var delegate: SendMessageViewDelegate?
 
     // MARK: - Init
     override init(frame: CGRect) {
@@ -87,5 +91,14 @@ class SendMessageView: UIView {
         sendButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
         
         messageView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10).isActive = true
+    }
+    
+    // MARK: - Action
+    @objc private func sendButtonDidTap() {
+        guard !messageView.text.isEmpty, let delegate = delegate else {
+            return
+        }
+        
+        delegate.sendMessage(with: messageView.text)
     }
 }
