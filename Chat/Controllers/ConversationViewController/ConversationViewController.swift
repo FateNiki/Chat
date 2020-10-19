@@ -57,8 +57,10 @@ class ConversationViewController: UIViewController {
         initTableView()
         initNavigation()
         configKeyboard()
+        var needAnimation = false
         messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery) {
-            self.scrollToBottom(animated: true)
+            self.scrollToBottom(animated: needAnimation)
+            needAnimation = true
         }
     }
     
