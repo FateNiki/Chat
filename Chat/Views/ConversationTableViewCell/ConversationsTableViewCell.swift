@@ -24,7 +24,7 @@ class ConversationsTableViewCell: UITableViewCell {
     }()
     
     // MARK: - Interface constants
-    @objc dynamic var primaryTextColor = UIColor.black
+    @objc dynamic var primaryTextColor: UIColor?
     static let secondaryTextColor = UIColor.lightGray
     static let fontSize: CGFloat = 15
     
@@ -37,13 +37,17 @@ class ConversationsTableViewCell: UITableViewCell {
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        setViewColors()
         resetView()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         resetView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setViewColors()
     }
     
     // MARK: - Interface configuring
