@@ -21,7 +21,7 @@ class SendMessageView: UIView {
     }()
     private lazy var containerView: ThemedView = {
         let containerView = ThemedView()
-        containerView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        containerView.heightAnchor.constraint(lessThanOrEqualToConstant: 64).isActive = true
         containerView.layer.borderWidth = 0.5
         containerView.layer.cornerRadius = 16
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,19 +77,21 @@ class SendMessageView: UIView {
         divider.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         divider.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         
-        containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 18).isActive = true
-        containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 18).isActive = true
+        containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
+        containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
         
-        messageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 18).isActive = true
-        messageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 2).isActive = true
-        messageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -2).isActive = true
-        
-        sendButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -18).isActive = true
-        sendButton.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        sendButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        
+        messageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0.5).isActive = true
+        messageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0.5).isActive = true
+        messageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
         messageView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10).isActive = true
+        
+        sendButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -9).isActive = true
+        sendButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5).isActive = true
+        sendButton.widthAnchor.constraint(equalTo: sendButton.heightAnchor).isActive = true
+        
+        messageView.sizeToFit()
     }
     
     // MARK: - Action
