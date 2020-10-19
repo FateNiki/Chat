@@ -8,12 +8,15 @@
 
 import Firebase
 
-protocol DataSourceElement {
+protocol FirebaseElement {
     init?(from data: [String: Any], id: String)
+    
+    var data: [String: Any] { get }
+    
     var timestamp: Double { get }
 }
 
-extension Channel: DataSourceElement {
+extension Channel: FirebaseElement {
     init?(from data: [String: Any], id: String) {
         guard let name = data["name"] as? String else {
             return nil
@@ -28,10 +31,14 @@ extension Channel: DataSourceElement {
         }
     }
     
+    var data: [String: Any] {
+        ["name": name]
+    }
+    
     var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? Double.infinity }
 }
 
-extension Message: DataSourceElement {
+extension Message: FirebaseElement {
     init?(from data: [String: Any], id: String) {
         guard let content = data["content"] as? String,
               let created = data["created"] as? Timestamp,
@@ -44,10 +51,17 @@ extension Message: DataSourceElement {
         self.senderName = senderName
     }
     
+    var data: [String: Any] {[
+        "content": content,
+        "created": Timestamp(date: created),
+        "senderId": senderId,
+        "senderName": senderName
+    ]}
+    
     var timestamp: Double { -created.timeIntervalSince1970 }
 }
 
-class FirebaseDataSource<Element> where Element: DataSourceElement {
+class FirebaseDataSource<Element> where Element: FirebaseElement {
     private let collectionsQuery: Query    
     private weak var tableView: UITableView!
     private(set) var elements = [Element]()
