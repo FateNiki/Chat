@@ -107,15 +107,15 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Helpers
     private func createChannel(with name: String) {
-        print(#function, name)
-        var ref: DocumentReference?
-        ref = channelsRef.addDocument(data: ["name": name]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
+        let newChannelRef = channelsRef.document()
+        let newChannel = Channel(id: newChannelRef.documentID, name: name)
+        newChannelRef.setData(newChannel.data) { [weak self] (error) in
+            if let error = error {
+                self?.openAlert(title: "Ошибка сохранения", message: error.localizedDescription)
             } else {
-                print("Document added with ID: \(ref!.documentID)")
+                self?.openChannel(newChannel)
             }
-        }
+        }        
     }
     
     // MARK: - Interface Actions
