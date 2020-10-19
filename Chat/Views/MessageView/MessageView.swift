@@ -21,8 +21,8 @@ class MessageView: UIView {
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
-    
     private static let cornerRadius = CGFloat(10)
+    private var senderTopPadding: NSLayoutConstraint?
     var textColor: UIColor? {
         didSet {
             messageLabel.textColor = textColor
@@ -88,7 +88,8 @@ class MessageView: UIView {
         
         senderNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         senderNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
-        senderNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        senderTopPadding = senderNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10)
+        senderTopPadding!.isActive = true
         
         messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -10).isActive = true
@@ -118,5 +119,6 @@ extension MessageView: ConfigurableView {
             dateLabel.text = Self.dateFormatter.string(from: message.date)
         }
         senderNameLabel.text = message.income ? message.senderName : nil
+        senderTopPadding?.constant = message.income ? 10 : 0
     }
 }
