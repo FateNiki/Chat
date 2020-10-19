@@ -97,6 +97,7 @@ extension ConversationViewController: UITableViewDataSource {
 
 extension ConversationViewController: SendMessageViewDelegate {
     func sendMessage(with text: String) {
-        openAlert(title: #function, message: text)
+        let message = Message(content: text, senderId: currentUser.id, senderName: currentUser.fullName)
+        messagesRef.addDocument(data: message.data)
     }
 }
