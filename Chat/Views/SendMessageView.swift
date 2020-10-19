@@ -95,10 +95,8 @@ class SendMessageView: UIView {
     
     // MARK: - Action
     @objc private func sendButtonDidTap() {
-        guard !messageView.text.isEmpty, let delegate = delegate else {
-            return
-        }
-        
-        delegate.sendMessage(with: messageView.text)
+        guard !messageView.text.isEmpty else { return }
+        delegate?.sendMessage(with: messageView.text)
+        messageView.text = ""
     }
 }
