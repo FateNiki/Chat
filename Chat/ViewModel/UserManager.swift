@@ -112,7 +112,7 @@ extension UserManager {
         // Слип для эмуляции долгого чтения из файла
         // Пока идет первая загрузка пользователя - отображается UIActivityIndicatorView
         // Можно закомментировать
-        sleep(2)
+//        sleep(2)
         return user
     }
     
