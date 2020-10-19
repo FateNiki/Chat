@@ -39,6 +39,7 @@
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
 		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
 		5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */; };
+		5BE44803253D837C0015A6AF /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE44802253D837C0015A6AF /* SendMessageView.swift */; };
 		5BE8FA1C252B62A200B06809 /* ThemePlaceholderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */; };
 		5BECAD47251FAACB00141621 /* ConversationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD45251FAACB00141621 /* ConversationsTableViewCell.swift */; };
 		5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */; };
@@ -86,6 +87,7 @@
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
 		5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
+		5BE44802253D837C0015A6AF /* SendMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageView.swift; sourceTree = "<group>"; };
 		5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholderDelegate.swift; sourceTree = "<group>"; };
 		5BECAD45251FAACB00141621 /* ConversationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsTableViewCell.swift; sourceTree = "<group>"; };
 		5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsTableViewCell.xib; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 				5B0D0D50252B431F00CCBB3F /* ThemedView.swift */,
 				5B72E1432532246D004BECDA /* TurnedOffTextField.swift */,
+				5BE44802253D837C0015A6AF /* SendMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
 				5B411CDA2535DBEC001859F0 /* SafeArray.swift in Sources */,
 				5B100E8825211DF0002E75B4 /* ConversationViewController.swift in Sources */,
+				5BE44803253D837C0015A6AF /* SendMessageView.swift in Sources */,
 				5B0D0D51252B431F00CCBB3F /* ThemedView.swift in Sources */,
 				5B0D0D54252B4C2E00CCBB3F /* ThemePickerDelegate.swift in Sources */,
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
