@@ -42,7 +42,8 @@ class ConversationViewController: UIViewController {
         smView.delegate = self
         return smView
     }()
-
+    private var messageViewBottom: NSLayoutConstraint?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,14 +56,22 @@ class ConversationViewController: UIViewController {
         initSendMessageView()
         initTableView()
         initNavigation()
+        configKeyboard()
         messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery)
+    }
+    
+    private func configKeyboard() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func initSendMessageView() {
         view.addSubview(sendMessageView)
-        sendMessageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         sendMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         sendMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        messageViewBottom = sendMessageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        messageViewBottom!.isActive = true
     }
     
     private func initTableView() {
@@ -75,6 +84,22 @@ class ConversationViewController: UIViewController {
     
     private func initNavigation() {
         navigationItem.title = channel.name
+    }
+    
+    // MARK: - Inteface Actions
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame: CGRect = keyboardValue.cgRectValue
+        let keyboardViewEndFrame: CGRect = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            tableView.contentInset = .zero
+            messageViewBottom?.constant = 0
+        } else {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+            messageViewBottom?.constant = -keyboardViewEndFrame.height
+        }
     }
 }
 
