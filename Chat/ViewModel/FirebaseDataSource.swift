@@ -124,10 +124,11 @@ class FirebaseDataSource<Element> where Element: FirebaseElement {
     }
     
     private func updateTable() {
+        print("RELOAD \(String(describing: type(of: Element.self)))")
         elements.sort { $0.timestamp > $1.timestamp }
         tableView.reloadData()
     }
-    }
+}
 
 fileprivate extension IndexPath {
     init(for index: UInt) {
