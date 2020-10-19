@@ -40,6 +40,7 @@ class ConversationViewController: UIViewController {
         let smView = SendMessageView()
         smView.translatesAutoresizingMaskIntoConstraints = false
         smView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        smView.delegate = self
         return smView
     }()
 
@@ -92,4 +93,10 @@ extension ConversationViewController: UITableViewDataSource {
         
         return messageCell
     }        
+}
+
+extension ConversationViewController: SendMessageViewDelegate {
+    func sendMessage(with text: String) {
+        openAlert(title: #function, message: text)
+    }
 }
