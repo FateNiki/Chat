@@ -33,7 +33,14 @@ class ConversationViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.allowsSelection = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    lazy var sendMessageView: SendMessageView = {
+        let smView = SendMessageView()
+        smView.translatesAutoresizingMaskIntoConstraints = false
+        smView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        return smView
     }()
 
     // MARK: - Lifecycle
@@ -43,24 +50,27 @@ class ConversationViewController: UIViewController {
         setupView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateView()
-    }
-    
     // MARK: - Interface configuring
     private func setupView() {
+        initSendMessageView()
         initTableView()
         initNavigation()
         messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery)
     }
     
-    private func updateView() {
-        tableView.frame = view.frame
+    private func initSendMessageView() {
+        view.addSubview(sendMessageView)
+        sendMessageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        sendMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        sendMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     private func initTableView() {
         view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: sendMessageView.topAnchor).isActive = true
     }
     
     private func initNavigation() {
