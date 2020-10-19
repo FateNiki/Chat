@@ -30,7 +30,6 @@ class SendMessageView: UIView {
     }()
     private lazy var messageView: UITextView = {
         let messageView = UITextView()
-        messageView.text = "placeholder"
         messageView.translatesAutoresizingMaskIntoConstraints = false
         messageView.font = UIFont.systemFont(ofSize: 16)
         return messageView
