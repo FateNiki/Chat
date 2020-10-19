@@ -74,7 +74,7 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: channelsQuery)
+        channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: channelsQuery, refresh: nil)
         GCDUserManager.shared.loadFromFile { result in
             DispatchQueue.main.async {
                 self.currentUser = result.user

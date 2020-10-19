@@ -57,7 +57,9 @@ class ConversationViewController: UIViewController {
         initTableView()
         initNavigation()
         configKeyboard()
-        messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery)
+        messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery) {
+            self.scrollToBottom(animated: true)
+        }
     }
     
     private func configKeyboard() {
@@ -97,17 +99,17 @@ class ConversationViewController: UIViewController {
             messageViewBottom?.constant = 0
         } else {
             messageViewBottom?.constant = -keyboardScreenEndFrame.height
-            self.scrollToBottom()
         }
         
         UIView.animate(withDuration: keyboardDuration) {
             self.view.layoutIfNeeded()
+            self.scrollToBottom(animated: false)
         }
     }
     
-    private func scrollToBottom() {
+    private func scrollToBottom(animated: Bool) {
         let lastIndex = IndexPath(row: tableView.numberOfRows(inSection: 0) - 1, section: 0)
-        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: true)
+        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: animated)
     }
 }
 

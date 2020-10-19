@@ -66,10 +66,12 @@ class FirebaseDataSource<Element> where Element: FirebaseElement {
     private weak var tableView: UITableView!
     private(set) var elements = [Element]()
     private var listener: ListenerRegistration?
+    private let refreshCallback: (() -> Void)?
     
-    init(for tableView: UITableView, with query: Query) {
+    init(for tableView: UITableView, with query: Query, refresh: (() -> Void)?) {
         self.tableView = tableView
-        collectionsQuery = query
+        self.collectionsQuery = query
+        self.refreshCallback = refresh
         createListener()
     }
     
@@ -121,12 +123,14 @@ class FirebaseDataSource<Element> where Element: FirebaseElement {
         print("removedIndeces", removedIndeces)
 
         tableView.endUpdates()
+        refreshCallback?()
     }
     
     private func updateTable() {
         print("RELOAD \(String(describing: type(of: Element.self)))")
         elements.sort { $0.timestamp > $1.timestamp }
         tableView.reloadData()
+        refreshCallback?()
     }
 }
 
