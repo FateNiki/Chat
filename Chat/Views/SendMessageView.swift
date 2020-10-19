@@ -21,7 +21,7 @@ class SendMessageView: UIView {
     }()
     private lazy var containerView: ThemedView = {
         let containerView = ThemedView()
-        containerView.heightAnchor.constraint(lessThanOrEqualToConstant: 64).isActive = true
+        containerView.heightAnchor.constraint(equalToConstant: 64).isActive = true
         containerView.layer.borderWidth = 0.5
         containerView.layer.cornerRadius = 16
         containerView.translatesAutoresizingMaskIntoConstraints = false
