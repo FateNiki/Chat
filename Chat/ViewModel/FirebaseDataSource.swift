@@ -35,7 +35,7 @@ extension Channel: FirebaseElement {
         ["name": name]
     }
     
-    var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? Double.infinity }
+    var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? 0 }
 }
 
 extension Message: FirebaseElement {
