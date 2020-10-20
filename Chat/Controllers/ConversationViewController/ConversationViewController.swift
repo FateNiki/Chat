@@ -14,7 +14,7 @@ class ConversationViewController: UIViewController {
 
     // MARK: - Variables
     var conversation: Conversation?
-    var messages = mockMessages
+    var messages: [Message] = MessagesMock.messages
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -22,6 +22,7 @@ class ConversationViewController: UIViewController {
         tableView.register(UINib(nibName: messageCellIdentifier, bundle: nil), forCellReuseIdentifier: messageCellIdentifier)
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
 
@@ -69,11 +70,15 @@ extension ConversationViewController: UITableViewDataSource {
         
         if let messageCell = cell as? MessageTableViewCell {
             let message = messages[indexPath.row]
-            messageCell.configure(with: .init(text: message.text, income: message.direction == .income))
+            messageCell.configure(
+                with: MessageCellModel(
+                    text: message.text,
+                    date: message.date,
+                    income: message.direction == .income
+                )
+            )
         }
         
         return cell
-    }
-    
-        
+    }        
 }

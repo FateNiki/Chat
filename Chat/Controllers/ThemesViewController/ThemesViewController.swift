@@ -13,7 +13,7 @@ class ThemesViewController: UIViewController {
     @IBOutlet var placeholders: [ThemePlaceholderView]!
     
     // MARK: - Variables
-    var delegate: ThemePickerDelegate?
+    weak var delegate: ThemePickerDelegate?
     var selectThemeClosure: ((ThemeName) -> Void)?
 
     // MARK: - Lifecycle

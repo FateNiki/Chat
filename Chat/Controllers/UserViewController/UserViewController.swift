@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+fileprivate enum UserViewState {
+    case viewing, editing, saving, loading
+}
+
 class UserViewController: UIViewController {
     // MARK: - Interface constants
     private let saveButtonBackground = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
@@ -16,14 +20,79 @@ class UserViewController: UIViewController {
     
     // MARK: - Variables
     var currentUser: User?
-    fileprivate var imagePicker: UIImagePickerController!
+    weak var delegate: UserViewDelegate?
+    private var saveIsRequired: Bool {
+        guard let user = currentUser else { return false }
+        let equal = fullNameTextField.text == user.fullName &&
+            descriptionTextView.text == user.description &&
+            userAvatarView.avatar == user.avatar
+        return !equal
+    }
+    
+    private var state: UserViewState = .viewing {
+        didSet {
+            switch state {
+                case .viewing:
+                    editButton.isHidden = true
+                    fullNameTextField.isEnabled = false
+                    descriptionTextView.isEditable = false
+                    activityIndicator.stopAnimating()
+                    
+                    editButtonItem.isEnabled = true
+                    navigationItem.leftBarButtonItem?.isEnabled = true
+                    if #available(iOS 13, *) {
+                        isModalInPresentation = false
+                    }
+                case .editing:
+                    editButton.isHidden = false
+                    editButton.isEnabled = true
+                    fullNameTextField.isEnabled = true
+                    descriptionTextView.isEditable = true
+                    activityIndicator.stopAnimating()
+                    
+                    editButtonItem.isEnabled = true
+                    navigationItem.leftBarButtonItem?.isEnabled = true
+                    if #available(iOS 13, *) {
+                        isModalInPresentation = false
+                    }
+                case .saving, .loading:
+                    editButton.isHidden = false
+                    editButton.isEnabled = false
+                    fullNameTextField.isEnabled = false
+                    descriptionTextView.isEditable = false
+                    activityIndicator.startAnimating()
+                    
+                    editButtonItem.isEnabled = false
+                    navigationItem.leftBarButtonItem?.isEnabled = false
+                    if #available(iOS 13, *) {
+                        isModalInPresentation = true
+                    }
+            }
+            updateSaveButtons()
+        }
+    }
+    
 
     
     // MARK: - Outlets
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet var saveButtons: [UIButton]!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var fullNameTextField: TurnedOffTextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var userAvatarView: UserAvatarView!
+    @IBOutlet weak var scrollView: UIScrollView!
+
+    
+    // MARK: - UI Variables
+    fileprivate var imagePicker: UIImagePickerController!
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        indicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return indicator
+    }()
 
     
     
@@ -35,29 +104,109 @@ class UserViewController: UIViewController {
     
     // MARK: - Interface configuring
     private func setupView() {
-        configSaveButton()
-        initUserFields()
         configNavigation()
+        configSaveButton()
+        configKeyboard()
+        addActivityIndicator()
+        
+        fullNameTextField.delegate = self
+        descriptionTextView.delegate = self
+        
+        initUserFields()
+        loadUser(by: GCDUserManager.shared)
+    }
+    
+    private func configKeyboard() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func configNavigation() {
         navigationItem.title = "My profile"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
+        navigationItem.rightBarButtonItem = editButtonItem
+    }
+    
+    private func addActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func configSaveButton() -> Void {
-        saveButton.backgroundColor = saveButtonBackground
-        saveButton.layer.cornerRadius = saveButtonCornerRadius
-        saveButton.clipsToBounds = true
+        for saveButton in saveButtons {
+            saveButton.backgroundColor = saveButtonBackground
+            saveButton.layer.cornerRadius = saveButtonCornerRadius
+            saveButton.clipsToBounds = true
+        }
     }
     
     private func initUserFields() -> Void {
         guard let user = currentUser else { return }
         
-        fullNameLabel.text = user.fullName
-        descriptionLabel.text = user.description
+        fullNameTextField.text = user.fullName
+        descriptionTextView.text = user.description
         userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+        print(#function, Date())
     }
+    
+    // MARK: - Helpers
+    private func updateSaveButtons() {
+        let isEnabled = state == .editing ? saveIsRequired : false
+        saveButtons.forEach { $0.isEnabled = isEnabled }
+    }
+    
+    private func loadUser<M: UserManager>(by manager: M) {
+        state = .loading
+        manager.loadFromFile {[weak self] result in
+            DispatchQueue.main.async {
+                guard let controller = self else { return }
+                
+                controller.currentUser = result.user
+                controller.delegate?.userDidChange(newUser: result.user)
+                controller.initUserFields()
+                controller.state = .viewing
+            }
+        }
+    }
+
+    private func saveUser<M: UserManager>(by manager: M) {
+        state = .saving
+        manager.saveToFile(
+            data: .init(
+                fullName: fullNameTextField.text ?? "",
+                description: descriptionTextView.text,
+                avatar: userAvatarView.avatar
+            )
+        ) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let controller = self else { return }
+
+                controller.currentUser = result.user
+                controller.delegate?.userDidChange(newUser: result.user)
+                
+                if result.withErrors {
+                    let messages = result.errors.joined(separator: "\r\n")
+                    let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
+                        controller.setEditing(false, animated: true)
+                    })
+                    let repeatButton = UIAlertAction(title: "Повторить", style: .default, handler: {_ in
+                        controller.saveUser(by: manager)
+                    })
+
+                    controller.openAlert(title: "Ошибка сохранения", message: messages, buttons: [
+                        okButton,
+                        repeatButton
+                    ])
+                } else {
+                    controller.openAlert(title: "Сохранено успешно", message: "")
+                    controller.setEditing(false, animated: true)
+                }
+            }
+        }
+    }
+    
     
     // MARK: - Inteface Actions
     @IBAction func editAvatarButtonDidTap(_ sender: UIButton) {
@@ -88,6 +237,50 @@ class UserViewController: UIViewController {
     @objc func closeModal() {
         dismiss(animated: true, completion: nil)
     }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        state = editing ? .editing : .viewing
+        initUserFields()
+    }
+    
+    @IBAction func saveByGCD() {
+        saveUser(by: GCDUserManager.shared)
+    }
+    
+    @IBAction func saveByOperations() {
+        saveUser(by: OperationsUserManager.shared)
+    }
+    
+    @IBAction func fullNameDidChange(_ sender: Any) {
+        updateSaveButtons()
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame: CGRect = keyboardValue.cgRectValue
+        let keyboardViewEndFrame: CGRect = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            scrollView.contentInset = .zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+    }
+}
+
+extension UserViewController: UITextFieldDelegate, UITextViewDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        return updatedText.count <= 24
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        updateSaveButtons()
+    }
 }
 
 // MARK: - Work with ImagePicker
@@ -113,11 +306,12 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
         imagePicker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[.originalImage] as? UIImage else {
-            openErrorAlert(title: "Изображение", message: "Image not found!")
+            openAlert(title: "Изображение", message: "Image not found!")
             return
         }
-        currentUser?.avatar = selectedImage.jpegData(compressionQuality: 1)
-        initUserFields()
+        guard let user = currentUser else { return }
+        userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: selectedImage.jpegData(compressionQuality: 1)))
+        updateSaveButtons()
     }
         
     private func requestCameraPermission(_ openImagePicker: @escaping () -> Void) {
@@ -131,13 +325,13 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
                         if granted {
                             openImagePicker()
                         } else {
-                            self.openErrorAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+                            self.openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
                         }
                     }
                 }
             
             default:
-                openErrorAlert(title: "Камера", message: "Доступ к камере не предоставлен")
+                openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
                 return
         }
     }

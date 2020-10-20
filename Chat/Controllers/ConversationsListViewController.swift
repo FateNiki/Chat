@@ -11,8 +11,13 @@ import UIKit
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
-    private let conversations = conversationsMock
-    private let currentUser = mockUser
+    private let conversations: [Conversation] = MessagesMock.conversations
+    private var currentUser: User? {
+        didSet {
+            guard let user = currentUser else { return }
+            userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+        }
+    }
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -27,18 +32,25 @@ class ConversationsListViewController: UIViewController {
         let uaView = UserAvatarView()
         uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        uaView.configure(with: UserAvatarModel(initials: currentUser.initials, avatar: currentUser.avatar))
         uaView.delegate = self
         return uaView
     }()
-    private lazy var themesController: ThemesViewController = {
+    
+    // MARK: - Controllers
+    private var userViewController: UserViewController {
+        let uvController = UserViewController()
+        uvController.delegate = self
+        uvController.currentUser = currentUser
+        return uvController
+    }
+    private var themesController: ThemesViewController {
         let themesController = ThemesViewController()
 //        themesController.delegate = self
         themesController.selectThemeClosure = { [weak self] (themeName) in
             self?.pickTheme(with: themeName)
         }
         return themesController
-    }()
+    }
     
     
     // MARK: - Lifecycle
@@ -55,8 +67,14 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Config UI
     private func setupView() {
-        initTableView()
-        initNavigation()
+        self.initTableView()
+        self.initNavigation()
+        GCDUserManager.shared.loadFromFile { result in
+            DispatchQueue.main.async {
+                self.currentUser = result.user
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.userAvatarView)
+            }
+        }
     }
     
     private func updateView() {
@@ -70,8 +88,9 @@ class ConversationsListViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = "Tinkoff Chat"
         
-        let userButton = UIBarButtonItem(customView: userAvatarView)
-        navigationItem.rightBarButtonItem = userButton
+        let userLoadingView = UIActivityIndicatorView()
+        userLoadingView.startAnimating()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: userLoadingView)
         
         let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openThemeChoice))
         navigationItem.leftBarButtonItem = settingButton
@@ -79,11 +98,9 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Actions
     func openUserEdit() -> Void {
-        let userController = UserViewController()
-        userController.currentUser = currentUser
+        guard currentUser != nil else { return }
         
-        let userNavigationController = UINavigationController(rootViewController: userController)
-        
+        let userNavigationController = UINavigationController(rootViewController: userViewController)
         self.present(userNavigationController, animated: true, completion: nil)
     }
     
@@ -153,11 +170,20 @@ extension ConversationsListViewController: UserAvatarViewDelegate {
 
 extension ConversationsListViewController: ThemePickerDelegate {
     func pickTheme(with name: ThemeName) {
-        ThemeManager.shared.saveTheme(with: name)
-        tableView.reloadData()
-        
-        let theme = name.theme
-        navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+        ThemeManager.shared.saveToFile(data: name) { savedTheme in
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+                
+                let theme = savedTheme.theme
+                self?.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+                self?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+            }
+        }
+    }
+}
+
+extension ConversationsListViewController: UserViewDelegate {
+    func userDidChange(newUser: User) {
+        currentUser = newUser
     }
 }

@@ -12,13 +12,15 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Interface constants
     @objc dynamic var incomeMessageCellColor: UIColor?
     @objc dynamic var incomeMessageTextColor: UIColor?
+    @objc dynamic var incomeDateTextColor: UIColor?
     @objc dynamic var outcomeMessageCellColor: UIColor?
     @objc dynamic var outcomeMessageTextColor: UIColor?
+    @objc dynamic var outcomeDateTextColor: UIColor?
 
     private static let labelCornerRadius = CGFloat(10)
     
     // MARK: - Outlets
-    @IBOutlet weak var messageLabel: PaddingLabel!
+    @IBOutlet weak var messageContainer: MessageView!
     @IBOutlet weak var incomePadding: NSLayoutConstraint!
     @IBOutlet weak var outcomePadding: NSLayoutConstraint!
     
@@ -30,15 +32,9 @@ class MessageTableViewCell: UITableViewCell {
     }
     
     // MARK: - Lifecycle
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        messageLabel.layer.cornerRadius = Self.labelCornerRadius
-        messageLabel.clipsToBounds = true
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        messageLabel.text = nil
+        messageContainer.configure(with: nil)
     }
     
     override func layoutSubviews() {
@@ -49,8 +45,10 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Interface configuring
     private func updateView() -> Void {
         contentView.backgroundColor = backgroundColor
-        messageLabel.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor
-        messageLabel.textColor = messageIsIncome ? incomeMessageTextColor : outcomeMessageTextColor
+        
+        messageContainer.backgroundColor = messageIsIncome ? incomeMessageCellColor : outcomeMessageCellColor
+        messageContainer.textColor = messageIsIncome ? incomeMessageTextColor : outcomeMessageTextColor
+        messageContainer.dateColor = messageIsIncome ? incomeDateTextColor : outcomeDateTextColor
         
         incomePadding.isActive = messageIsIncome
         outcomePadding.isActive = !messageIsIncome
@@ -59,7 +57,7 @@ class MessageTableViewCell: UITableViewCell {
 
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
-        messageLabel.text = "\(model.text) | \(model.income ? "income" : "outcome")"
+        messageContainer.configure(with: model)
         messageIsIncome = model.income
     }
 }

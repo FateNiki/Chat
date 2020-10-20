@@ -8,6 +8,10 @@
 
 import Foundation
 
-protocol UserAvatarViewDelegate {
+protocol UserAvatarViewDelegate: class {
     func userAvatarDidTap() -> Void
+}
+
+protocol UserViewDelegate: class {
+    func userDidChange(newUser: User) -> Void
 }
