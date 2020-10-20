@@ -36,7 +36,7 @@ class ConversationViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    lazy var sendMessageView: SendMessageView = {
+    private lazy var sendMessageView: SendMessageView = {
         let smView = SendMessageView()
         smView.translatesAutoresizingMaskIntoConstraints = false
         smView.delegate = self
@@ -58,8 +58,8 @@ class ConversationViewController: UIViewController {
         initNavigation()
         configKeyboard()
         var needAnimation = false
-        messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery) {
-            self.scrollToBottom(animated: needAnimation)
+        messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery) { [weak self] in
+            self?.scrollToBottom(animated: needAnimation)
             needAnimation = true
         }
     }
