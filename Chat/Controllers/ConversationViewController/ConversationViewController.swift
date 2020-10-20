@@ -111,8 +111,11 @@ class ConversationViewController: UIViewController {
     }
     
     private func scrollToBottom(animated: Bool) {
-        let lastIndex = IndexPath(row: tableView.numberOfRows(inSection: 0) - 1, section: 0)
-        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: animated)
+        let count = tableView.numberOfRows(inSection: 0)
+        if count > 0 {
+            let lastIndex = IndexPath(row: count - 1, section: 0)
+            tableView.scrollToRow(at: lastIndex, at: .bottom, animated: animated)
+        }
     }
 }
 
