@@ -140,9 +140,9 @@ class ConversationsListViewController: UIViewController {
     @objc func openCreateChannelAlert() {
         let createAlert = UIAlertController(title: "Новый канал", message: "Введите название нового канала", preferredStyle: .alert)
         createAlert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
-        createAlert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak createAlert] (_) in
+        createAlert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak createAlert, weak self] (_) in
             guard let textField = createAlert?.textFields?[0], let text = textField.text else { return }
-            self.createChannel(with: text)
+            self?.createChannel(with: text)
         })
         createAlert.addTextField(configurationHandler: nil)
         present(createAlert, animated: true, completion: nil)
