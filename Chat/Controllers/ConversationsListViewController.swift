@@ -95,7 +95,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func initNavigation() {
-        navigationItem.title = "Tinkoff Chat"
+        navigationItem.title = "Channels"
         
         let userLoadingView = UIActivityIndicatorView()
         userLoadingView.startAnimating()
@@ -139,8 +139,8 @@ class ConversationsListViewController: UIViewController {
     
     @objc func openCreateChannelAlert() {
         let createAlert = UIAlertController(title: "Новый канал", message: "Введите название нового канала", preferredStyle: .alert)
-        createAlert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
-        createAlert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak createAlert, weak self] (_) in
+        createAlert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        createAlert.addAction(UIAlertAction(title: "Создать", style: .default) { [weak createAlert, weak self] (_) in
             guard let textField = createAlert?.textFields?[0], let text = textField.text else { return }
             self?.createChannel(with: text)
         })
