@@ -143,7 +143,6 @@ class UserViewController: UIViewController {
         fullNameTextField.text = user.fullName
         descriptionTextView.text = user.description
         userAvatarView.configure(with: user.avatarModel())
-        print(#function, Date())
     }
     
     // MARK: - Helpers
