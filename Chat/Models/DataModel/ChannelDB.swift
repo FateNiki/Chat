@@ -12,16 +12,23 @@ import CoreData
 
 @objc(ChannelDB)
 public class ChannelDB: NSManagedObject {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ChannelDB> {
-        return NSFetchRequest<ChannelDB>(entityName: "Channel")
-    }
-
     @NSManaged public var identifier: String?
     @NSManaged public var lastActivity: Date?
     @NSManaged public var lastMessage: String?
     @NSManaged public var name: String?
     @NSManaged public var messages: NSSet?
-
+    
+    convenience init(identifier: String, name: String, lastMessage: String? = nil, lastActivity: Date? = nil, in context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.identifier = identifier
+        self.name = name
+        self.lastMessage = lastMessage
+        self.lastActivity = lastActivity
+    }
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ChannelDB> {
+        return NSFetchRequest<ChannelDB>(entityName: "Channel")
+    }
 }
 
 // MARK: Generated accessors for messages
