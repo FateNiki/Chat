@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DataManager {
+protocol FileDataManager {
     associatedtype ManagerData
     associatedtype ManagerResult
     

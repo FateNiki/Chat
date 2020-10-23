@@ -58,7 +58,7 @@ enum UserSaveError: LocalizedError {
     }
 }
 
-protocol UserManager: class, DataManager where ManagerData == UserManagerData, ManagerResult == UserManagerResult {
+protocol UserManager: class, FileDataManager where ManagerData == UserManagerData, ManagerResult == UserManagerResult {
     var user: User { get set }
 }
 

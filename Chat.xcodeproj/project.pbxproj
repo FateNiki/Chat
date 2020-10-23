@@ -21,7 +21,7 @@
 		5B6C091A2517A3A2007F58E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09192517A3A2007F58E3 /* User.swift */; };
 		5B725872253C6C4800594243 /* FirebaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B725871253C6C4800594243 /* FirebaseDataSource.swift */; };
 		5B72E1442532246D004BECDA /* TurnedOffTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72E1432532246D004BECDA /* TurnedOffTextField.swift */; };
-		5B72E14925322CAA004BECDA /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72E14825322CAA004BECDA /* DataManager.swift */; };
+		5B72E14925322CAA004BECDA /* FileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72E14825322CAA004BECDA /* FileDataManager.swift */; };
 		5B72E14F25322DC9004BECDA /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72E14E25322DC9004BECDA /* UserManager.swift */; };
 		5B74D7A02530718D002C2363 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B74D79F2530718D002C2363 /* MessageView.swift */; };
 		5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */; };
@@ -68,7 +68,7 @@
 		5B6C09192517A3A2007F58E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5B725871253C6C4800594243 /* FirebaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDataSource.swift; sourceTree = "<group>"; };
 		5B72E1432532246D004BECDA /* TurnedOffTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnedOffTextField.swift; sourceTree = "<group>"; };
-		5B72E14825322CAA004BECDA /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		5B72E14825322CAA004BECDA /* FileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDataManager.swift; sourceTree = "<group>"; };
 		5B72E14E25322DC9004BECDA /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		5B74D79F2530718D002C2363 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
@@ -276,8 +276,8 @@
 				5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */,
 				5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */,
 				5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */,
-				5B72E14825322CAA004BECDA /* DataManager.swift */,
 				5BE44805253D9B490015A6AF /* SendMessageViewDelegate.swift */,
+				5B72E14825322CAA004BECDA /* FileDataManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -463,7 +463,7 @@
 				5B0D0D54252B4C2E00CCBB3F /* ThemePickerDelegate.swift in Sources */,
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */,
-				5B72E14925322CAA004BECDA /* DataManager.swift in Sources */,
+				5B72E14925322CAA004BECDA /* FileDataManager.swift in Sources */,
 				5BECAD47251FAACB00141621 /* ConversationsTableViewCell.swift in Sources */,
 				5BCE62952521E03C00107339 /* MessageTableViewCell.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,

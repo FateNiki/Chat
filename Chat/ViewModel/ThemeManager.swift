@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ThemeManager: DataManager {
+class ThemeManager: FileDataManager {
     static let shared = ThemeManager()
     private static let keyForStorage = "currentTheme"
     
