@@ -40,7 +40,7 @@ class ThemeManager: DataManager {
         }
     }
     
-    private func apply() -> Void {
+    private func apply() {
         let theme = currentThemeName.theme
         
         // ThemedView
@@ -63,12 +63,16 @@ class ThemeManager: DataManager {
         UITextField.appearance().backgroundColor = theme.backgroundColor
         UITextField.appearance().textColor = theme.textColor
         
+        // SendMessageView
+        SendMessageView.appearance().backgroundColor = theme.sendMessageBackground
+        SendMessageView.appearance().borderColor = theme.sendMessageBorder
+        ThemedView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).backgroundColor = theme.sendMessageSecondBackground
+        UITextView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).backgroundColor = theme.sendMessageSecondBackground
+        UITextView.appearance(whenContainedInInstancesOf: [SendMessageView.self]).textColor = theme.sendMessageTextColor
         
         // ConversationsTableViewCell
         ConversationsTableViewCell.appearance().backgroundColor = theme.backgroundColor
         ConversationsTableViewCell.appearance().primaryTextColor = theme.textColor
-        ConversationsTableViewCell.appearance().onlineBackgroundColor = theme.onlineConverationCellColor
-        ConversationsTableViewCell.appearance().onlineNameTextColor = theme.onlineConverationCellTextColor
         
         // MessageTableViewCell
         MessageTableViewCell.appearance().backgroundColor = theme.backgroundColor

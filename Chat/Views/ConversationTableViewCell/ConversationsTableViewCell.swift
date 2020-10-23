@@ -24,19 +24,9 @@ class ConversationsTableViewCell: UITableViewCell {
     }()
     
     // MARK: - Interface constants
-    @objc dynamic var onlineBackgroundColor: UIColor? = UIColor(red: 1.00, green: 1.00, blue: 0.85, alpha: 1.00)
-    @objc dynamic var primaryTextColor = UIColor.black
-    @objc dynamic var onlineNameTextColor = UIColor.black
+    @objc dynamic var primaryTextColor: UIColor?
     static let secondaryTextColor = UIColor.lightGray
     static let fontSize: CGFloat = 15
-    
-    // MARK: - Variables
-    private var userIsOnline: Bool = false {
-        didSet {
-            updateViewColors()
-        }
-    }
-
     
     // MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
@@ -45,53 +35,55 @@ class ConversationsTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarView: UserAvatarView!
     
     // MARK: - Lifecycle
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        resetView()
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        nameLabel.text = nil
-        dateLabel.text = nil
-        lastMessageLabel.text = nil
-        avatarView.avatarImageView.image = nil
+        resetView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateViewColors()
+        setViewColors()
     }
     
-    
     // MARK: - Interface configuring
-    private func updateViewColors() -> Void {
-        if (userIsOnline) {
-            contentView.backgroundColor = onlineBackgroundColor
-            nameLabel.textColor = onlineNameTextColor
-        } else {
-            contentView.backgroundColor = backgroundColor
-            nameLabel.textColor = primaryTextColor
-        }
+    private func setViewColors() {
+        contentView.backgroundColor = backgroundColor
+        nameLabel.textColor = primaryTextColor
         lastMessageLabel.textColor = Self.secondaryTextColor
         dateLabel.textColor = Self.secondaryTextColor
+    }
+    
+    private func resetView() {
+        nameLabel.text = nil
+        dateLabel.text = nil
+        lastMessageLabel.text = nil
+        avatarView.configure(with: UserAvatarModel(initials: "", avatar: nil))
     }
 }
 
 extension ConversationsTableViewCell: ConfigurableView {
-    func configure(with model: ConversationCellModel) {
-        userIsOnline = model.isOnline
+    func configure(with model: ChannelCellModel) {
         nameLabel.text = model.name
         avatarView.configure(with: model)
         
-        if model.message.isEmpty {
+        if let message = model.message {
+            lastMessageLabel.text = message
+            lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize)
+        } else {
             lastMessageLabel.text =  "No messages yet"
             lastMessageLabel.font = UIFont.italicSystemFont(ofSize: Self.fontSize)
-        } else {
-            lastMessageLabel.text = model.message
-            lastMessageLabel.font = UIFont.systemFont(ofSize: Self.fontSize, weight: model.hasUnreadMessage ? .heavy : .regular)
         }
         
-        if (!model.message.isEmpty) {
-            if Calendar.current.isDateInToday(model.date) {
-                dateLabel.text = Self.timeFormatter.string(from: model.date)
+        if let date = model.date {
+            if Calendar.current.isDateInToday(date) {
+                dateLabel.text = Self.timeFormatter.string(from: date)
             } else {
-                dateLabel.text = Self.dateFormatter.string(from: model.date)
+                dateLabel.text = Self.dateFormatter.string(from: date)
             }
         } else {
             dateLabel.text = nil

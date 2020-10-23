@@ -7,14 +7,23 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationViewController: UIViewController {
     // MARK: - Constants
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
+    private lazy var messagesRef: CollectionReference = {
+        let db = Firestore.firestore()
+        return db.collection(Channel.firebaseCollectionName)
+            .document(channel.identifier)
+            .collection(Message.firebaseCollectionName)
+    }()
+    private lazy var messagesQuery: Query = messagesRef.order(by: "created", descending: false)
+    private var messageDataSource: FirebaseDataSource<Message>!
 
     // MARK: - Variables
-    var conversation: Conversation?
-    var messages: [Message] = MessagesMock.messages
+    var currentUser: User!
+    var channel: Channel!
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -23,9 +32,18 @@ class ConversationViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.allowsSelection = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
+    private lazy var sendMessageView: SendMessageView = {
+        let smView = SendMessageView()
+        smView.translatesAutoresizingMaskIntoConstraints = false
+        smView.delegate = self
+        return smView
+    }()
+    private var messageViewBottom: NSLayoutConstraint?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,52 +51,93 @@ class ConversationViewController: UIViewController {
         setupView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateView()
-    }
-    
     // MARK: - Interface configuring
     private func setupView() {
+        initSendMessageView()
         initTableView()
         initNavigation()
+        configKeyboard()
+        var needAnimation = false
+        messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery) { [weak self] in
+            self?.scrollToBottom(animated: needAnimation)
+            needAnimation = true
+        }
     }
     
-    private func updateView() {
-        tableView.frame = view.frame
+    private func configKeyboard() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func initSendMessageView() {
+        view.addSubview(sendMessageView)
+        sendMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        sendMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        messageViewBottom = sendMessageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        messageViewBottom!.isActive = true
+        view.backgroundColor = SendMessageView.appearance().backgroundColor
     }
     
     private func initTableView() {
         view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: sendMessageView.topAnchor).isActive = true
     }
     
     private func initNavigation() {
-        navigationItem.title = conversation?.user.fullName ?? "Untitled"
+        navigationItem.title = channel.name
     }
     
+    // MARK: - Inteface Actions
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+
+        let keyboardScreenEndFrame: CGRect = keyboardValue.cgRectValue
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            messageViewBottom?.constant = 0
+        } else {
+            messageViewBottom?.constant = -keyboardScreenEndFrame.height
+        }
+        
+        UIView.animate(withDuration: keyboardDuration) {
+            self.view.layoutIfNeeded()
+            self.scrollToBottom(animated: false)
+        }
+    }
     
+    private func scrollToBottom(animated: Bool) {
+        let count = tableView.numberOfRows(inSection: 0)
+        if count > 0 {
+            let lastIndex = IndexPath(row: count - 1, section: 0)
+            tableView.scrollToRow(at: lastIndex, at: .bottom, animated: animated)
+        }
+    }
 }
 
-
 extension ConversationViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int { 1 }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messages.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messageDataSource.elements.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
-        
-        if let messageCell = cell as? MessageTableViewCell {
-            let message = messages[indexPath.row]
-            messageCell.configure(
-                with: MessageCellModel(
-                    text: message.text,
-                    date: message.date,
-                    income: message.direction == .income
-                )
-            )
+        guard let messageCell = cell as? MessageTableViewCell else {
+            return cell
         }
         
-        return cell
-    }        
+        let message = messageDataSource.elements[indexPath.row]
+        messageCell.configure(with: message.cellModel(for: currentUser))
+        
+        return messageCell
+    }
+}
+
+extension ConversationViewController: SendMessageViewDelegate {
+    func sendMessage(with text: String) {
+        let message = Message(content: text, senderId: currentUser.id, senderName: currentUser.fullName)
+        messagesRef.addDocument(data: message.data)
+    }
 }

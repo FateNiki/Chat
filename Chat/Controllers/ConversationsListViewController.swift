@@ -7,17 +7,23 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
     private let conversationCellIdentifier = String(describing: ConversationsTableViewCell.self)
-    private let conversations: [Conversation] = MessagesMock.conversations
     private var currentUser: User? {
         didSet {
             guard let user = currentUser else { return }
-            userAvatarView.configure(with: UserAvatarModel(initials: user.initials, avatar: user.avatar))
+            userAvatarView.configure(with: user.avatarModel())
         }
     }
+    private lazy var channelsRef: CollectionReference = {
+        let db = Firestore.firestore()
+        return db.collection(Channel.firebaseCollectionName)
+    }()
+    private lazy var channelsQuery = channelsRef
+    private var channelDataSource: FirebaseDataSource<Channel>!
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -51,8 +57,7 @@ class ConversationsListViewController: UIViewController {
         }
         return themesController
     }
-    
-    
+        
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +74,14 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
+        channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: channelsQuery, refresh: nil)
         GCDUserManager.shared.loadFromFile { result in
             DispatchQueue.main.async {
                 self.currentUser = result.user
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.userAvatarView)
+                self.navigationItem.rightBarButtonItems = [
+                    UIBarButtonItem(customView: self.userAvatarView),
+                    UIBarButtonItem(title: "➕", style: .plain, target: self, action: #selector(self.openCreateChannelAlert))
+                ]
             }
         }
     }
@@ -86,7 +95,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func initNavigation() {
-        navigationItem.title = "Tinkoff Chat"
+        navigationItem.title = "Channels"
         
         let userLoadingView = UIActivityIndicatorView()
         userLoadingView.startAnimating()
@@ -96,70 +105,75 @@ class ConversationsListViewController: UIViewController {
         navigationItem.leftBarButtonItem = settingButton
     }
     
-    // MARK: - Actions
-    func openUserEdit() -> Void {
+    // MARK: - Helpers
+    private func createChannel(with name: String) {
+        let newChannelRef = channelsRef.document()
+        let newChannel = Channel(id: newChannelRef.documentID, name: name)
+        newChannelRef.setData(newChannel.data) { [weak self] (error) in
+            if let error = error {
+                self?.openAlert(title: "Ошибка сохранения", message: error.localizedDescription)
+            } else {
+                self?.openChannel(newChannel)
+            }
+        }        
+    }
+    
+    // MARK: - Interface Actions
+    func openUserEdit() {
         guard currentUser != nil else { return }
         
         let userNavigationController = UINavigationController(rootViewController: userViewController)
         self.present(userNavigationController, animated: true, completion: nil)
     }
     
-    func openConversation(with conversation: Conversation) -> Void {
+    func openChannel(_ channel: Channel) {
         let conversationController = ConversationViewController()
-        conversationController.conversation = conversation
+        conversationController.channel = channel
+        conversationController.currentUser = currentUser
         navigationController?.pushViewController(conversationController, animated: true)
     }
     
-    @objc func openThemeChoice() -> Void {
+    @objc func openThemeChoice() {
         navigationController?.pushViewController(themesController, animated: true)
+    }
+    
+    @objc func openCreateChannelAlert() {
+        let createAlert = UIAlertController(title: "Новый канал", message: "Введите название нового канала", preferredStyle: .alert)
+        createAlert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        createAlert.addAction(UIAlertAction(title: "Создать", style: .default) { [weak createAlert, weak self] (_) in
+            guard let textField = createAlert?.textFields?[0], let text = textField.text else { return }
+            self?.createChannel(with: text)
+        })
+        createAlert.addTextField(configurationHandler: nil)
+        present(createAlert, animated: true, completion: nil)
     }
 
 }
 
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
-        openConversation(with: conversation)
+        let channel = channelDataSource.elements[indexPath.row]
+        openChannel(channel)
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return currentUser == nil ? nil : indexPath
     }
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversations.withStatus(online: section == 0).count
+        channelDataSource.elements.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
-        
         if let conversationCell = cell as? ConversationsTableViewCell {
-            let conversation = conversations.withStatus(online: indexPath.section == 0)[indexPath.row]
-            conversationCell.configure(with: .init(
-                name: conversation.user.fullName,
-                message: conversation.lastMessage.text,
-                date: conversation.lastMessage.date,
-                isOnline: conversation.isOnline,
-                hasUnreadMessage: !conversation.lastMessage.isRead,
-                initials: conversation.user.initials,
-                avatar: conversation.user.avatar
-            ))
+            let channel = channelDataSource.elements[indexPath.row]
+            conversationCell.configure(with: channel.cellModel())
         }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-            case 0: return "Online"
-            case 1: return "History"
-            default: return nil
-        }
-        
-    }
-    
 }
 
 extension ConversationsListViewController: UserAvatarViewDelegate {

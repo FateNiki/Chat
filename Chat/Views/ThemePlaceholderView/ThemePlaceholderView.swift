@@ -31,7 +31,6 @@ class ThemePlaceholderView: ThemedView {
             updateTheme()
         }
     }
-
     
     // MARK: - Create from xib
     private func initViewFromXib() -> UIView? {
@@ -57,7 +56,6 @@ class ThemePlaceholderView: ThemedView {
         updateView()
     }
     
-    
     // MARK: - Interface configuring
     private func setupView() {
         guard let xibView = initViewFromXib() else { return }
@@ -67,14 +65,14 @@ class ThemePlaceholderView: ThemedView {
         
         messagesContainer.layer.cornerRadius = 14
         messagesContainer.clipsToBounds = true
-        incomeMessageView.configure(with: MessageCellModel(text: "Income", date: Date(), income: true))
-        outcomeMessageView.configure(with: MessageCellModel(text: "Outcome", date: Date(), income: false))
+        incomeMessageView.configure(with: MessageCellModel(text: "Income", date: Date(), senderName: "Sender", income: true))
+        outcomeMessageView.configure(with: MessageCellModel(text: "Outcome", date: Date(), senderName: "", income: false))
         
         messagesContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
         themeNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
     }
     
-    private func updateView() -> Void {
+    private func updateView() {
         updateActive()
         updateTheme()
     }
@@ -100,7 +98,7 @@ class ThemePlaceholderView: ThemedView {
     }
     
     // MARK: - Actions
-    @objc func selectTheme() -> Void {
+    @objc func selectTheme() {
         if let delegate = delegate, let themeName = themeName {
             delegate.themePlaceholderDidTap(themeName: themeName)
         }

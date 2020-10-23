@@ -9,13 +9,17 @@
 import Foundation
 
 struct Message {
-    enum Direction {
-        case income
-        case outcome
-    }
+    static let firebaseCollectionName = "messages"
+
+    let content: String
+    let created: Date
+    let senderId: String
+    let senderName: String
     
-    let text: String
-    let date: Date
-    let direction: Direction
-    var isRead: Bool
+    init(content: String, created: Date = Date(), senderId: String, senderName: String) {
+        self.content = content
+        self.created = created
+        self.senderId = senderId
+        self.senderName = senderName
+    }
 }

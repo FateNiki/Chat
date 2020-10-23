@@ -9,9 +9,9 @@
 import Foundation
 
 protocol UserAvatarViewDelegate: class {
-    func userAvatarDidTap() -> Void
+    func userAvatarDidTap()
 }
 
 protocol UserViewDelegate: class {
-    func userDidChange(newUser: User) -> Void
+    func userDidChange(newUser: User)
 }

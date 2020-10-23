@@ -27,7 +27,7 @@ struct UserManagerResult {
     var withErrors: Bool { errors.count > 0 }
 }
 
-fileprivate enum FieldFileName: String {
+private enum FieldFileName: String {
     case firstName = "userFirstName.txt"
     case lastName = "userLastName.txt"
     case description = "userDescription.txt"
@@ -42,14 +42,14 @@ enum UserSaveError: LocalizedError {
     
     private var errorMessage: String {
         switch self {
-            case let .firstName(message):
-                return "Имя: \(message)"
-            case let .lastName(message):
-                return "Фамилия: \(message)"
-            case let .description(message):
-                return "Описание: \(message)"
-            case let .avatar(message):
-                return "Аватар: \(message)"
+        case let .firstName(message):
+            return "Имя: \(message)"
+        case let .lastName(message):
+            return "Фамилия: \(message)"
+        case let .description(message):
+            return "Описание: \(message)"
+        case let .avatar(message):
+            return "Аватар: \(message)"
         }
     }
     
@@ -69,6 +69,20 @@ extension UserManager {
         return paths[0]
     }
     
+    fileprivate var userId: String {
+        let userIdKey = "userId"
+        if let userId = UserDefaults.standard.value(forKey: userIdKey) as? String {
+            print("old id: \(userId)")
+            return userId
+        } else {
+            let userId = UUID().uuidString
+            UserDefaults.standard.setValue(userId, forKey: userIdKey)
+            UserDefaults.standard.synchronize()
+            print("new id: \(userId)")
+            return userId
+        }
+    }
+    
     fileprivate func loadUserFromFile() -> User {
         let docsDirectory = getDocumentsDirectory()
         let firstNameFile = docsDirectory.appendingPathComponent(FieldFileName.firstName.rawValue)
@@ -76,7 +90,7 @@ extension UserManager {
         let descFile = docsDirectory.appendingPathComponent(FieldFileName.description.rawValue)
         let avatarFile = docsDirectory.appendingPathComponent(FieldFileName.avatar.rawValue)
         
-        var user = User(firstName: "", lastName: "")
+        var user = User(id: self.userId)
         
         if let firstName = try? String(contentsOf: firstNameFile, encoding: .utf8) {
             user.firstName = firstName
@@ -98,7 +112,7 @@ extension UserManager {
         // Слип для эмуляции долгого чтения из файла
         // Пока идет первая загрузка пользователя - отображается UIActivityIndicatorView
         // Можно закомментировать
-        sleep(2)
+//        sleep(2)
         return user
     }
     
@@ -177,7 +191,9 @@ class GCDUserManager: UserManager {
     static let shared = GCDUserManager()
     
     private var errorArray = SafeArray<String>()
-    var user: User = User(firstName: "Unknow", lastName: "Person")
+    lazy var user: User = {
+        return User(id: self.userId)
+    }()
     
     func saveToFile(data: UserManagerData, completion: ((UserManagerResult) -> Void)?) {
         let group = DispatchGroup()
@@ -297,7 +313,9 @@ class OperationsUserManager: UserManager {
         }
     }
     
-    var user: User = User(firstName: "Unknow", lastName: "Person")
+    lazy var user: User = {
+        return User(id: self.userId)
+    }()
     
     func saveToFile(data: UserManagerData, completion: ((UserManagerResult) -> Void)?) {
         let names = data.fullName.split(separator: Character(" "), maxSplits: 1, omittingEmptySubsequences: true)
@@ -349,5 +367,3 @@ class OperationsUserManager: UserManager {
     
     private init() { }
 }
-
-
