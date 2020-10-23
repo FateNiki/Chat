@@ -35,10 +35,7 @@ class CoreDataStack {
         
         do {
             // TODO отдельная очередь
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                               configurationName: nil,
-                                               at: storeUrl,
-                                               options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeUrl, options: nil)
         } catch {
             fatalError(error.localizedDescription)
         }
