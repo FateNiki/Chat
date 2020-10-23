@@ -144,16 +144,9 @@
 				5B6C09192517A3A2007F58E3 /* User.swift */,
 				5BB6876C2539BCB30040F1AF /* Channel.swift */,
 				5BECAD51251FC5AB00141621 /* Message.swift */,
+				5B8586532527BA0800DCCD63 /* Theme.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		5B74D79D25307159002C2363 /* MessageView */ = {
-			isa = PBXGroup;
-			children = (
-				5B74D79F2530718D002C2363 /* MessageView.swift */,
-			);
-			path = MessageView;
 			sourceTree = "<group>";
 		};
 		5B79C34D251FA41900963D06 /* Controllers */ = {
@@ -171,11 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */,
-				5B8586532527BA0800DCCD63 /* Theme.swift */,
-				5B72E14E25322DC9004BECDA /* UserManager.swift */,
 				5B411CD92535DBEC001859F0 /* SafeArray.swift */,
-				5B411CDE2536044D001859F0 /* ThemeManager.swift */,
-				5B725871253C6C4800594243 /* FirebaseDataSource.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -202,12 +191,13 @@
 		5BC2B73E250D4D770062C724 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				5BECAD4A251FB94B00141621 /* Protocols */,
 				5BECAD44251FAA9900141621 /* Views */,
 				5B79C34D251FA41900963D06 /* Controllers */,
+				5BECAD4A251FB94B00141621 /* Delegates */,
+				5B5A8CEB251A5224000A541A /* Extensions */,
 				5B6C09182517A389007F58E3 /* Models */,
 				5B85865D2527BAE400DCCD63 /* ViewModel */,
-				5B5A8CEB251A5224000A541A /* Extensions */,
+				5BF9AE9A2542FBB3008E4CF4 /* Services */,
 				5BC2B73F250D4D770062C724 /* AppDelegate.swift */,
 				5BC2B745250D4D770062C724 /* Main.storyboard */,
 				5BC2B748250D4D7C0062C724 /* Assets.xcassets */,
@@ -257,29 +247,28 @@
 		5BECAD44251FAA9900141621 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B74D79D25307159002C2363 /* MessageView */,
 				5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */,
 				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
 				5BCE62922521E01700107339 /* MessageTableViewCell */,
 				5BE20DFE2520B4C200D73A63 /* ConversationTableViewCell */,
 				5B0D0D50252B431F00CCBB3F /* ThemedView.swift */,
+				5BECAD4B251FB96A00141621 /* ConfigurableView.swift */,
 				5B72E1432532246D004BECDA /* TurnedOffTextField.swift */,
+				5B74D79F2530718D002C2363 /* MessageView.swift */,
 				5BE44802253D837C0015A6AF /* SendMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5BECAD4A251FB94B00141621 /* Protocols */ = {
+		5BECAD4A251FB94B00141621 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				5BECAD4B251FB96A00141621 /* ConfigurableView.swift */,
 				5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */,
 				5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */,
 				5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */,
 				5BE44805253D9B490015A6AF /* SendMessageViewDelegate.swift */,
-				5B72E14825322CAA004BECDA /* FileDataManager.swift */,
 			);
-			path = Protocols;
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		5BEF6A192527B7D600F88572 /* ThemesViewController */ = {
@@ -289,6 +278,17 @@
 				5BEF6A1B2527B7FA00F88572 /* ThemesViewController.xib */,
 			);
 			path = ThemesViewController;
+			sourceTree = "<group>";
+		};
+		5BF9AE9A2542FBB3008E4CF4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5B72E14825322CAA004BECDA /* FileDataManager.swift */,
+				5B411CDE2536044D001859F0 /* ThemeManager.swift */,
+				5B72E14E25322DC9004BECDA /* UserManager.swift */,
+				5B725871253C6C4800594243 /* FirebaseDataSource.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		6E790EE7E43EA5841CAD02D5 /* Frameworks */ = {
