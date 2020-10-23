@@ -27,6 +27,7 @@
 		5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */; };
 		5B8586542527BA0800DCCD63 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8586532527BA0800DCCD63 /* Theme.swift */; };
 		5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6876C2539BCB30040F1AF /* Channel.swift */; };
+		5BBE67E32543081700545557 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BBE67E12543081700545557 /* Chat.xcdatamodeld */; };
 		5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B73F250D4D770062C724 /* AppDelegate.swift */; };
 		5BC2B747250D4D770062C724 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B745250D4D770062C724 /* Main.storyboard */; };
 		5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B748250D4D7C0062C724 /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		5B8586532527BA0800DCCD63 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5BB6876C2539BCB30040F1AF /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		5BBE67E22543081700545557 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		5BC2B73C250D4D770062C724 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC2B73F250D4D770062C724 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BC2B746250D4D770062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		5B6C09182517A389007F58E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5BBE67E02543080A00545557 /* DataModel */,
 				5B6C09192517A3A2007F58E3 /* User.swift */,
 				5BB6876C2539BCB30040F1AF /* Channel.swift */,
 				5BECAD51251FC5AB00141621 /* Message.swift */,
@@ -167,6 +170,14 @@
 				5B411CD92535DBEC001859F0 /* SafeArray.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5BBE67E02543080A00545557 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				5BBE67E12543081700545557 /* Chat.xcdatamodeld */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		5BC2B733250D4D770062C724 = {
@@ -472,6 +483,7 @@
 				5B72E14F25322DC9004BECDA /* UserManager.swift in Sources */,
 				5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */,
 				5BE8FA1C252B62A200B06809 /* ThemePlaceholderDelegate.swift in Sources */,
+				5BBE67E32543081700545557 /* Chat.xcdatamodeld in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
 				5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */,
 				5B8586542527BA0800DCCD63 /* Theme.swift in Sources */,
@@ -681,6 +693,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5BBE67E12543081700545557 /* Chat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5BBE67E22543081700545557 /* Chat.xcdatamodel */,
+			);
+			currentVersion = 5BBE67E22543081700545557 /* Chat.xcdatamodel */;
+			path = Chat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5BC2B734250D4D770062C724 /* Project object */;
 }
