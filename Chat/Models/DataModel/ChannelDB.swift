@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 @objc(ChannelDB)
 public class ChannelDB: NSManagedObject {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ChannelDB> {
