@@ -66,5 +66,26 @@ class CoreDataStack {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return context
     }
+    
+    // MARK: - Save
+    func performSave(_ block: (NSManagedObjectContext) -> Void) {
+        let context = saveContext()
+        context.performAndWait {
+            block(context)
+            if context.hasChanges {
+                do {
+                    try performSave(in: context)                    
+                } catch { assertionFailure(error.localizedDescription)}
+            }
+        }
+        
+    }
+    
+    private func performSave(in context: NSManagedObjectContext) throws {
+        try context.save()
+        if let parent = context.parent {
+            try performSave(in: parent)
+        }
+    }
 
 }
