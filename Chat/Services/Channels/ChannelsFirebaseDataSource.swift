@@ -77,4 +77,16 @@ class ChannelsFirebaseDataSource {
             }
         }
     }
+    
+    public func createChannel(with name: String, _ completion: @escaping (Channel?, Error?) -> Void) {
+        let newChannelRef = channelsRef.document()
+        let newChannel = Channel(id: newChannelRef.documentID, name: name)
+        newChannelRef.setData(newChannel.data) { (error) in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                completion(newChannel, nil)
+            }
+        }
+    }
 }

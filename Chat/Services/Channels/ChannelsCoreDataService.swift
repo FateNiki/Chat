@@ -30,11 +30,6 @@ class ChannelsCoreDataService: ChannelsService {
     }
     
     public func createChannel(with name: String, _ completion: @escaping (Channel?, Error?) -> Void) {
-//        let newChannelRef = channelsRef.document()
-//        let newChannel = Channel(id: newChannelRef.documentID, name: name)
-//        newChannelRef.setData(newChannel.data) { [weak self] (error) in
-//
-//        }
-        completion(nil, TestError(message: "TEST CREATE CHANNEL"))
+        firebaseDataSource.createChannel(with: name, completion)
     }
 }
