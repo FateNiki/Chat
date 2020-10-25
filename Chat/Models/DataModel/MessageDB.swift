@@ -26,7 +26,6 @@ public class MessageDB: NSManagedObject {
         self.senderName = senderName
     }
     
-    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageDB> {
         return NSFetchRequest<MessageDB>(entityName: "Message")
     }
