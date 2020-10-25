@@ -153,12 +153,12 @@ class UserViewController: UIViewController {
     
     private func loadUser<M: UserManager>(by manager: M) {
         state = .loading
-        manager.loadFromFile {[weak self] result in
+        manager.loadFromFile { [weak self] (result, _) in
             DispatchQueue.main.async {
-                guard let controller = self else { return }
+                guard let controller = self, let user = result else { return }
                 
-                controller.currentUser = result.user
-                controller.delegate?.userDidChange(newUser: result.user)
+                controller.currentUser = user
+                controller.delegate?.userDidChange(newUser: user)
                 controller.initUserFields()
                 controller.state = .viewing
             }
@@ -173,15 +173,17 @@ class UserViewController: UIViewController {
                 description: descriptionTextView.text,
                 avatar: userAvatarView.avatar
             )
-        ) { [weak self] result in
+        ) { [weak self] (result, errors) in
             DispatchQueue.main.async {
                 guard let controller = self else { return }
 
-                controller.currentUser = result.user
-                controller.delegate?.userDidChange(newUser: result.user)
+                if let user = result {
+                    controller.currentUser = user
+                    controller.delegate?.userDidChange(newUser: user)
+                }
                 
-                if result.withErrors {
-                    let messages = result.errors.joined(separator: "\r\n")
+                if let errors = errors {
+                    let messages = errors.joined(separator: "\r\n")
                     let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
                         controller.setEditing(false, animated: true)
                     })

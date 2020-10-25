@@ -11,7 +11,8 @@ import Foundation
 protocol FileDataManager {
     associatedtype ManagerData
     associatedtype ManagerResult
+    associatedtype ManagerError
     
-    func loadFromFile(completion: ((ManagerResult) -> Void)?)
-    func saveToFile(data: ManagerData, completion: ((ManagerResult) -> Void)?)
+    func loadFromFile(completion: ((ManagerResult?, ManagerError?) -> Void)?)
+    func saveToFile(data: ManagerData, completion: ((ManagerResult?, ManagerError?) -> Void)?)
 }

@@ -75,9 +75,10 @@ class ConversationsListViewController: UIViewController {
         self.initTableView()
         self.initNavigation()
         channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: channelsQuery, refresh: nil)
-        GCDUserManager.shared.loadFromFile { result in
+        GCDUserManager.shared.loadFromFile { (result, _) in
+            guard let user = result else { return }
             DispatchQueue.main.async {
-                self.currentUser = result.user
+                self.currentUser = user
                 self.navigationItem.rightBarButtonItems = [
                     UIBarButtonItem(customView: self.userAvatarView),
                     UIBarButtonItem(title: "➕", style: .plain, target: self, action: #selector(self.openCreateChannelAlert))
@@ -184,11 +185,11 @@ extension ConversationsListViewController: UserAvatarViewDelegate {
 
 extension ConversationsListViewController: ThemePickerDelegate {
     func pickTheme(with name: ThemeName) {
-        ThemeManager.shared.saveToFile(data: name) { savedTheme in
+        ThemeManager.shared.saveToFile(data: name) { (savedTheme, _) in
+            guard let theme = savedTheme?.theme else { return }
+
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
-                
-                let theme = savedTheme.theme
                 self?.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
                 self?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
             }

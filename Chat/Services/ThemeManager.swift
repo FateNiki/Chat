@@ -20,7 +20,7 @@ class ThemeManager: FileDataManager {
     
     private init() {}
     
-    public func loadFromFile(completion: ((ThemeName) -> Void)?) {
+    public func loadFromFile(completion: ((ThemeName?, String?) -> Void)?) {
         let storedThemeAsAny = UserDefaults.standard.value(forKey: Self.keyForStorage)
         
         if let storedThemeAsString = storedThemeAsAny as? String,
@@ -29,14 +29,14 @@ class ThemeManager: FileDataManager {
         } else {
             self.currentThemeName = .classic
         }
-        completion?(self.currentThemeName)
+        completion?(self.currentThemeName, nil)
     }
     
-    func saveToFile(data: ThemeName, completion: ((ThemeName) -> Void)?) {
+    func saveToFile(data: ThemeName, completion: ((ThemeName?, String?) -> Void)?) {
         DispatchQueue.global(qos: .userInitiated).async {
             UserDefaults.standard.set(data.rawValue, forKey: Self.keyForStorage)
             self.currentThemeName = data
-            completion?(self.currentThemeName)
+            completion?(self.currentThemeName, nil)
         }
     }
     
