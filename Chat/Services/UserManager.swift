@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// TODO перенести в отдельный файл
 struct TestError: LocalizedError {
     var message: String
     
