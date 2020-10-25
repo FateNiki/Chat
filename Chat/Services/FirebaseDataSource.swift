@@ -16,29 +16,6 @@ protocol FirebaseElement {
     var timestamp: Double { get }
 }
 
-extension Message: FirebaseElement {
-    init?(from data: [String: Any], id: String) {
-        guard let content = data["content"] as? String,
-              let created = data["created"] as? Timestamp,
-              let senderId = data["senderId"] as? String,
-              let senderName = data["senderName"] as? String
-        else { return nil }
-        self.content = content
-        self.created = created.dateValue()
-        self.senderId = senderId
-        self.senderName = senderName
-    }
-    
-    var data: [String: Any] {[
-        "content": content,
-        "created": Timestamp(date: created),
-        "senderId": senderId,
-        "senderName": senderName
-    ]}
-    
-    var timestamp: Double { -created.timeIntervalSince1970 }
-}
-
 class FirebaseDataSource<Element> where Element: FirebaseElement {
     private let collectionsQuery: Query    
     private weak var tableView: UITableView!

@@ -12,14 +12,7 @@ import Firebase
 class ConversationViewController: UIViewController {
     // MARK: - Constants
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
-    private lazy var messagesRef: CollectionReference = {
-        let db = Firestore.firestore()
-        return db.collection(Channel.firebaseCollectionName)
-            .document(channel.identifier)
-            .collection(Message.firebaseCollectionName)
-    }()
-    private lazy var messagesQuery: Query = messagesRef.order(by: "created", descending: false)
-    private var messageDataSource: FirebaseDataSource<Message>!
+    private var messageService: MessagesService!
 
     // MARK: - Variables
     var currentUser: User!
@@ -57,10 +50,13 @@ class ConversationViewController: UIViewController {
         initTableView()
         initNavigation()
         configKeyboard()
-        var needAnimation = false
-        messageDataSource = FirebaseDataSource<Message>(for: tableView, with: messagesQuery) { [weak self] in
-            self?.scrollToBottom(animated: needAnimation)
-            needAnimation = true
+        messageService = MessagesCoreDataService(for: channel) { [weak self] in
+            self?.tableView.reloadData()
+            self?.scrollToBottom(animated: true)
+        }
+        messageService.loadMessages { [weak self] in
+            self?.tableView.reloadData()
+            self?.scrollToBottom(animated: false)
         }
     }
     
@@ -120,7 +116,7 @@ class ConversationViewController: UIViewController {
 }
 
 extension ConversationViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messageDataSource.elements.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messageService.messages.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
@@ -128,7 +124,7 @@ extension ConversationViewController: UITableViewDataSource {
             return cell
         }
         
-        let message = messageDataSource.elements[indexPath.row]
+        let message = messageService.messages[indexPath.row]
         messageCell.configure(with: message.cellModel(for: currentUser))
         
         return messageCell
@@ -137,7 +133,8 @@ extension ConversationViewController: UITableViewDataSource {
 
 extension ConversationViewController: SendMessageViewDelegate {
     func sendMessage(with text: String) {
-        let message = Message(content: text, senderId: currentUser.id, senderName: currentUser.fullName)
-        messagesRef.addDocument(data: message.data)
+        messageService.createMessage(from: currentUser, with: text) { error in
+            print(error.localizedDescription)
+        }
     }
 }

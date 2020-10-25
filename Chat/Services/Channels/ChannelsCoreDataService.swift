@@ -11,20 +11,19 @@ import Foundation
 class ChannelsCoreDataService: ChannelsService {
     private(set) var channels: [Channel] = []
     private(set) var channelsUpdate: () -> Void
-    private lazy var firebaseDataSource: ChannelsFirebaseDataSource = {
-        ChannelsFirebaseDataSource(refresh: { (channels) in
-            self.channels = channels
-            self.channelsUpdate()
-        })
-    }()
+    private var firebaseDataSource: ChannelsFirebaseDataSource!
     
     init(channelsUpdate: @escaping () -> Void) {
         self.channelsUpdate = channelsUpdate
+        self.firebaseDataSource = ChannelsFirebaseDataSource { [weak self] channels in
+            self?.channels = channels
+            self?.channelsUpdate()
+        }
     }
     
     public func loadChannels(_ completion: @escaping () -> Void) {
-        firebaseDataSource.loadChannels { (channels) in
-            self.channels = channels
+        firebaseDataSource.loadChannels { [weak self] channels in
+            self?.channels = channels
             completion()
         }
     }
