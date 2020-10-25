@@ -16,28 +16,6 @@ protocol FirebaseElement {
     var timestamp: Double { get }
 }
 
-extension Channel: FirebaseElement {
-    init?(from data: [String: Any], id: String) {
-        guard let name = data["name"] as? String else {
-            return nil
-        }
-        self.name = name
-        self.identifier = id
-        lastMessage = data["lastMessage"] as? String
-        if let timestamp = data["lastActivity"] as? Timestamp {
-            lastActivity = timestamp.dateValue()
-        } else {
-            lastActivity = nil
-        }
-    }
-    
-    var data: [String: Any] {
-        ["name": name]
-    }
-    
-    var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? 0 }
-}
-
 extension Message: FirebaseElement {
     init?(from data: [String: Any], id: String) {
         guard let content = data["content"] as? String,
