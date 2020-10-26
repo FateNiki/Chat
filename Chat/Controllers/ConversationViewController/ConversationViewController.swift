@@ -54,7 +54,7 @@ class ConversationViewController: UIViewController {
             self?.tableView.reloadData()
             self?.scrollToBottom(animated: true)
         }
-        messageService.loadMessages { [weak self] in
+        messageService.getMessages { [weak self] in
             self?.tableView.reloadData()
             self?.scrollToBottom(animated: false)
         }

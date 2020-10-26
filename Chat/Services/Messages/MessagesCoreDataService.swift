@@ -10,18 +10,18 @@ import Foundation
 
 class MessagesCoreDataService: MessagesService {
     private(set) var messages: [Message] = []
-    private(set) var messagesUpdate: () -> Void
+    private(set) var messagesDidUpdate: () -> Void
     private var apiRepository: MessagesApiRepository!
     
     init(for channel: Channel, messagesUpdate: @escaping () -> Void) {
-        self.messagesUpdate = messagesUpdate
+        self.messagesDidUpdate = messagesUpdate
         self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] messages in
             self?.messages = messages
-            self?.messagesUpdate()
+            self?.messagesDidUpdate()
         }
     }
     
-    func loadMessages(_ completion: @escaping () -> Void) {
+    func getMessages(_ completion: @escaping () -> Void) {
         apiRepository.loadMessages { [weak self] messages in
             self?.messages = messages
             completion()

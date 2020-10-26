@@ -10,9 +10,9 @@ import Foundation
 
 protocol MessagesService: class {
     var messages: [Message] { get }
-    var messagesUpdate: () -> Void { get }
+    var messagesDidUpdate: () -> Void { get }
     
-    func loadMessages(_ completion: @escaping() -> Void)
+    func getMessages(_ loadCallback: @escaping() -> Void)
     
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
