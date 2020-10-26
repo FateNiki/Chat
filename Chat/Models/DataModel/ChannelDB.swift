@@ -31,6 +31,18 @@ public class ChannelDB: NSManagedObject {
     }
 }
 
+extension Channel {
+    init?(from channelDB: ChannelDB) {
+        guard let identifier = channelDB.identifier,
+              let name = channelDB.name else { return nil }
+        
+        self.identifier = identifier
+        self.name = name
+        self.lastMessage = channelDB.lastMessage
+        self.lastActivity = channelDB.lastActivity
+    }
+}
+
 // MARK: Generated accessors for messages
 extension ChannelDB {
 
