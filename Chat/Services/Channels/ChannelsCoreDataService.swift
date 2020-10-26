@@ -12,25 +12,39 @@ class ChannelsCoreDataService: ChannelsService {
     private(set) var channels: [Channel] = []
     private(set) var channelsDidUpdate: () -> Void
     
-    private let cacheService = ChannelsCoreDataCacheService()
+    private var cacheService: ChannelsCacheService!
     private var apiRepository: ChannelsApiRepository!
     
     init(channelsUpdate: @escaping () -> Void) {
         self.channelsDidUpdate = channelsUpdate
+        
+        self.cacheService = ChannelsCoreDataCacheService { [weak self] cacheChannels in
+            guard let self = self else { return }
+            self.channels = cacheChannels
+            self.channelsDidUpdate()
+        }
+        
         self.apiRepository = ChannelsFirebaseDataSource { [weak self] channels in
-            self?.channels = channels
-            self?.channelsDidUpdate()
+            self?.cacheService.syncChannels(channels)
         }
     }
     
-    public func getChannels(_ completion: @escaping () -> Void) {
+    private func getChannelsFromServer() {
         apiRepository.loadChannels { [weak self] channels in
-            self?.channels = channels
-            completion()
+            self?.cacheService.syncChannels(channels)
         }
     }
     
-    public func createChannel(with name: String, _ completion: @escaping (Channel?, Error?) -> Void) {
-        apiRepository.createChannel(with: name, completion)
+    public func getChannels(_ loadCallback: @escaping () -> Void) {
+        cacheService.getChannels { [weak self] cacheChannels in
+            guard let self = self else { return }
+            self.channels = cacheChannels
+            loadCallback()
+            self.getChannelsFromServer()
+        }
+    }
+    
+    public func createChannel(with name: String, _ createCallback: @escaping (Channel?, Error?) -> Void) {
+        apiRepository.createChannel(with: name, createCallback)
     }
 }

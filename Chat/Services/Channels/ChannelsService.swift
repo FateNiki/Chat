@@ -12,9 +12,9 @@ protocol ChannelsService: class {
     var channels: [Channel] { get }
     var channelsDidUpdate: () -> Void { get }
     
-    func getChannels(_ completion: @escaping() -> Void)
+    func getChannels(_ loadCallback: @escaping() -> Void)
     
-    func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
+    func createChannel(with name: String, _ createCallback: @escaping(Channel?, Error?) -> Void)
 }
 
 protocol ChannelsApiRepository: class {

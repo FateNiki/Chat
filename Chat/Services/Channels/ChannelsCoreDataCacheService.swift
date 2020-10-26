@@ -9,12 +9,18 @@
 import Foundation
 
 class ChannelsCoreDataCacheService: ChannelsCacheService {
+    private var cacheDidChange: ([Channel]) -> Void
+    
+    init(changeCallback: @escaping ([Channel]) -> Void) {
+        self.cacheDidChange = changeCallback
+    }
+    
     func getChannels(_ completion: @escaping ([Channel]) -> Void) {
         completion([Channel]())
     }
     
     func syncChannels(_ channels: [Channel]) {
         print("sync \(channels.count) channels")
-        
+        self.cacheDidChange(channels)
     }
 }
