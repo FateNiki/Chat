@@ -66,13 +66,11 @@ extension UserManager {
     fileprivate var userId: String {
         let userIdKey = "userId"
         if let userId = UserDefaults.standard.value(forKey: userIdKey) as? String {
-            print("old id: \(userId)")
             return userId
         } else {
             let userId = UUID().uuidString
             UserDefaults.standard.setValue(userId, forKey: userIdKey)
             UserDefaults.standard.synchronize()
-            print("new id: \(userId)")
             return userId
         }
     }
