@@ -11,24 +11,24 @@ import Foundation
 class ChannelsCoreDataService: ChannelsService {
     private(set) var channels: [Channel] = []
     private(set) var channelsUpdate: () -> Void
-    private var firebaseDataSource: ChannelsFirebaseDataSource!
+    private var apiRepository: ChannelsApiRepository!
     
     init(channelsUpdate: @escaping () -> Void) {
         self.channelsUpdate = channelsUpdate
-        self.firebaseDataSource = ChannelsFirebaseDataSource { [weak self] channels in
+        self.apiRepository = ChannelsFirebaseDataSource { [weak self] channels in
             self?.channels = channels
             self?.channelsUpdate()
         }
     }
     
     public func loadChannels(_ completion: @escaping () -> Void) {
-        firebaseDataSource.loadChannels { [weak self] channels in
+        apiRepository.loadChannels { [weak self] channels in
             self?.channels = channels
             completion()
         }
     }
     
     public func createChannel(with name: String, _ completion: @escaping (Channel?, Error?) -> Void) {
-        firebaseDataSource.createChannel(with: name, completion)
+        apiRepository.createChannel(with: name, completion)
     }
 }

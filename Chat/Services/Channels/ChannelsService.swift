@@ -16,3 +16,8 @@ protocol ChannelsService: class {
     
     func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
 }
+
+protocol ChannelsApiRepository {
+    func loadChannels(_ completion: @escaping([Channel]) -> Void)
+    func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
+}

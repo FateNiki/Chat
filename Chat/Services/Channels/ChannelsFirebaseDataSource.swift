@@ -30,7 +30,7 @@ extension Channel {
     var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? 0 }
 }
 
-class ChannelsFirebaseDataSource {
+class ChannelsFirebaseDataSource: ChannelsApiRepository {    
     private var channels = [Channel]()
     private var listener: ListenerRegistration?
     private let refreshCallback: ([Channel]) -> Void
