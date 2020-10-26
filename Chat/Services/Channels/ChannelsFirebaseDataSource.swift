@@ -57,7 +57,7 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
     private func setChannels(from snapshot: QuerySnapshot) {
         self.channels = snapshot.documents.compactMap { docSnapshot in
             Channel(from: docSnapshot.data(), id: docSnapshot.documentID)
-        }.sorted { $0.timestamp > $1.timestamp }
+        }
     }
     
     public func loadChannels(_ completion: @escaping ([Channel]) -> Void) {
