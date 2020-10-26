@@ -60,7 +60,7 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
         removeListener()
         var queryRef: Query = messagesRef
         if let message = message {
-            queryRef = queryRef.whereField("created", isGreaterThan: Timestamp(date: message.created))
+            queryRef = queryRef.whereField("created", isGreaterThan: Timestamp(date: message.created.addingTimeInterval(1)))
         }
         listener = queryRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
