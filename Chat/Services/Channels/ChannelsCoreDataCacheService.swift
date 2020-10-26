@@ -18,9 +18,8 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     
     func getChannels(_ completion: @escaping ([Channel]) -> Void) {
         print("RETURN cache channels")
-        let context = coreDataStack.mainContext
         do {
-            guard let result = try context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB] else { return }
+            guard let result = try coreDataStack.mainContext.fetch(ChannelDB.fetchRequest()) as? [ChannelDB] else { return }
             completion(result.compactMap { Channel(from: $0)})
         } catch {
             completion([Channel]())
@@ -28,7 +27,16 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     }
     
     func syncChannels(_ channels: [Channel]) {
-        print("SYNC \(channels.count) channels")
-        self.cacheDidChange(channels)
+        coreDataStack.performSave { saveContext in
+            let result = channels.compactMap { channel in
+                ChannelDB(identifier: channel.identifier,
+                          name: channel.name,
+                          lastMessage: channel.lastMessage,
+                          lastActivity: channel.lastActivity,
+                          in: saveContext)
+            }
+            print("SYNC \(result.count) channels")
+            self.cacheDidChange(channels)
+        }
     }
 }
