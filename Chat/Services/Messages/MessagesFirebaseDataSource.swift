@@ -31,7 +31,7 @@ extension Message {
     var timestamp: Double { created.timeIntervalSince1970 }
 }
 
-class MessagesFirebaseDataSource {
+class MessagesFirebaseDataSource: MessagesApiRepository {
     private var messages = [Message]()
     private var listener: ListenerRegistration?
     private let refreshCallback: ([Message]) -> Void
@@ -63,7 +63,7 @@ class MessagesFirebaseDataSource {
         }.sorted { $0.timestamp < $1.timestamp }
     }
     
-    public func loadChannels(_ completion: @escaping ([Message]) -> Void) {
+    public func loadMessages(_ completion: @escaping ([Message]) -> Void) {
         removeListener()
         var load = true
         listener = messagesRef.addSnapshotListener { [weak self] (docsSnapshot, _) in

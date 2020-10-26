@@ -11,25 +11,27 @@ import Foundation
 class MessagesCoreDataService: MessagesService {
     private(set) var messages: [Message] = []
     private(set) var messagesUpdate: () -> Void
-    private var firebaseDataSource: MessagesFirebaseDataSource!
+    private var apiRepository: MessagesApiRepository!
     
     init(for channel: Channel, messagesUpdate: @escaping () -> Void) {
         self.messagesUpdate = messagesUpdate
-        self.firebaseDataSource = MessagesFirebaseDataSource(for: channel) { [weak self] messages in
+        self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] messages in
             self?.messages = messages
             self?.messagesUpdate()
         }
     }
     
     func loadMessages(_ completion: @escaping () -> Void) {
-        firebaseDataSource.loadChannels { [weak self] messages in
+        apiRepository.loadMessages { [weak self] messages in
             self?.messages = messages
             completion()
         }
     }
     
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
-        firebaseDataSource.createMessage(Message(content: text, senderId: sender.id, senderName: sender.fullName), errorCallback)
+        apiRepository.createMessage(
+            Message(content: text, senderId: sender.id, senderName: sender.fullName),
+            errorCallback
+        )
     }
-    
 }

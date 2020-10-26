@@ -16,3 +16,8 @@ protocol MessagesService: class {
     
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
+
+protocol MessagesApiRepository {
+    func loadMessages(_ completion: @escaping([Message]) -> Void)
+    func createMessage(_ message: Message, _ errorCallback: @escaping(Error) -> Void)
+}
