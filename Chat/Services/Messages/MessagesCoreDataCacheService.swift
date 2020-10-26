@@ -47,7 +47,7 @@ class MessagesCoreDataCacheService: MessagesCacheService {
         print("RETURN cache messages")
         do {
             let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: false)]
+            request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: true)]
             guard let channelDB = getChannelDB(for: coreDataStack.mainContext) else {
                 completion([])
                 return
