@@ -24,6 +24,7 @@ public class MessageDB: NSManagedObject {
         self.created = message.created
         self.senderId = message.senderId
         self.senderName = message.senderName
+        self.channel = channel
     }
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageDB> {
