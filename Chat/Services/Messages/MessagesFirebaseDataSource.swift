@@ -32,7 +32,6 @@ extension Message {
 }
 
 class MessagesFirebaseDataSource: MessagesApiRepository {
-    private var messages = [Message]()
     private var listener: ListenerRegistration?
     private let refreshCallback: ([Message]) -> Void
     private var messagesRef: CollectionReference
@@ -57,27 +56,19 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
         self.listener = nil
     }
     
-    private func setMessages(from snapshot: QuerySnapshot) {
-        self.messages = snapshot.documents.compactMap { docSnapshot in
-            Message(from: docSnapshot.data())
-        }.sorted { $0.timestamp < $1.timestamp }
-    }
-    
-    public func loadMessages(_ completion: @escaping ([Message]) -> Void) {
+    public func loadMessages(after message: Message?) {
         removeListener()
-        var load = true
-        listener = messagesRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
+        var queryRef: Query = messagesRef
+        if let message = message {
+            queryRef = queryRef.whereField("created", isGreaterThan: Timestamp(date: message.created))
+        }
+        listener = queryRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
-            self.setMessages(from: snapshot)
             
-            if load {
-                print("LOAD \(String(describing: Message.self))")
-                completion(self.messages)
-                load = false
-            } else {
-                print("UPDATE \(String(describing: Message.self))")
-                self.refreshCallback(self.messages)
-            }
+            let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap { Message(from: $0.document.data()) }
+            self.refreshCallback(newMessages)
+            
+            print("UPDATE \(String(describing: Message.self))")
         }
     }
     

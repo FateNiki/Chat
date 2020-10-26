@@ -18,7 +18,7 @@ public class MessageDB: NSManagedObject {
     @NSManaged public var senderName: String?
     @NSManaged public var channel: ChannelDB?
     
-    convenience init(message: Message, in context: NSManagedObjectContext) {
+    convenience init(message: Message, for channel: ChannelDB? = nil, in context: NSManagedObjectContext) {
         self.init(context: context)
         self.content = message.content
         self.created = message.created

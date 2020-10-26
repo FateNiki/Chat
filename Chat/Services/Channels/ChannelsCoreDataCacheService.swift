@@ -28,6 +28,7 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     @objc private func observeNotificatino(_ notification: Notification) {
         guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
         
+        print("NOTIFY Channels")
         if let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>, !insertedObjects.isEmpty {
             print("\tinsertedObjects", insertedObjects.count)
             getChannels(self.cacheDidChange)

@@ -10,21 +10,31 @@ import Foundation
 
 class MessagesCoreDataService: MessagesService {
     private(set) var messages: [Message] = []
-    private(set) var messagesDidUpdate: () -> Void
+    private(set) var messagesDidAdd: () -> Void
+    
+    private var cacheService: MessagesCacheService!
     private var apiRepository: MessagesApiRepository!
     
-    init(for channel: Channel, messagesUpdate: @escaping () -> Void) {
-        self.messagesDidUpdate = messagesUpdate
-        self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] messages in
-            self?.messages = messages
-            self?.messagesDidUpdate()
+    init(for channel: Channel, messagesDidAdd: @escaping () -> Void) {
+        self.messagesDidAdd = messagesDidAdd
+        
+        self.cacheService = MessagesCoreDataCacheService(for: channel) { [weak self] cacheMessages in
+            guard let self = self else { return }
+            self.messages = cacheMessages
+            self.messagesDidAdd()
+        }
+        
+        self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] newMessages in
+            self?.cacheService.syncMessages(newMessages: newMessages)
         }
     }
     
     func getMessages(_ completion: @escaping () -> Void) {
-        apiRepository.loadMessages { [weak self] messages in
-            self?.messages = messages
+        cacheService.getMessages { [weak self] cacheMessages in
+            guard let self = self else { return }
+            self.messages = cacheMessages
             completion()
+            self.apiRepository.loadMessages(after: self.messages.last)
         }
     }
     
