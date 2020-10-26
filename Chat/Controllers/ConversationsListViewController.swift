@@ -70,7 +70,7 @@ class ConversationsListViewController: UIViewController {
         self.initTableView()
         self.initNavigation()
         channelsService = ChannelsCoreDataService { self.tableView.reloadData() }
-        channelsService.loadChannels {
+        channelsService.getChannels {
             self.tableView.reloadData()
         }
 

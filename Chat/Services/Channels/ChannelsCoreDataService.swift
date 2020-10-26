@@ -10,18 +10,20 @@ import Foundation
 
 class ChannelsCoreDataService: ChannelsService {
     private(set) var channels: [Channel] = []
-    private(set) var channelsUpdate: () -> Void
+    private(set) var channelsDidUpdate: () -> Void
+    
+    private let cacheService = ChannelsCoreDataCacheService()
     private var apiRepository: ChannelsApiRepository!
     
     init(channelsUpdate: @escaping () -> Void) {
-        self.channelsUpdate = channelsUpdate
+        self.channelsDidUpdate = channelsUpdate
         self.apiRepository = ChannelsFirebaseDataSource { [weak self] channels in
             self?.channels = channels
-            self?.channelsUpdate()
+            self?.channelsDidUpdate()
         }
     }
     
-    public func loadChannels(_ completion: @escaping () -> Void) {
+    public func getChannels(_ completion: @escaping () -> Void) {
         apiRepository.loadChannels { [weak self] channels in
             self?.channels = channels
             completion()

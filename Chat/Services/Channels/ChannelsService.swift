@@ -10,14 +10,20 @@ import Foundation
 
 protocol ChannelsService: class {
     var channels: [Channel] { get }
-    var channelsUpdate: () -> Void { get }
+    var channelsDidUpdate: () -> Void { get }
     
-    func loadChannels(_ completion: @escaping() -> Void)
+    func getChannels(_ completion: @escaping() -> Void)
     
     func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
 }
 
-protocol ChannelsApiRepository {
+protocol ChannelsApiRepository: class {
     func loadChannels(_ completion: @escaping([Channel]) -> Void)
     func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
+}
+
+protocol ChannelsCacheService: class {
+    func getChannels(_ completion: @escaping([Channel]) -> Void)
+    
+    func syncChannels(_ channels: [Channel])
 }
