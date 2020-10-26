@@ -26,8 +26,7 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     }
     
     @objc private func observeNotificatino(_ notification: Notification) {
-        guard let context = notification.object as? NSManagedObjectContext else { return }
-        guard context.parent == nil else { return }
+        guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
         
         if let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>, !insertedObjects.isEmpty {
             print("\tinsertedObjects", insertedObjects.count)
@@ -60,7 +59,7 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     
     func syncChannels(_ channels: [Channel]) {
         coreDataStack.performSave { saveContext in
-            print("SYNC START")                        
+            print("SYNC START")
             channels.forEach { channel in
                 _ = ChannelDB(identifier: channel.identifier,
                           name: channel.name,
