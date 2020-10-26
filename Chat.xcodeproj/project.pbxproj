@@ -42,6 +42,7 @@
 		5BC2B747250D4D770062C724 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B745250D4D770062C724 /* Main.storyboard */; };
 		5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B748250D4D7C0062C724 /* Assets.xcassets */; };
 		5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */; };
+		5BC729C22547335B00A05B88 /* MessagesCoreDataCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC729C12547335B00A05B88 /* MessagesCoreDataCacheService.swift */; };
 		5BCE62952521E03C00107339 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62932521E03C00107339 /* MessageTableViewCell.swift */; };
 		5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE62942521E03C00107339 /* MessageTableViewCell.xib */; };
 		5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */; };
@@ -102,6 +103,7 @@
 		5BC2B748250D4D7C0062C724 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BC2B74B250D4D7C0062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BC2B74D250D4D7C0062C724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BC729C12547335B00A05B88 /* MessagesCoreDataCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCoreDataCacheService.swift; sourceTree = "<group>"; };
 		5BCE62932521E03C00107339 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		5BCE62942521E03C00107339 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationModel.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				5B16E0EB25461B4D00E0DF86 /* MessagesService.swift */,
 				5B16E0EF25461BAD00E0DF86 /* MessagesFirebaseDataSource.swift */,
+				5BC729C12547335B00A05B88 /* MessagesCoreDataCacheService.swift */,
 				5B16E0F225461E1200E0DF86 /* MessagesCoreDataService.swift */,
 			);
 			path = Messages;
@@ -530,6 +533,7 @@
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */,
 				5B72E1442532246D004BECDA /* TurnedOffTextField.swift in Sources */,
+				5BC729C22547335B00A05B88 /* MessagesCoreDataCacheService.swift in Sources */,
 				5B72E14F25322DC9004BECDA /* UserManager.swift in Sources */,
 				5B16E0B32546045700E0DF86 /* ChannelsCoreDataService.swift in Sources */,
 				5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */,

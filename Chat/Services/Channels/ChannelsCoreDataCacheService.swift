@@ -10,7 +10,7 @@ import CoreData
 
 class ChannelsCoreDataCacheService: ChannelsCacheService {
     private var cacheDidChange: ([Channel]) -> Void
-    private let coreDataStack = CoreDataStack()
+    private let coreDataStack = CoreDataStack.shared
     
     init(changeCallback: @escaping ([Channel]) -> Void) {
         self.cacheDidChange = changeCallback
@@ -59,7 +59,7 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     
     func syncChannels(_ channels: [Channel]) {
         coreDataStack.performSave { saveContext in
-            print("SYNC START")
+            print("SYNC Channels")
             channels.forEach { channel in
                 _ = ChannelDB(identifier: channel.identifier,
                           name: channel.name,

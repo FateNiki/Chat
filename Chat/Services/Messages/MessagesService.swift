@@ -21,3 +21,9 @@ protocol MessagesApiRepository {
     func loadMessages(_ completion: @escaping([Message]) -> Void)
     func createMessage(_ message: Message, _ errorCallback: @escaping(Error) -> Void)
 }
+
+protocol MessagesCacheService: class {
+    func getMessages(in channel: Channel, _ completion: @escaping([Message]) -> Void)
+    
+    func syncMessages(in channel: Channel, _ messages: [Message])
+}

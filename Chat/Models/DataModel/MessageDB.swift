@@ -18,15 +18,30 @@ public class MessageDB: NSManagedObject {
     @NSManaged public var senderName: String?
     @NSManaged public var channel: ChannelDB?
     
-    convenience init(content: String, created: Date, senderId: String, senderName: String, in context: NSManagedObjectContext) {
+    convenience init(message: Message, in context: NSManagedObjectContext) {
         self.init(context: context)
-        self.content = content
-        self.created = created
-        self.senderId = senderId
-        self.senderName = senderName
+        self.content = message.content
+        self.created = message.created
+        self.senderId = message.senderId
+        self.senderName = message.senderName
     }
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageDB> {
         return NSFetchRequest<MessageDB>(entityName: "Message")
+    }
+}
+
+extension Message {
+    init?(from messageDB: MessageDB) {
+        guard let content = messageDB.content,
+              let senderId = messageDB.senderId,
+              let senderName = messageDB.senderName,
+              let created = messageDB.created
+              else { return nil }
+        
+        self.content = content
+        self.created = created
+        self.senderId = senderId
+        self.senderName = senderName
     }
 }

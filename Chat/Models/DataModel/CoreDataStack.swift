@@ -10,6 +10,11 @@ import Foundation
 import CoreData
 
 class CoreDataStack {
+    // MARK: - Singleton
+    static let shared = CoreDataStack()
+    private init() { }
+    
+    // MARK: - Constants
     private let dataModelName = "Chat"
     private let dataModelExtension = "momd"
     private var storeUrl: URL = {
