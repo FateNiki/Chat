@@ -44,7 +44,6 @@ class MessagesCoreDataCacheService: MessagesCacheService {
     }
     
     func getMessages(_ completion: @escaping ([Message]) -> Void) {
-        print("RETURN cache messages")
         do {
             let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: true)]

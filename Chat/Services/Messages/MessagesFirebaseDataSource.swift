@@ -51,7 +51,6 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
     
     private func removeListener() {
         guard let listener = listener else { return }
-        print("REMOVE \(String(describing: Message.self))")
         listener.remove()
         self.listener = nil
     }
@@ -67,8 +66,6 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
             
             let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap { Message(from: $0.document.data()) }
             self.refreshCallback(newMessages)
-            
-            print("UPDATE \(String(describing: Message.self))")
         }
     }
     

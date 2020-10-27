@@ -49,7 +49,6 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
     
     private func removeListener() {
         guard let listener = listener else { return }
-        print("REMOVE \(String(describing: Channel.self))")
         listener.remove()
         self.listener = nil
     }
@@ -68,11 +67,9 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
             self.setChannels(from: snapshot)
             
             if load {
-                print("LOAD \(String(describing: Channel.self))")
                 completion(self.channels)
                 load = false
             } else {
-                print("UPDATE \(String(describing: Channel.self))")
                 self.refreshCallback(self.channels)
             }
         }

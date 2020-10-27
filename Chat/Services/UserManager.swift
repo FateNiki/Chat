@@ -110,7 +110,6 @@ extension UserManager {
     
     fileprivate func save(firstName: String) throws {
         guard firstName != user.firstName else { return }
-        print(#function)
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.firstName.rawValue)
         do {
@@ -123,7 +122,6 @@ extension UserManager {
     
     fileprivate func save(lastName: String) throws {
         guard lastName != user.lastName else { return }
-        print(#function)
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.lastName.rawValue)
         do {
@@ -137,7 +135,6 @@ extension UserManager {
     
     fileprivate func save(description: String) throws {
         guard description != user.description else { return }
-        print(#function)
 
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
         do {
@@ -157,7 +154,6 @@ extension UserManager {
     
     fileprivate func save(avatar: Data?) throws {
         guard avatar != user.avatar else { return }
-        print(#function)
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.avatar.rawValue)
         if let avatarData = avatar {

@@ -47,7 +47,6 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     }
     
     func getChannels(_ completion: @escaping ([Channel]) -> Void) {
-        print("RETURN cache channels")
         do {
             let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(key: "lastActivity", ascending: false)]

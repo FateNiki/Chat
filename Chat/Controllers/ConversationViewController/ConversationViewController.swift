@@ -134,7 +134,7 @@ extension ConversationViewController: UITableViewDataSource {
 extension ConversationViewController: SendMessageViewDelegate {
     func sendMessage(with text: String) {
         messageService.createMessage(from: currentUser, with: text) { error in
-            print(error.localizedDescription)
+            print("SEND MESSAGE ERROR: \(error.localizedDescription)")
         }
     }
 }
