@@ -27,6 +27,11 @@ class MessagesCoreDataCacheService: MessagesCacheService {
             object: nil)
     }
     
+    private func printChannelLog(message: MessageDB) {
+        let channelName: String = message.channel?.name ?? ""
+        print("\t\t \(channelName) → \(message.senderName ?? "") → \(message.content ?? "")")
+    }
+    
     @objc private func observeNotificatino(_ notification: Notification) {
         guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
         guard let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>,
@@ -34,10 +39,7 @@ class MessagesCoreDataCacheService: MessagesCacheService {
         let insertedMessages = insertedObjects.compactMap({ $0 as? MessageDB })
         guard !insertedMessages.isEmpty else { return }
         print("MESSAGES:\n\t insertedMessages", insertedMessages.count)
-        insertedMessages.forEach { message in
-            let channelName: String = message.channel?.name ?? ""
-            print("\t\t \(channelName) → \(message.senderName ?? "") → \(message.content ?? "")")
-        }
+        insertedMessages.forEach(printChannelLog)
         getMessages(self.cacheDidChange)
     }
     
