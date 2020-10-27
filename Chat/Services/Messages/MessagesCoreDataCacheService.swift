@@ -68,7 +68,6 @@ class MessagesCoreDataCacheService: MessagesCacheService {
     
     func syncMessages(newMessages: [Message]) {
         coreDataStack.performSave { saveContext in
-            print("SYNC Messages")
             guard let channelDB = getChannelDB(for: saveContext) else { return }
             _ = newMessages.compactMap { MessageDB(message: $0, for: channelDB, in: saveContext) }            
         }
