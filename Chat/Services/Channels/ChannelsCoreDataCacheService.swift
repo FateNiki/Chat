@@ -28,19 +28,24 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     @objc private func observeNotificatino(_ notification: Notification) {
         guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
         
-        print("NOTIFY Channels")
         if let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>, !insertedObjects.isEmpty {
-            print("\tinsertedObjects", insertedObjects.count)
+            let insertedChannels = insertedObjects.compactMap { $0 as? ChannelDB }
+            guard !insertedChannels.isEmpty else { return }
+            print("CHANNELS:\n\t insertedChannels", insertedChannels.count)
             getChannels(self.cacheDidChange)
             return
         }
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>, !updatedObjects.isEmpty {
-            print("\tupdatedObjects", updatedObjects.count)
+            let updatedChannels = updatedObjects.compactMap { $0 as? ChannelDB }
+            guard !updatedChannels.isEmpty else { return }
+            print("CHANNELS:\n\t updatedChannels", updatedChannels.count)
             getChannels(self.cacheDidChange)
             return
         }
         if let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? Set<NSManagedObject>, !deletedObjects.isEmpty {
-            print("\tdeletedObjects", deletedObjects.count)
+            let deletedChannels = deletedObjects.compactMap { $0 as? ChannelDB }
+            guard !deletedChannels.isEmpty else { return }
+            print("CHANNELS:\n\t deletedChannels", deletedChannels.count)
             getChannels(self.cacheDidChange)
             return
         }

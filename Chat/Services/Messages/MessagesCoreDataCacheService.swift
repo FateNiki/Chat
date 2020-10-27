@@ -29,11 +29,12 @@ class MessagesCoreDataCacheService: MessagesCacheService {
     
     @objc private func observeNotificatino(_ notification: Notification) {
         guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
-        print("NOTIFY Messages")
-        if let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>, !insertedObjects.isEmpty {
-            print("\tinsertedObjects", insertedObjects.count)
-            getMessages(self.cacheDidChange)
-        }
+        guard let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>,
+              !insertedObjects.isEmpty else { return }
+        let insertedMessages = insertedObjects.compactMap({ $0 as? MessageDB })
+        guard !insertedMessages.isEmpty else { return }
+        print("MESSAGES:\n\t insertedMessages", insertedMessages.count)
+        getMessages(self.cacheDidChange)
     }
     
     private func getChannelDB(for context: NSManagedObjectContext) -> ChannelDB? {
