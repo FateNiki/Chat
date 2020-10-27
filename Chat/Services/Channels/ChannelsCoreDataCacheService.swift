@@ -77,7 +77,6 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     
     func syncChannels(_ channels: [Channel]) {
         coreDataStack.performSave { saveContext in
-            print("SYNC Channels")
             channels.forEach { channel in
                 _ = ChannelDB(identifier: channel.identifier,
                           name: channel.name,
