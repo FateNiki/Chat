@@ -31,7 +31,6 @@ extension Channel {
 }
 
 class ChannelsFirebaseDataSource: ChannelsApiRepository {    
-    private var channels = [Channel]()
     private var listener: ListenerRegistration?
     private let refreshCallback: ([Channel]) -> Void
     private lazy var channelsRef: CollectionReference = {
@@ -53,24 +52,21 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
         self.listener = nil
     }
     
-    private func setChannels(from snapshot: QuerySnapshot) {
-        self.channels = snapshot.documents.compactMap { docSnapshot in
-            Channel(from: docSnapshot.data(), id: docSnapshot.documentID)
-        }
-    }
-    
     public func loadChannels(_ completion: @escaping ([Channel]) -> Void) {
         removeListener()
         var load = true
         listener = channelsRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
-            self.setChannels(from: snapshot)
+            
+            let channels = snapshot.documentChanges.compactMap { diff in
+                Channel(from: diff.document.data(), id: diff.document.documentID)
+            }
             
             if load {
-                completion(self.channels)
+                completion(channels)
                 load = false
             } else {
-                self.refreshCallback(self.channels)
+                self.refreshCallback(channels)
             }
         }
     }
