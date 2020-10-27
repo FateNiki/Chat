@@ -56,8 +56,13 @@ class ConversationViewController: UIViewController {
         }
         messageService.getMessages { [weak self] in
             self?.tableView.reloadData()
-            self?.scrollToBottom(animated: false)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.scrollToBottom(animated: true)
+        super.viewDidAppear(animated)
+
     }
     
     private func configKeyboard() {
