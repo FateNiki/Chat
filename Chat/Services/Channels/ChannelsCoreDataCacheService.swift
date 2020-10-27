@@ -9,6 +9,11 @@ import Foundation
 import CoreData
 
 class ChannelsCoreDataCacheService: ChannelsCacheService {
+    private static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM, HH:mm"
+        return formatter
+    }()
     private var cacheDidChange: ([Channel]) -> Void
     private let coreDataStack = CoreDataStack.shared
     
@@ -25,6 +30,13 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
             object: nil)
     }
     
+    private func printChannelLog(channelDB: ChannelDB) {
+        print("\t\t \(channelDB.name ?? "") | количество сообщений: \(channelDB.messages?.count ?? 0)")
+        print("\t\t\t – \(channelDB.lastMessage ?? "")")
+        guard let lastActivity = channelDB.lastActivity else { return }
+        print("\t\t\t – \(Self.dateFormatter.string(from: lastActivity))")
+    }
+    
     @objc private func observeNotificatino(_ notification: Notification) {
         guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
         
@@ -32,6 +44,7 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
             let insertedChannels = insertedObjects.compactMap { $0 as? ChannelDB }
             guard !insertedChannels.isEmpty else { return }
             print("CHANNELS:\n\t insertedChannels", insertedChannels.count)
+            insertedChannels.forEach(printChannelLog)
             getChannels(self.cacheDidChange)
             return
         }
