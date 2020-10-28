@@ -45,6 +45,10 @@ class ChannelsCoreDataService: ChannelsService {
     }
     
     public func createChannel(with name: String, _ createCallback: @escaping (Channel?, Error?) -> Void) {
-        apiRepository.createChannel(with: name, createCallback)
+        let trimName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimName.isEmpty else {
+            createCallback(nil, ErrorWithMessage(message: "Пустая строка"))
+        }
+        apiRepository.createChannel(with: trimName, createCallback)
     }
 }
