@@ -39,6 +39,12 @@ class MessagesCoreDataService: MessagesService {
     }
     
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
+        let trimText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimText.isEmpty else {
+            errorCallback(ErrorWithMessage(message: "Пустая строка"))
+            return
+        }
+        
         apiRepository.createMessage(
             Message(content: text, senderId: sender.id, senderName: sender.fullName),
             errorCallback
