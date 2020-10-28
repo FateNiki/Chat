@@ -48,6 +48,7 @@ class ChannelsCoreDataService: ChannelsService {
         let trimName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimName.isEmpty else {
             createCallback(nil, ErrorWithMessage(message: "Пустая строка"))
+            return
         }
         apiRepository.createChannel(with: trimName, createCallback)
     }
