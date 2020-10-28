@@ -12,6 +12,7 @@
 		5B0D0D54252B4C2E00CCBB3F /* ThemePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */; };
 		5B100E8825211DF0002E75B4 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B100E8625211DF0002E75B4 /* ConversationViewController.swift */; };
 		5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B100E8725211DF0002E75B4 /* ConversationViewController.xib */; };
+		5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1014BB2549A97B000416B0 /* CustomErrors.swift */; };
 		5B16E09E2546022600E0DF86 /* ChannelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E09D2546022600E0DF86 /* ChannelsService.swift */; };
 		5B16E0B32546045700E0DF86 /* ChannelsCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0B22546045700E0DF86 /* ChannelsCoreDataService.swift */; };
 		5B16E0C7254605D300E0DF86 /* ChannelsFirebaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0C6254605D300E0DF86 /* ChannelsFirebaseDataSource.swift */; };
@@ -70,6 +71,7 @@
 		5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerDelegate.swift; sourceTree = "<group>"; };
 		5B100E8625211DF0002E75B4 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		5B100E8725211DF0002E75B4 /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
+		5B1014BB2549A97B000416B0 /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
 		5B16E09D2546022600E0DF86 /* ChannelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsService.swift; sourceTree = "<group>"; };
 		5B16E0B22546045700E0DF86 /* ChannelsCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsCoreDataService.swift; sourceTree = "<group>"; };
 		5B16E0C6254605D300E0DF86 /* ChannelsFirebaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsFirebaseDataSource.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */,
 				5B411CD92535DBEC001859F0 /* SafeArray.swift */,
+				5B1014BB2549A97B000416B0 /* CustomErrors.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				5B74D7A02530718D002C2363 /* MessageView.swift in Sources */,
 				5B16E0F325461E1200E0DF86 /* MessagesCoreDataService.swift in Sources */,
 				5B16E0EC25461B4D00E0DF86 /* MessagesService.swift in Sources */,
+				5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */,
 				5B411CDF2536044D001859F0 /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
