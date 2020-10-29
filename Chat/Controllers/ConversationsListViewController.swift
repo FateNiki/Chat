@@ -54,6 +54,10 @@ class ConversationsListViewController: UIViewController {
     }
         
     // MARK: - Lifecycle
+    override func loadView() {
+        self.view = ThemedView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

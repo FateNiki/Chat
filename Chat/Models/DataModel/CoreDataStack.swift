@@ -14,6 +14,13 @@ class CoreDataStack {
     static let shared = CoreDataStack()
     private init() { }
     
+    func config(_ completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            self.addPersistentStoreToCoordinator()
+            DispatchQueue.main.async(execute: completion)
+        }
+    }
+    
     // MARK: - Constants
     private let dataModelName = "Chat"
     private let dataModelExtension = "momd"
@@ -35,18 +42,15 @@ class CoreDataStack {
         return managedObjectModel
     }()
     
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        
+    private lazy var persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+    
+    private func addPersistentStoreToCoordinator() {
         do {
-            // TODO отдельная очередь
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeUrl, options: nil)
+            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeUrl, options: nil)
         } catch {
             fatalError(error.localizedDescription)
         }
-        
-        return coordinator
-    }()
+    }
     
     // MARK: - Contexts
     private lazy var writterContext: NSManagedObjectContext = {

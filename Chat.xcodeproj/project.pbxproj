@@ -19,6 +19,7 @@
 		5B16E0EC25461B4D00E0DF86 /* MessagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0EB25461B4D00E0DF86 /* MessagesService.swift */; };
 		5B16E0F025461BAD00E0DF86 /* MessagesFirebaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0EF25461BAD00E0DF86 /* MessagesFirebaseDataSource.swift */; };
 		5B16E0F325461E1200E0DF86 /* MessagesCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0F225461E1200E0DF86 /* MessagesCoreDataService.swift */; };
+		5B173466254B17E000F8614D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B173465254B17E000F8614D /* RootViewController.swift */; };
 		5B23EFD52546CD87003A1BD6 /* ChannelsCoreDataCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B23EFD42546CD87003A1BD6 /* ChannelsCoreDataCacheService.swift */; };
 		5B411CDA2535DBEC001859F0 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B411CD92535DBEC001859F0 /* SafeArray.swift */; };
 		5B411CDF2536044D001859F0 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B411CDE2536044D001859F0 /* ThemeManager.swift */; };
@@ -39,7 +40,6 @@
 		5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6876C2539BCB30040F1AF /* Channel.swift */; };
 		5BBE67E32543081700545557 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BBE67E12543081700545557 /* Chat.xcdatamodeld */; };
 		5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B73F250D4D770062C724 /* AppDelegate.swift */; };
-		5BC2B747250D4D770062C724 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B745250D4D770062C724 /* Main.storyboard */; };
 		5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B748250D4D7C0062C724 /* Assets.xcassets */; };
 		5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */; };
 		5BC729C22547335B00A05B88 /* MessagesCoreDataCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC729C12547335B00A05B88 /* MessagesCoreDataCacheService.swift */; };
@@ -78,6 +78,7 @@
 		5B16E0EB25461B4D00E0DF86 /* MessagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesService.swift; sourceTree = "<group>"; };
 		5B16E0EF25461BAD00E0DF86 /* MessagesFirebaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesFirebaseDataSource.swift; sourceTree = "<group>"; };
 		5B16E0F225461E1200E0DF86 /* MessagesCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCoreDataService.swift; sourceTree = "<group>"; };
+		5B173465254B17E000F8614D /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		5B23EFD42546CD87003A1BD6 /* ChannelsCoreDataCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsCoreDataCacheService.swift; sourceTree = "<group>"; };
 		5B411CD92535DBEC001859F0 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
 		5B411CDE2536044D001859F0 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -99,7 +100,6 @@
 		5BBE67E22543081700545557 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		5BC2B73C250D4D770062C724 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC2B73F250D4D770062C724 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5BC2B746250D4D770062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5BC2B748250D4D7C0062C724 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BC2B74B250D4D7C0062C724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BC2B74D250D4D7C0062C724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +203,7 @@
 				5B100E8525211DA9002E75B4 /* ConversationViewController */,
 				5BE20E062520B5F000D73A63 /* UserViewController */,
 				5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */,
+				5B173465254B17E000F8614D /* RootViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -258,7 +259,6 @@
 				5B85865D2527BAE400DCCD63 /* ViewModel */,
 				5BF9AE9A2542FBB3008E4CF4 /* Services */,
 				5BC2B73F250D4D770062C724 /* AppDelegate.swift */,
-				5BC2B745250D4D770062C724 /* Main.storyboard */,
 				5BC2B748250D4D7C0062C724 /* Assets.xcassets */,
 				5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */,
 				5B06426A253ACBD10019AB80 /* GoogleService-Info.plist */,
@@ -439,7 +439,6 @@
 				5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */,
 				5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */,
 				5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */,
-				5BC2B747250D4D770062C724 /* Main.storyboard in Resources */,
 				5BDED39A2539972100B3A8EE /* .swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +548,7 @@
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
 				5B74D7A02530718D002C2363 /* MessageView.swift in Sources */,
 				5B16E0F325461E1200E0DF86 /* MessagesCoreDataService.swift in Sources */,
+				5B173466254B17E000F8614D /* RootViewController.swift in Sources */,
 				5B16E0EC25461B4D00E0DF86 /* MessagesService.swift in Sources */,
 				5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */,
 				5B411CDF2536044D001859F0 /* ThemeManager.swift in Sources */,
@@ -558,14 +558,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5BC2B745250D4D770062C724 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5BC2B746250D4D770062C724 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

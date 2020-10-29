@@ -15,8 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Lifecycle
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        ThemeManager.shared.loadFromFile(completion: nil)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let rootNavigationController = RootNavigationViewController()
+        window!.rootViewController = rootNavigationController
+        window!.makeKeyAndVisible()
+        
+        ThemeManager.shared.loadFromFile { themeName, _ in
+            rootNavigationController.view.backgroundColor = themeName?.theme.backgroundColor
+        }
         FirebaseApp.configure()
+        
         return true
     }   
 }
