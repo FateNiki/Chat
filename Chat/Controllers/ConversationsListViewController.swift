@@ -32,7 +32,7 @@ class ConversationsListViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .plain)
         tableView.register(UINib(nibName: conversationCellIdentifier, bundle: nil), forCellReuseIdentifier: conversationCellIdentifier)
-        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
@@ -72,11 +72,6 @@ class ConversationsListViewController: UIViewController {
         setupView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateView()
-    }
-    
     // MARK: - Config UI
     private func setupView() {
         self.initTableView()
@@ -94,12 +89,12 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
-    private func updateView() {
-        tableView.frame = view.frame
-    }
-    
     private func initTableView() {
         view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     private func initNavigation() {
