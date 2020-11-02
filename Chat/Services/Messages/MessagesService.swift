@@ -14,7 +14,6 @@ protocol MessagesService: class {
 }
 
 protocol MessagesApiRepository {
-    func loadMessages(after message: Message?)
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
 

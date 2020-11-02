@@ -41,7 +41,7 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
             .document(channel.identifier)
             .collection(Message.firebaseCollectionName)
         self.refreshCallback = refresh
-//        self.loadMessages(after: nil)
+        self.loadMessages()
         
     }
     
@@ -55,13 +55,9 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
         self.listener = nil
     }
     
-    public func loadMessages(after message: Message?) {
+    private func loadMessages() {
         removeListener()
-        var queryRef: Query = messagesRef
-        if let message = message {
-            queryRef = queryRef.whereField("created", isGreaterThan: Timestamp(date: message.created.addingTimeInterval(1)))
-        }
-        listener = queryRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
+        listener = messagesRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
             
             let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap { Message(from: $0.document.data(), id: $0.document.documentID) }
