@@ -46,13 +46,17 @@ class ChannelTitleView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         titleLabel.textAlignment = .center
-        titleLabel.text = "Test User"
     }
     
     private func configAvatarView() {
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         avatarView.widthAnchor.constraint(equalTo: avatarView.heightAnchor).isActive = true
-        avatarView.configure(with: UserAvatarModel.init(initials: "TU", avatar: nil))
     }
+}
 
+extension ChannelTitleView: ConfigurableView {
+    func configure(with model: ChannelCellModel) {
+        titleLabel.text = model.name
+        avatarView.configure(with: model)
+    }
 }
