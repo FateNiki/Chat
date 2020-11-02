@@ -248,9 +248,12 @@ extension ConversationsListViewController: ThemePickerDelegate {
             guard let theme = savedTheme?.theme else { return }
 
             DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-                self?.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-                self?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+                guard let self = self else { return }
+                self.tableView.reloadData()
+                self.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+                self.navigationController?.navigationBar.backgroundColor = theme.secondBackgroundColor
+                self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+                self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: theme.textColor]
             }
         }
     }
