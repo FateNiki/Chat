@@ -11,10 +11,11 @@ import CoreData
 class MessagesCoreDataService: MessagesService {
     private var cacheService: MessagesCacheService
     private var apiRepository: MessagesApiRepository!
+    private let channel: Channel
     
     init(for channel: Channel) {
-        cacheService = MessagesCoreDataCacheService(for: channel)
-        
+        self.channel = channel
+        self.cacheService = MessagesCoreDataCacheService(for: channel)
         self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] newMessages in
             self?.cacheService.syncMessages(newMessages: newMessages)
         }
@@ -32,7 +33,12 @@ class MessagesCoreDataService: MessagesService {
     
     public func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB> {
         let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
-        request.predicate = predicate
+        let channelPredicate = NSPredicate(format: "channel.identifier = %@", channel.identifier)
+        if let externalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [channelPredicate, externalPredicate])
+        } else {
+            request.predicate = channelPredicate
+        }
         request.sortDescriptors = [ NSSortDescriptor(key: "created", ascending: true) ]
         return NSFetchedResultsController(fetchRequest: request,
                                                     managedObjectContext: CoreDataStack.shared.mainContext,

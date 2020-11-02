@@ -60,7 +60,7 @@ class ConversationViewController: UIViewController {
         initNavigation()
         configKeyboard()
         messageService = MessagesCoreDataService(for: channel)
-        messageResultController = messageService.resultController(for: NSPredicate(format: "channel.identifier = %@", channel.identifier))
+        messageResultController = messageService.resultController(for: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
