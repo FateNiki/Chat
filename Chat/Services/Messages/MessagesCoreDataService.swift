@@ -27,10 +27,7 @@ class MessagesCoreDataService: MessagesService {
             return
         }
         
-        apiRepository.createMessage(
-            Message(content: text, senderId: sender.id, senderName: sender.fullName),
-            errorCallback
-        )
+        apiRepository.createMessage(from: sender, with: text, errorCallback)
     }
     
     public func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB> {
