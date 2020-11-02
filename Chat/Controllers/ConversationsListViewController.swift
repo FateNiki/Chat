@@ -246,7 +246,6 @@ extension ConversationsListViewController: ThemePickerDelegate {
                 guard let self = self else { return }
                 self.tableView.reloadData()
                 self.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-                self.navigationController?.navigationBar.backgroundColor = theme.secondBackgroundColor
                 self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
                 self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: theme.textColor]
             }
