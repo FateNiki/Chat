@@ -19,7 +19,6 @@ class ConversationViewController: UIViewController {
             guard let controller = messageResultController else { return }
             controller.delegate = self
             try? controller.performFetch()
-//            tableView.reloadData()
         }
     }
 
@@ -53,8 +52,11 @@ class ConversationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     // MARK: - Interface configuring
@@ -65,12 +67,6 @@ class ConversationViewController: UIViewController {
         configKeyboard()
         messageService = MessagesCoreDataService(for: channel)
         messageResultController = messageService.resultController(for: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.scrollToBottom(animated: true)
-        super.viewDidAppear(animated)
-
     }
     
     private func configKeyboard() {

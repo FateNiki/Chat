@@ -25,7 +25,6 @@ class ConversationsListViewController: UIViewController {
             guard let controller = channelsResultContoller else { return }
             controller.delegate = self
             try? controller.performFetch()
-//            tableView.reloadData()
         }
     }
     
