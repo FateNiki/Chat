@@ -14,14 +14,31 @@ class ChannelsCoreDataCacheService: ChannelsCacheService {
     func reloadChannels(_ channels: [Channel]) {
         coreDataStack.performSave { saveContext in
             let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
-            guard let result = try? saveContext.fetch(request) else { return }
-            result.forEach { saveContext.delete($0) }
-            channels.forEach {
+            guard let cachedChannels = try? saveContext.fetch(request) else { return }
+            var updatedChannels = [(ChannelDB, Channel)]()
+            var deletedChannels = [ChannelDB]()
+            var newChannels = channels
+            
+            cachedChannels.forEach { channelDB in
+                guard let channelIndex = newChannels.firstIndex(where: { $0.identifier == channelDB.identifier }) else {
+                    deletedChannels.append(channelDB)
+                    return
+                }
+                let updatedChannel = newChannels.remove(at: channelIndex)
+                updatedChannels.append((channelDB, updatedChannel))
+            }
+            
+            newChannels.forEach {
                 _ = ChannelDB(identifier: $0.identifier,
                           name: $0.name,
                           lastMessage: $0.lastMessage,
                           lastActivity: $0.lastActivity,
                           in: saveContext)
+            }
+            deletedChannels.forEach { saveContext.delete($0) }
+            updatedChannels.forEach {
+                $0.lastActivity = $1.lastActivity
+                $0.lastMessage = $1.lastMessage
             }
         }
         print()
