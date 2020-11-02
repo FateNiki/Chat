@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
@@ -18,7 +19,15 @@ class ConversationsListViewController: UIViewController {
             userAvatarView.configure(with: user.avatarModel())
         }
     }
-    private var channelsService: ChannelsService!
+    private var channelsService: ChannelsService = ChannelsCoreDataService.shared
+    private var channelsResultContoller: NSFetchedResultsController<ChannelDB>? {
+        didSet {
+            guard let controller = channelsResultContoller else { return }
+            controller.delegate = self
+            try? controller.performFetch()
+//            tableView.reloadData()
+        }
+    }
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -73,11 +82,7 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        channelsService = ChannelsCoreDataService { self.tableView.reloadData() }
-        channelsService.getChannels {
-            self.tableView.reloadData()
-        }
-
+        self.channelsResultContoller = channelsService.resultController(for: nil)
         GCDUserManager.shared.loadFromFile { (result, _) in
             guard let user = result else { return }
             DispatchQueue.main.async {
@@ -154,7 +159,7 @@ class ConversationsListViewController: UIViewController {
 
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = channelsService.channels[indexPath.row]
+        guard let channelDB = channelsResultContoller?.object(at: indexPath), let channel = Channel(from: channelDB) else { return }
         openChannel(channel)
     }
     
@@ -165,16 +170,52 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        channelsService.channels.count
+        guard let sections = channelsResultContoller?.sections else { return 0 }
+        return sections[section].numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
+        guard let channelDB = channelsResultContoller?.object(at: indexPath), let channel = Channel(from: channelDB) else { return cell }
+
         if let conversationCell = cell as? ConversationsTableViewCell {
-            let channel = channelsService.channels[indexPath.row]
             conversationCell.configure(with: channel.cellModel())
         }
         return cell
+    }
+}
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            guard let insertIndex = newIndexPath else { return }
+            tableView.insertRows(at: [insertIndex], with: .automatic)
+        case .update:
+            guard let updateIndex = indexPath else { return }
+            tableView.reloadRows(at: [updateIndex], with: .automatic)
+        case .move:
+            guard let oldIndex = indexPath, let newIndex = newIndexPath else { return }
+            tableView.deleteRows(at: [oldIndex], with: .automatic)
+            tableView.insertRows(at: [newIndex], with: .automatic)
+        case .delete:
+            guard let deleteIndex = indexPath else { return }
+            tableView.deleteRows(at: [deleteIndex], with: .automatic)
+        @unknown default:
+                fatalError("Unknowed chanes")
+        }
     }
 }
 

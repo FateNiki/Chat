@@ -9,81 +9,51 @@ import Foundation
 import CoreData
 
 class ChannelsCoreDataCacheService: ChannelsCacheService {
-    private static var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM, HH:mm"
-        return formatter
-    }()
-    private var cacheDidChange: ([Channel]) -> Void
     private let coreDataStack = CoreDataStack.shared
     
-    init(changeCallback: @escaping ([Channel]) -> Void) {
-        self.cacheDidChange = changeCallback
-        initObserver()
-    }
-    
-    private func initObserver() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(observeNotificatino(_:)),
-            name: .NSManagedObjectContextDidSave,
-            object: nil)
-    }
-    
-    private func printChannelLog(channelDB: ChannelDB) {
-        print("\t\t \(channelDB.name ?? "") | количество сообщений: \(channelDB.messages?.count ?? 0)")
-        print("\t\t\t – \(channelDB.lastMessage ?? "")")
-        guard let lastActivity = channelDB.lastActivity else { return }
-        print("\t\t\t – \(Self.dateFormatter.string(from: lastActivity))")
-    }
-    
-    @objc private func observeNotificatino(_ notification: Notification) {
-        guard let context = notification.object as? NSManagedObjectContext, context.parent == nil else { return }
-        
-        if let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? Set<NSManagedObject>, !insertedObjects.isEmpty {
-            let insertedChannels = insertedObjects.compactMap { $0 as? ChannelDB }
-            guard !insertedChannels.isEmpty else { return }
-            print("CHANNELS:\n\t insertedChannels", insertedChannels.count)
-            insertedChannels.forEach(printChannelLog)
-            getChannels(self.cacheDidChange)
-            return
-        }
-        if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>, !updatedObjects.isEmpty {
-            let updatedChannels = updatedObjects.compactMap { $0 as? ChannelDB }
-            guard !updatedChannels.isEmpty else { return }
-            print("CHANNELS:\n\t updatedChannels", updatedChannels.count)
-            getChannels(self.cacheDidChange)
-            return
-        }
-        if let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? Set<NSManagedObject>, !deletedObjects.isEmpty {
-            let deletedChannels = deletedObjects.compactMap { $0 as? ChannelDB }
-            guard !deletedChannels.isEmpty else { return }
-            print("CHANNELS:\n\t deletedChannels", deletedChannels.count)
-            getChannels(self.cacheDidChange)
-            return
-        }
-    }
-    
-    func getChannels(_ completion: @escaping ([Channel]) -> Void) {
-        do {
-            let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "lastActivity", ascending: false)]
-            let result = try coreDataStack.mainContext.fetch(request)
-            completion(result.compactMap { Channel(from: $0)})
-        } catch {
-            completion([Channel]())
-        }
-    }
-    
-    func syncChannels(_ channels: [Channel]) {
+    func reloadChannels(_ channels: [Channel]) {
         coreDataStack.performSave { saveContext in
-            channels.forEach { channel in
-                _ = ChannelDB(identifier: channel.identifier,
-                          name: channel.name,
-                          lastMessage: channel.lastMessage,
-                          lastActivity: channel.lastActivity,
+            let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+            guard let result = try? saveContext.fetch(request) else { return }
+            result.forEach { saveContext.delete($0) }
+            channels.forEach {
+                _ = ChannelDB(identifier: $0.identifier,
+                          name: $0.name,
+                          lastMessage: $0.lastMessage,
+                          lastActivity: $0.lastActivity,
                           in: saveContext)
             }
         }
+        print()
+    }
+    
+    func syncChanges(_ channelsChanges: [ChannelsChanges]) {
+        coreDataStack.performSave { saveContext in
+                        
+            channelsChanges.forEach { diff in
+                switch diff.event {
+                case .create:
+                    _ = ChannelDB(identifier: diff.channel.identifier,
+                              name: diff.channel.name,
+                              lastMessage: diff.channel.lastMessage,
+                              lastActivity: diff.channel.lastActivity,
+                              in: saveContext)
+                case .update:
+                    guard let channelDB = getChannel(with: diff.channel.identifier, for: saveContext) else { return }
+                    channelDB.lastActivity = diff.channel.lastActivity
+                    channelDB.lastMessage = diff.channel.lastMessage
+                case .delete:
+                    guard let channelDB = getChannel(with: diff.channel.identifier, for: saveContext) else { return }
+                    saveContext.delete(channelDB)
+                }
+            }
+        }
+    }
+    
+    private func getChannel(with identifier: String, for context: NSManagedObjectContext) -> ChannelDB? {
+        let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+        request.predicate = NSPredicate(format: "identifier = %@", identifier)
+        guard let result = try? context.fetch(request), let channelDB = result.first else { return nil }
+        return channelDB
     }
 }
