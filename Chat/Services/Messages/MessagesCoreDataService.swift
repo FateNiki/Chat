@@ -17,7 +17,10 @@ class MessagesCoreDataService: MessagesService {
         self.channel = channel
         self.cacheService = MessagesCoreDataCacheService(for: channel)
         self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] newMessages in
-            self?.cacheService.syncMessages(newMessages: newMessages)
+            self?.cacheService.syncChanges(newMessages: newMessages)
+        }
+        self.apiRepository.loadAllMessages { [weak self] allMessages in
+            self?.cacheService.reloadMessages(allMessages)
         }
     }
     

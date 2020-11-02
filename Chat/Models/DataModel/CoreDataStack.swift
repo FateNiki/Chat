@@ -83,6 +83,7 @@ class CoreDataStack {
             block(context)
             if context.hasChanges {
                 do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                     try performSave(in: context)                    
                 } catch { assertionFailure(error.localizedDescription)}
             }

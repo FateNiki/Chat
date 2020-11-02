@@ -23,10 +23,27 @@ class MessagesCoreDataCacheService: MessagesCacheService {
         return channelDB
     }
         
-    func syncMessages(newMessages: [Message]) {
+    func syncChanges(newMessages: [Message]) {
         coreDataStack.performSave { saveContext in
             guard let channelDB = getChannelDB(for: saveContext) else { return }
             _ = newMessages.compactMap { MessageDB(message: $0, for: channelDB, in: saveContext) }            
         }
+    }
+    
+    func reloadMessages(_ loadedMessages: [Message]) {
+        coreDataStack.performSave { saveContext in
+            let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
+            request.predicate = NSPredicate(format: "channel.identifier = %@", channel.identifier)
+            
+            guard let cachedMessages = try? saveContext.fetch(request),
+                  let channelDB = getChannelDB(for: saveContext) else { return }
+            
+            loadedMessages.forEach { message in
+                if !cachedMessages.contains(where: { $0.identifier == message.identifier }) {
+                    _ = MessageDB(message: message, for: channelDB, in: saveContext)
+                }
+            }
+        }
+        
     }
 }

@@ -14,9 +14,11 @@ protocol MessagesService: class {
 }
 
 protocol MessagesApiRepository {
+    func loadAllMessages(_ completion: @escaping([Message]) -> Void)
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
 
-protocol MessagesCacheService: class {    
-    func syncMessages(newMessages: [Message])
+protocol MessagesCacheService: class {
+    func reloadMessages(_ messages: [Message])
+    func syncChanges(newMessages: [Message])
 }

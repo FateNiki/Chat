@@ -41,8 +41,6 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
             .document(channel.identifier)
             .collection(Message.firebaseCollectionName)
         self.refreshCallback = refresh
-        self.loadMessages()
-        
     }
     
     deinit {
@@ -55,22 +53,30 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
         self.listener = nil
     }
     
-    private func loadMessages() {
+    public func loadAllMessages(_ completion: @escaping ([Message]) -> Void) {
         removeListener()
+        var load = true
         listener = messagesRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
             
-            let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap { Message(from: $0.document.data(), id: $0.document.documentID) }
-            self.refreshCallback(newMessages)
+            if load {
+                let newMessages = snapshot.documents.compactMap { Message(from: $0.data(), id: $0.documentID) }
+                completion(newMessages)
+                load = false
+            } else {
+                let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap {
+                    Message(from: $0.document.data(), id: $0.document.documentID)
+                }
+                self.refreshCallback(newMessages)
+            }
         }
     }
     
-    func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
+    public func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
         let newMessageRef = messagesRef.document()
         let newMessage = Message(id: newMessageRef.documentID, content: text, senderId: sender.id, senderName: sender.fullName)
         newMessageRef.setData(newMessage.data) { error in
             if let error = error { errorCallback(error) }
         }
     }
-    
 }
