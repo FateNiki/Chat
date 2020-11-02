@@ -32,6 +32,7 @@ class SendMessageView: UIView {
         let messageView = UITextView()
         messageView.translatesAutoresizingMaskIntoConstraints = false
         messageView.font = UIFont.systemFont(ofSize: 16)
+        messageView.delegate = self
         return messageView
     }()
     private lazy var sendButton: UIButton = {
@@ -39,6 +40,7 @@ class SendMessageView: UIView {
         sendButton.setImage(UIImage(named: "icon_send"), for: .normal)
         sendButton.addTarget(self, action: #selector(sendButtonDidTap), for: .touchUpInside)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.isHidden = true
         return sendButton
     }()
     
@@ -99,5 +101,11 @@ class SendMessageView: UIView {
         guard !messageView.text.isEmpty else { return }
         delegate?.sendMessage(with: messageView.text)
         messageView.text = ""
+    }
+}
+
+extension SendMessageView: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        sendButton.isHidden = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }

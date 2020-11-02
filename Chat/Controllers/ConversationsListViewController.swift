@@ -18,12 +18,7 @@ class ConversationsListViewController: UIViewController {
             userAvatarView.configure(with: user.avatarModel())
         }
     }
-    private lazy var channelsRef: CollectionReference = {
-        let db = Firestore.firestore()
-        return db.collection(Channel.firebaseCollectionName)
-    }()
-    private lazy var channelsQuery = channelsRef
-    private var channelDataSource: FirebaseDataSource<Channel>!
+    private var channelsService: ChannelsService!
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
@@ -59,6 +54,10 @@ class ConversationsListViewController: UIViewController {
     }
         
     // MARK: - Lifecycle
+    override func loadView() {
+        self.view = ThemedView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,10 +73,15 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        channelDataSource = FirebaseDataSource<Channel>(for: tableView, with: channelsQuery, refresh: nil)
-        GCDUserManager.shared.loadFromFile { result in
+        channelsService = ChannelsCoreDataService { self.tableView.reloadData() }
+        channelsService.getChannels {
+            self.tableView.reloadData()
+        }
+
+        GCDUserManager.shared.loadFromFile { (result, _) in
+            guard let user = result else { return }
             DispatchQueue.main.async {
-                self.currentUser = result.user
+                self.currentUser = user
                 self.navigationItem.rightBarButtonItems = [
                     UIBarButtonItem(customView: self.userAvatarView),
                     UIBarButtonItem(title: "➕", style: .plain, target: self, action: #selector(self.openCreateChannelAlert))
@@ -107,15 +111,13 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Helpers
     private func createChannel(with name: String) {
-        let newChannelRef = channelsRef.document()
-        let newChannel = Channel(id: newChannelRef.documentID, name: name)
-        newChannelRef.setData(newChannel.data) { [weak self] (error) in
+        channelsService.createChannel(with: name) {[weak self] (newChannel, error) in
             if let error = error {
                 self?.openAlert(title: "Ошибка сохранения", message: error.localizedDescription)
-            } else {
+            } else if let newChannel = newChannel {
                 self?.openChannel(newChannel)
             }
-        }        
+        }       
     }
     
     // MARK: - Interface Actions
@@ -152,7 +154,7 @@ class ConversationsListViewController: UIViewController {
 
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = channelDataSource.elements[indexPath.row]
+        let channel = channelsService.channels[indexPath.row]
         openChannel(channel)
     }
     
@@ -163,13 +165,13 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        channelDataSource.elements.count
+        channelsService.channels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
         if let conversationCell = cell as? ConversationsTableViewCell {
-            let channel = channelDataSource.elements[indexPath.row]
+            let channel = channelsService.channels[indexPath.row]
             conversationCell.configure(with: channel.cellModel())
         }
         return cell
@@ -184,11 +186,11 @@ extension ConversationsListViewController: UserAvatarViewDelegate {
 
 extension ConversationsListViewController: ThemePickerDelegate {
     func pickTheme(with name: ThemeName) {
-        ThemeManager.shared.saveToFile(data: name) { savedTheme in
+        ThemeManager.shared.saveToFile(data: name) { (savedTheme, _) in
+            guard let theme = savedTheme?.theme else { return }
+
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
-                
-                let theme = savedTheme.theme
                 self?.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
                 self?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
             }
