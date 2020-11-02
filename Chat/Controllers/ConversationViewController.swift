@@ -47,6 +47,10 @@ class ConversationViewController: UIViewController {
     private var messageViewBottom: NSLayoutConstraint?
     
     // MARK: - Lifecycle
+    override func loadView() {
+        self.view = ThemedView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
