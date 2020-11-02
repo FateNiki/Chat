@@ -188,7 +188,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
-        guard let channelDB = channelsResultContoller?.object(at: indexPath), let channel = Channel(from: channelDB) else { return cell }
+        guard let channel = getChannel(at: indexPath) else { return cell }
 
         if let conversationCell = cell as? ConversationsTableViewCell {
             conversationCell.configure(with: channel.cellModel())
