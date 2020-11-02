@@ -43,7 +43,7 @@ fileprivate extension ChannelsChanges.Event {
     }
 }
 
-class ChannelsFirebaseDataSource: ChannelsApiRepository {    
+class ChannelsFirebaseDataSource: ChannelsApiRepository {
     private var listener: ListenerRegistration?
     private lazy var channelsRef: CollectionReference = {
         let db = Firestore.firestore()
@@ -95,5 +95,9 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
                 completion(newChannel, nil)
             }
         }
+    }
+    
+    public func deleteChannel(with identifier: String, _ deleteCallback: @escaping (Error?) -> Void) {
+        channelsRef.document(identifier).delete(completion: deleteCallback)
     }
 }

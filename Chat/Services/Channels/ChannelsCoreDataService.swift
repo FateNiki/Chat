@@ -49,4 +49,8 @@ class ChannelsCoreDataService: ChannelsService {
         }
         apiRepository.createChannel(with: trimName, createCallback)
     }
+    
+    public func deleteChannel(with identifier: String, _ deleteCallback: @escaping (Error?) -> Void) {
+        apiRepository.deleteChannel(with: identifier, deleteCallback)
+    }
 }

@@ -157,8 +157,13 @@ class ConversationsListViewController: UIViewController {
 }
 
 extension ConversationsListViewController: UITableViewDelegate {
+    private func getChannel(at indexPath: IndexPath) -> Channel? {
+        guard let channelDB = channelsResultContoller?.object(at: indexPath), let channel = Channel(from: channelDB) else { return nil }
+        return channel
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let channelDB = channelsResultContoller?.object(at: indexPath), let channel = Channel(from: channelDB) else { return }
+        guard let channel = getChannel(at: indexPath) else { return }
         openChannel(channel)
     }
     
@@ -167,9 +172,11 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-//        tableView.deleteRows(at: [indexPath], with: .automatic)
-        print(editingStyle)
+        guard editingStyle == .delete, let channel = getChannel(at: indexPath) else { return }
+        channelsService.deleteChannel(with: channel.identifier) { [weak self] error in
+            guard let self = self, let error = error else { return }
+            self.openAlert(title: "Ошибка удаления", message: error.localizedDescription)
+        }
     }
 }
 

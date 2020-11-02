@@ -20,6 +20,7 @@ struct ChannelsChanges {
 protocol ChannelsService: class {
     func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<ChannelDB>
     func createChannel(with name: String, _ createCallback: @escaping(Channel?, Error?) -> Void)
+    func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
 }
 
 protocol ChannelsApiRepository: class {
@@ -27,6 +28,7 @@ protocol ChannelsApiRepository: class {
     
     func loadAllChannels(_ completion: @escaping([Channel]) -> Void)
     func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
+    func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
 }
 
 protocol ChannelsCacheService: class {
