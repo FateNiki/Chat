@@ -33,6 +33,7 @@ class ConversationViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
         tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -53,10 +54,7 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        scrollToBottom(animated: true)
     }
     
     // MARK: - Interface configuring
@@ -119,7 +117,7 @@ class ConversationViewController: UIViewController {
         let count = tableView.numberOfRows(inSection: 0)
         if count > 0 {
             let lastIndex = IndexPath(row: count - 1, section: 0)
-            tableView.scrollToRow(at: lastIndex, at: .bottom, animated: animated)
+            tableView.scrollToRow(at: lastIndex, at: .top, animated: animated)
         }
     }
 }
@@ -147,6 +145,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        scrollToBottom(animated: true)
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
