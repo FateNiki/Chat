@@ -103,7 +103,9 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func initNavigation() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Channels"
+        navigationItem.largeTitleDisplayMode = .always
         
         let userLoadingView = UIActivityIndicatorView()
         userLoadingView.startAnimating()

@@ -92,6 +92,7 @@ class ConversationViewController: UIViewController {
     
     private func initNavigation() {
         navigationItem.title = channel.name
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     // MARK: - Inteface Actions
