@@ -6,39 +6,21 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 class MessagesCoreDataService: MessagesService {
-    private(set) var messages: [Message] = []
-    private(set) var messagesDidAdd: () -> Void
-    
-    private var cacheService: MessagesCacheService!
+    private var cacheService: MessagesCacheService
     private var apiRepository: MessagesApiRepository!
     
-    init(for channel: Channel, messagesDidAdd: @escaping () -> Void) {
-        self.messagesDidAdd = messagesDidAdd
-        
-        self.cacheService = MessagesCoreDataCacheService(for: channel) { [weak self] cacheMessages in
-            guard let self = self else { return }
-            self.messages = cacheMessages
-            self.messagesDidAdd()
-        }
+    init(for channel: Channel) {
+        cacheService = MessagesCoreDataCacheService(for: channel)
         
         self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] newMessages in
             self?.cacheService.syncMessages(newMessages: newMessages)
         }
     }
     
-    func getMessages(_ completion: @escaping () -> Void) {
-        cacheService.getMessages { [weak self] cacheMessages in
-            guard let self = self else { return }
-            self.messages = cacheMessages
-            completion()
-            self.apiRepository.loadMessages(after: self.messages.last)
-        }
-    }
-    
-    func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
+    public func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
         let trimText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimText.isEmpty else {
             errorCallback(ErrorWithMessage(message: "Пустая строка"))
@@ -49,5 +31,15 @@ class MessagesCoreDataService: MessagesService {
             Message(content: text, senderId: sender.id, senderName: sender.fullName),
             errorCallback
         )
+    }
+    
+    public func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB> {
+        let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
+        request.predicate = predicate
+        request.sortDescriptors = [ NSSortDescriptor(key: "created", ascending: true) ]
+        return NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: CoreDataStack.shared.mainContext,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
     }
 }

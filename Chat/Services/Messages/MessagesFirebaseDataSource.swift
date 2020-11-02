@@ -8,7 +8,7 @@
 
 import Firebase
 
-extension Message {
+fileprivate extension Message {
     init?(from data: [String: Any]) {
         guard let content = data["content"] as? String,
               let created = data["created"] as? Timestamp,
@@ -27,14 +27,12 @@ extension Message {
         "senderId": senderId,
         "senderName": senderName
     ]}
-    
-    var timestamp: Double { created.timeIntervalSince1970 }
 }
 
 class MessagesFirebaseDataSource: MessagesApiRepository {
     private var listener: ListenerRegistration?
-    private let refreshCallback: ([Message]) -> Void
     private var messagesRef: CollectionReference
+    private let refreshCallback: ([Message]) -> Void
     
     init(for channel: Channel, refresh: @escaping ([Message]) -> Void) {
         let db = Firestore.firestore()

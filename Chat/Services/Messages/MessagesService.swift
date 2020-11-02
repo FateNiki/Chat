@@ -6,14 +6,10 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 protocol MessagesService: class {
-    var messages: [Message] { get }
-    var messagesDidAdd: () -> Void { get }
-    
-    func getMessages(_ loadCallback: @escaping() -> Void)
-    
+    func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB>
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
 
@@ -22,8 +18,6 @@ protocol MessagesApiRepository {
     func createMessage(_ message: Message, _ errorCallback: @escaping(Error) -> Void)
 }
 
-protocol MessagesCacheService: class {
-    func getMessages(_ completion: @escaping([Message]) -> Void)
-    
+protocol MessagesCacheService: class {    
     func syncMessages(newMessages: [Message])
 }

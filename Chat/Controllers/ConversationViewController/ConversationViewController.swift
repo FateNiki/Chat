@@ -8,11 +8,20 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class ConversationViewController: UIViewController {
     // MARK: - Constants
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
     private var messageService: MessagesService!
+    private var messageResultController: NSFetchedResultsController<MessageDB>? {
+        didSet {
+            guard let controller = messageResultController else { return }
+            controller.delegate = self
+            try? controller.performFetch()
+//            tableView.reloadData()
+        }
+    }
 
     // MARK: - Variables
     var currentUser: User!
@@ -50,13 +59,8 @@ class ConversationViewController: UIViewController {
         initTableView()
         initNavigation()
         configKeyboard()
-        messageService = MessagesCoreDataService(for: channel) { [weak self] in
-            self?.tableView.reloadData()
-            self?.scrollToBottom(animated: true)
-        }
-        messageService.getMessages { [weak self] in
-            self?.tableView.reloadData()
-        }
+        messageService = MessagesCoreDataService(for: channel)
+        messageResultController = messageService.resultController(for: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -121,18 +125,52 @@ class ConversationViewController: UIViewController {
 }
 
 extension ConversationViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { messageService.messages.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let sections = messageResultController?.sections else { return 0 }
+        return sections[section].numberOfObjects }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: messageCellIdentifier, for: indexPath)
-        guard let messageCell = cell as? MessageTableViewCell else {
-            return cell
+        guard let messageDB = messageResultController?.object(at: indexPath), let message = Message(from: messageDB) else { return cell }
+
+        if let messageCell = cell as? MessageTableViewCell {
+            messageCell.configure(with: message.cellModel(for: currentUser))
         }
-        
-        let message = messageService.messages[indexPath.row]
-        messageCell.configure(with: message.cellModel(for: currentUser))
-        
-        return messageCell
+        return cell
+    }
+}
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            guard let insertIndex = newIndexPath else { return }
+            tableView.insertRows(at: [insertIndex], with: .automatic)
+        case .update:
+            guard let updateIndex = indexPath else { return }
+            tableView.reloadRows(at: [updateIndex], with: .automatic)
+        case .move:
+            guard let oldIndex = indexPath, let newIndex = newIndexPath else { return }
+            tableView.deleteRows(at: [oldIndex], with: .automatic)
+            tableView.insertRows(at: [newIndex], with: .automatic)
+        case .delete:
+            guard let deleteIndex = indexPath else { return }
+            tableView.deleteRows(at: [deleteIndex], with: .automatic)
+        @unknown default:
+                fatalError("Unknowed chanes")
+        }
     }
 }
 
