@@ -109,7 +109,10 @@ class ConversationsListViewController: UIViewController {
         userLoadingView.startAnimating()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: userLoadingView)
         
-        let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openThemeChoice))
+        let settingButton = UIBarButtonItem(image: UIImage(named: "icon_settings"),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(openThemeChoice))
         navigationItem.leftBarButtonItem = settingButton
     }
     
