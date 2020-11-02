@@ -165,6 +165,12 @@ extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return currentUser == nil ? nil : indexPath
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+//        tableView.deleteRows(at: [indexPath], with: .automatic)
+        print(editingStyle)
+    }
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
