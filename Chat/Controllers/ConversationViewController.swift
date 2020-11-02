@@ -93,6 +93,10 @@ class ConversationViewController: UIViewController {
     private func initNavigation() {
         navigationItem.title = channel.name
         navigationItem.largeTitleDisplayMode = .never
+        let titleView = ChannelTitleView()
+        titleView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        titleView.configure(with: channel.cellModel())
+        navigationItem.titleView = titleView
     }
     
     // MARK: - Inteface Actions
