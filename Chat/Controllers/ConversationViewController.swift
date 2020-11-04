@@ -23,7 +23,7 @@ class ConversationViewController: UIViewController {
     }
     
     init(channel: Channel, user: User) {
-        self.currentUser = user
+        self.user = user
         self.channel = channel
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,7 +33,7 @@ class ConversationViewController: UIViewController {
     }
     
     // MARK: - Variables
-    var currentUser: User
+    var user: User
     var channel: Channel
     
     // MARK: - UI Variables
@@ -147,7 +147,7 @@ extension ConversationViewController: UITableViewDataSource {
         guard let messageDB = messageResultController?.object(at: indexPath), let message = Message(from: messageDB) else { return cell }
 
         if let messageCell = cell as? MessageTableViewCell {
-            messageCell.configure(with: message.cellModel(for: currentUser))
+            messageCell.configure(with: message.cellModel(for: user))
         }
         return cell
     }
@@ -190,7 +190,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 
 extension ConversationViewController: SendMessageViewDelegate {
     func sendMessage(with text: String) {
-        messageService.createMessage(from: currentUser, with: text) { error in
+        messageService.createMessage(from: user, with: text) { error in
             print("SEND MESSAGE ERROR: \(error.localizedDescription)")
         }
     }
