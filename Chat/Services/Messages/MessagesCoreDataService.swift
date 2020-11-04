@@ -43,6 +43,7 @@ class MessagesCoreDataService: MessagesService {
             request.predicate = channelPredicate
         }
         request.sortDescriptors = [ NSSortDescriptor(key: "created", ascending: true) ]
+        request.fetchBatchSize = 30
         return NSFetchedResultsController(fetchRequest: request,
                                                     managedObjectContext: CoreDataStack.shared.mainContext,
                                                     sectionNameKeyPath: nil,
