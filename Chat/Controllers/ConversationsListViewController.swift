@@ -133,9 +133,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     func openChannel(_ channel: Channel) {
-        let conversationController = ConversationViewController()
-        conversationController.channel = channel
-        conversationController.currentUser = currentUser
+        guard let user = currentUser else { return }
+        let conversationController = ConversationViewController(channel: channel, user: user)
         navigationController?.pushViewController(conversationController, animated: true)
     }
     

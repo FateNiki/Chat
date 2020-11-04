@@ -21,10 +21,20 @@ class ConversationViewController: UIViewController {
             try? controller.performFetch()
         }
     }
-
+    
+    init(channel: Channel, user: User) {
+        self.currentUser = user
+        self.channel = channel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Variables
-    var currentUser: User!
-    var channel: Channel!
+    var currentUser: User
+    var channel: Channel
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
