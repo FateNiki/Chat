@@ -12,7 +12,7 @@ class ChannelsCoreDataService: ChannelsService {
     
     static let shared = ChannelsCoreDataService()
     
-    private var cacheService: ChannelsCacheService!
+    private var cacheService: ChannelsCacheService
     private var apiRepository: ChannelsApiRepository!
     
     private init() {
