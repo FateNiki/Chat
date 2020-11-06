@@ -6,24 +6,32 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import CoreData
+
+struct ChannelsChanges {
+    enum Event {
+        case create, update, delete
+    }
+    
+    let event: Event
+    let channel: Channel
+}
 
 protocol ChannelsService: class {
-    var channels: [Channel] { get }
-    var channelsDidUpdate: () -> Void { get }
-    
-    func getChannels(_ loadCallback: @escaping() -> Void)
-    
+    func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<ChannelDB>
     func createChannel(with name: String, _ createCallback: @escaping(Channel?, Error?) -> Void)
+    func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
 }
 
 protocol ChannelsApiRepository: class {
-    func loadChannels(_ completion: @escaping([Channel]) -> Void)
+    var refreshCallback: ([ChannelsChanges]) -> Void { get }
+    
+    func loadAllChannels(_ completion: @escaping([Channel]) -> Void)
     func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
+    func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
 }
 
 protocol ChannelsCacheService: class {
-    func getChannels(_ completion: @escaping([Channel]) -> Void)
-    
-    func syncChannels(_ channels: [Channel])
+    func reloadChannels(_ channels: [Channel])
+    func syncChanges(_ channelsChanges: [ChannelsChanges])
 }

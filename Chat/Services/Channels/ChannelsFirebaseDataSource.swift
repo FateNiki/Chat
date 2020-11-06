@@ -8,7 +8,7 @@
 
 import Firebase
 
-extension Channel {
+fileprivate extension Channel {
     init?(from data: [String: Any], id: String) {
         guard let name = data["name"] as? String else {
             return nil
@@ -30,15 +30,28 @@ extension Channel {
     var timestamp: Double { lastActivity?.timeIntervalSince1970 ?? 0 }
 }
 
-class ChannelsFirebaseDataSource: ChannelsApiRepository {    
+fileprivate extension ChannelsChanges.Event {
+    init(from: DocumentChangeType) {
+        switch from {
+        case .added:
+            self = .create
+        case .modified:
+            self = .update
+        case .removed:
+            self = .delete
+        }
+    }
+}
+
+class ChannelsFirebaseDataSource: ChannelsApiRepository {
     private var listener: ListenerRegistration?
-    private let refreshCallback: ([Channel]) -> Void
     private lazy var channelsRef: CollectionReference = {
         let db = Firestore.firestore()
         return db.collection(Channel.firebaseCollectionName)
     }()
+    let refreshCallback: ([ChannelsChanges]) -> Void
     
-    init(refresh: @escaping ([Channel]) -> Void) {
+    init(refresh: @escaping ([ChannelsChanges]) -> Void) {
         self.refreshCallback = refresh
     }
     
@@ -52,20 +65,21 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
         self.listener = nil
     }
     
-    public func loadChannels(_ completion: @escaping ([Channel]) -> Void) {
+    public func loadAllChannels(_ completion: @escaping ([Channel]) -> Void) {
         removeListener()
         var load = true
         listener = channelsRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
             
-            let channels = snapshot.documentChanges.compactMap { diff in
-                Channel(from: diff.document.data(), id: diff.document.documentID)
-            }
-            
             if load {
+                let channels = snapshot.documents.compactMap { Channel(from: $0.data(), id: $0.documentID) }
                 completion(channels)
                 load = false
             } else {
+                let channels: [ChannelsChanges] = snapshot.documentChanges.compactMap { diff in
+                    guard let channel = Channel(from: diff.document.data(), id: diff.document.documentID) else { return nil }
+                    return ChannelsChanges(event: .init(from: diff.type), channel: channel)
+                }
                 self.refreshCallback(channels)
             }
         }
@@ -81,5 +95,9 @@ class ChannelsFirebaseDataSource: ChannelsApiRepository {
                 completion(newChannel, nil)
             }
         }
+    }
+    
+    public func deleteChannel(with identifier: String, _ deleteCallback: @escaping (Error?) -> Void) {
+        channelsRef.document(identifier).delete(completion: deleteCallback)
     }
 }

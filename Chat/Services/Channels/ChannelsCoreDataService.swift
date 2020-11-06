@@ -6,42 +6,39 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 class ChannelsCoreDataService: ChannelsService {
-    private(set) var channels: [Channel] = []
-    private(set) var channelsDidUpdate: () -> Void
     
-    private var cacheService: ChannelsCacheService!
+    static let shared = ChannelsCoreDataService()
+    
+    private var cacheService: ChannelsCacheService
     private var apiRepository: ChannelsApiRepository!
     
-    init(channelsUpdate: @escaping () -> Void) {
-        self.channelsDidUpdate = channelsUpdate
+    private init() {
+        self.cacheService = ChannelsCoreDataCacheService()
         
-        self.cacheService = ChannelsCoreDataCacheService { [weak self] cacheChannels in
-            guard let self = self else { return }
-            self.channels = cacheChannels
-            self.channelsDidUpdate()
+        self.apiRepository = ChannelsFirebaseDataSource { [weak self] diff in
+            self?.cacheService.syncChanges(diff)
         }
         
-        self.apiRepository = ChannelsFirebaseDataSource { [weak self] channels in
-            self?.cacheService.syncChannels(channels)
-        }
+        getChannelsFromServer()
     }
     
     private func getChannelsFromServer() {
-        apiRepository.loadChannels { [weak self] channels in
-            self?.cacheService.syncChannels(channels)
+        apiRepository.loadAllChannels { [weak self] channels in
+            self?.cacheService.reloadChannels(channels)
         }
     }
     
-    public func getChannels(_ loadCallback: @escaping () -> Void) {
-        cacheService.getChannels { [weak self] cacheChannels in
-            guard let self = self else { return }
-            self.channels = cacheChannels
-            loadCallback()
-            self.getChannelsFromServer()
-        }
+    public func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<ChannelDB> {
+        let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+        request.predicate = predicate
+        request.sortDescriptors = [ NSSortDescriptor(key: "lastActivity", ascending: false) ]
+        return NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: CoreDataStack.shared.mainContext,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
     }
     
     public func createChannel(with name: String, _ createCallback: @escaping (Channel?, Error?) -> Void) {
@@ -51,5 +48,9 @@ class ChannelsCoreDataService: ChannelsService {
             return
         }
         apiRepository.createChannel(with: trimName, createCallback)
+    }
+    
+    public func deleteChannel(with identifier: String, _ deleteCallback: @escaping (Error?) -> Void) {
+        apiRepository.deleteChannel(with: identifier, deleteCallback)
     }
 }

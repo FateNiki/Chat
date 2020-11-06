@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class ConversationsListViewController: UIViewController {
     // MARK: - Constants
@@ -18,13 +19,20 @@ class ConversationsListViewController: UIViewController {
             userAvatarView.configure(with: user.avatarModel())
         }
     }
-    private var channelsService: ChannelsService!
+    private var channelsService: ChannelsService = ChannelsCoreDataService.shared
+    private var channelsResultContoller: NSFetchedResultsController<ChannelDB>? {
+        didSet {
+            guard let controller = channelsResultContoller else { return }
+            controller.delegate = self
+            try? controller.performFetch()
+        }
+    }
     
     // MARK: - UI Variables
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .plain)
         tableView.register(UINib(nibName: conversationCellIdentifier, bundle: nil), forCellReuseIdentifier: conversationCellIdentifier)
-        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
@@ -64,20 +72,11 @@ class ConversationsListViewController: UIViewController {
         setupView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateView()
-    }
-    
     // MARK: - Config UI
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        channelsService = ChannelsCoreDataService { self.tableView.reloadData() }
-        channelsService.getChannels {
-            self.tableView.reloadData()
-        }
-
+        self.channelsResultContoller = channelsService.resultController(for: nil)
         GCDUserManager.shared.loadFromFile { (result, _) in
             guard let user = result else { return }
             DispatchQueue.main.async {
@@ -90,22 +89,27 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
-    private func updateView() {
-        tableView.frame = view.frame
-    }
-    
     private func initTableView() {
         view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     private func initNavigation() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Channels"
+        navigationItem.largeTitleDisplayMode = .always
         
         let userLoadingView = UIActivityIndicatorView()
         userLoadingView.startAnimating()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: userLoadingView)
         
-        let settingButton = UIBarButtonItem(title: "⚙️", style: .plain, target: self, action: #selector(openThemeChoice))
+        let settingButton = UIBarButtonItem(image: UIImage(named: "icon_settings"),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(openThemeChoice))
         navigationItem.leftBarButtonItem = settingButton
     }
     
@@ -129,9 +133,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     func openChannel(_ channel: Channel) {
-        let conversationController = ConversationViewController()
-        conversationController.channel = channel
-        conversationController.currentUser = currentUser
+        guard let user = currentUser else { return }
+        let conversationController = ConversationViewController(channel: channel, user: user)
         navigationController?.pushViewController(conversationController, animated: true)
     }
     
@@ -153,28 +156,77 @@ class ConversationsListViewController: UIViewController {
 }
 
 extension ConversationsListViewController: UITableViewDelegate {
+    private func getChannel(at indexPath: IndexPath) -> Channel? {
+        guard let channelDB = channelsResultContoller?.object(at: indexPath), let channel = Channel(from: channelDB) else { return nil }
+        return channel
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = channelsService.channels[indexPath.row]
+        guard let channel = getChannel(at: indexPath) else { return }
         openChannel(channel)
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return currentUser == nil ? nil : indexPath
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete, let channel = getChannel(at: indexPath) else { return }
+        channelsService.deleteChannel(with: channel.identifier) { [weak self] error in
+            guard let self = self, let error = error else { return }
+            self.openAlert(title: "Ошибка удаления", message: error.localizedDescription)
+        }
+    }
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        channelsService.channels.count
+        guard let sections = channelsResultContoller?.sections else { return 0 }
+        return sections[section].numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: conversationCellIdentifier, for: indexPath)
+        guard let channel = getChannel(at: indexPath) else { return cell }
+
         if let conversationCell = cell as? ConversationsTableViewCell {
-            let channel = channelsService.channels[indexPath.row]
             conversationCell.configure(with: channel.cellModel())
         }
         return cell
+    }
+}
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            guard let insertIndex = newIndexPath else { return }
+            tableView.insertRows(at: [insertIndex], with: .automatic)
+        case .update:
+            guard let updateIndex = indexPath else { return }
+            tableView.reloadRows(at: [updateIndex], with: .automatic)
+        case .move:
+            guard let oldIndex = indexPath, let newIndex = newIndexPath else { return }
+            tableView.deleteRows(at: [oldIndex], with: .automatic)
+            tableView.insertRows(at: [newIndex], with: .automatic)
+        case .delete:
+            guard let deleteIndex = indexPath else { return }
+            tableView.deleteRows(at: [deleteIndex], with: .automatic)
+        @unknown default:
+                fatalError("Unknowed chanes")
+        }
     }
 }
 
@@ -190,9 +242,11 @@ extension ConversationsListViewController: ThemePickerDelegate {
             guard let theme = savedTheme?.theme else { return }
 
             DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-                self?.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-                self?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+                guard let self = self else { return }
+                self.tableView.reloadData()
+                self.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+                self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+                self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: theme.textColor]
             }
         }
     }

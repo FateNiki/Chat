@@ -26,6 +26,7 @@ class ThemesViewController: UIViewController {
     // MARK: - Config UI
     private func setupView() {
         navigationItem.title = "Settings"
+        navigationItem.largeTitleDisplayMode = .never
         
         for (index, themeName) in ThemeName.allCases.enumerated() where index < placeholders.count {
             placeholders[index].configure(with: themeName)

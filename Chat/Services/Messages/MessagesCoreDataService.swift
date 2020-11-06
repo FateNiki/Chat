@@ -6,48 +6,47 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 class MessagesCoreDataService: MessagesService {
-    private(set) var messages: [Message] = []
-    private(set) var messagesDidAdd: () -> Void
-    
-    private var cacheService: MessagesCacheService!
+    private var cacheService: MessagesCacheService
     private var apiRepository: MessagesApiRepository!
+    private let channel: Channel
     
-    init(for channel: Channel, messagesDidAdd: @escaping () -> Void) {
-        self.messagesDidAdd = messagesDidAdd
-        
-        self.cacheService = MessagesCoreDataCacheService(for: channel) { [weak self] cacheMessages in
-            guard let self = self else { return }
-            self.messages = cacheMessages
-            self.messagesDidAdd()
-        }
-        
+    init(for channel: Channel) {
+        self.channel = channel
+        self.cacheService = MessagesCoreDataCacheService(for: channel)
         self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] newMessages in
-            self?.cacheService.syncMessages(newMessages: newMessages)
+            self?.cacheService.syncChanges(newMessages: newMessages)
+        }
+        self.apiRepository.loadAllMessages { [weak self] allMessages in
+            self?.cacheService.reloadMessages(allMessages)
         }
     }
     
-    func getMessages(_ completion: @escaping () -> Void) {
-        cacheService.getMessages { [weak self] cacheMessages in
-            guard let self = self else { return }
-            self.messages = cacheMessages
-            completion()
-            self.apiRepository.loadMessages(after: self.messages.last)
-        }
-    }
-    
-    func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
+    public func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
         let trimText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimText.isEmpty else {
             errorCallback(ErrorWithMessage(message: "Пустая строка"))
             return
         }
         
-        apiRepository.createMessage(
-            Message(content: text, senderId: sender.id, senderName: sender.fullName),
-            errorCallback
-        )
+        apiRepository.createMessage(from: sender, with: text, errorCallback)
+    }
+    
+    public func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB> {
+        let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
+        let channelPredicate = NSPredicate(format: "channel.identifier = %@", channel.identifier)
+        if let externalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [channelPredicate, externalPredicate])
+        } else {
+            request.predicate = channelPredicate
+        }
+        request.sortDescriptors = [ NSSortDescriptor(key: "created", ascending: true) ]
+        request.fetchBatchSize = 30
+        return NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: CoreDataStack.shared.mainContext,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
     }
 }

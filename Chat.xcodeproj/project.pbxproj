@@ -11,8 +11,8 @@
 		5B0D0D51252B431F00CCBB3F /* ThemedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0D0D50252B431F00CCBB3F /* ThemedView.swift */; };
 		5B0D0D54252B4C2E00CCBB3F /* ThemePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */; };
 		5B100E8825211DF0002E75B4 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B100E8625211DF0002E75B4 /* ConversationViewController.swift */; };
-		5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B100E8725211DF0002E75B4 /* ConversationViewController.xib */; };
 		5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1014BB2549A97B000416B0 /* CustomErrors.swift */; };
+		5B16A56A25507AC1005CB96B /* ChannelTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16A56925507AC1005CB96B /* ChannelTitleView.swift */; };
 		5B16E09E2546022600E0DF86 /* ChannelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E09D2546022600E0DF86 /* ChannelsService.swift */; };
 		5B16E0B32546045700E0DF86 /* ChannelsCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0B22546045700E0DF86 /* ChannelsCoreDataService.swift */; };
 		5B16E0C7254605D300E0DF86 /* ChannelsFirebaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16E0C6254605D300E0DF86 /* ChannelsFirebaseDataSource.swift */; };
@@ -70,8 +70,8 @@
 		5B0D0D50252B431F00CCBB3F /* ThemedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedView.swift; sourceTree = "<group>"; };
 		5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerDelegate.swift; sourceTree = "<group>"; };
 		5B100E8625211DF0002E75B4 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
-		5B100E8725211DF0002E75B4 /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
 		5B1014BB2549A97B000416B0 /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
+		5B16A56925507AC1005CB96B /* ChannelTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTitleView.swift; sourceTree = "<group>"; };
 		5B16E09D2546022600E0DF86 /* ChannelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsService.swift; sourceTree = "<group>"; };
 		5B16E0B22546045700E0DF86 /* ChannelsCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsCoreDataService.swift; sourceTree = "<group>"; };
 		5B16E0C6254605D300E0DF86 /* ChannelsFirebaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsFirebaseDataSource.swift; sourceTree = "<group>"; };
@@ -136,15 +136,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B100E8525211DA9002E75B4 /* ConversationViewController */ = {
-			isa = PBXGroup;
-			children = (
-				5B100E8625211DF0002E75B4 /* ConversationViewController.swift */,
-				5B100E8725211DF0002E75B4 /* ConversationViewController.xib */,
-			);
-			path = ConversationViewController;
-			sourceTree = "<group>";
-		};
 		5B16E0B12546041F00E0DF86 /* Channels */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,9 +191,9 @@
 			isa = PBXGroup;
 			children = (
 				5BEF6A192527B7D600F88572 /* ThemesViewController */,
-				5B100E8525211DA9002E75B4 /* ConversationViewController */,
 				5BE20E062520B5F000D73A63 /* UserViewController */,
 				5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */,
+				5B100E8625211DF0002E75B4 /* ConversationViewController.swift */,
 				5B173465254B17E000F8614D /* RootViewController.swift */,
 			);
 			path = Controllers;
@@ -315,6 +306,7 @@
 				5B72E1432532246D004BECDA /* TurnedOffTextField.swift */,
 				5B74D79F2530718D002C2363 /* MessageView.swift */,
 				5BE44802253D837C0015A6AF /* SendMessageView.swift */,
+				5B16A56925507AC1005CB96B /* ChannelTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,7 +430,6 @@
 				5BEF6A1D2527B7FA00F88572 /* ThemesViewController.xib in Resources */,
 				5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */,
 				5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */,
-				5B100E8925211DF0002E75B4 /* ConversationViewController.xib in Resources */,
 				5BDED39A2539972100B3A8EE /* .swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +540,7 @@
 				5B74D7A02530718D002C2363 /* MessageView.swift in Sources */,
 				5B16E0F325461E1200E0DF86 /* MessagesCoreDataService.swift in Sources */,
 				5B173466254B17E000F8614D /* RootViewController.swift in Sources */,
+				5B16A56A25507AC1005CB96B /* ChannelTitleView.swift in Sources */,
 				5B16E0EC25461B4D00E0DF86 /* MessagesService.swift in Sources */,
 				5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */,
 				5B411CDF2536044D001859F0 /* ThemeManager.swift in Sources */,

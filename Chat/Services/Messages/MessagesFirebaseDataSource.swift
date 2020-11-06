@@ -8,13 +8,14 @@
 
 import Firebase
 
-extension Message {
-    init?(from data: [String: Any]) {
+fileprivate extension Message {
+    init?(from data: [String: Any], id: String) {
         guard let content = data["content"] as? String,
               let created = data["created"] as? Timestamp,
               let senderId = data["senderId"] as? String,
               let senderName = data["senderName"] as? String
         else { return nil }
+        self.identifier = id
         self.content = content
         self.created = created.dateValue()
         self.senderId = senderId
@@ -27,14 +28,12 @@ extension Message {
         "senderId": senderId,
         "senderName": senderName
     ]}
-    
-    var timestamp: Double { created.timeIntervalSince1970 }
 }
 
 class MessagesFirebaseDataSource: MessagesApiRepository {
     private var listener: ListenerRegistration?
-    private let refreshCallback: ([Message]) -> Void
     private var messagesRef: CollectionReference
+    private let refreshCallback: ([Message]) -> Void
     
     init(for channel: Channel, refresh: @escaping ([Message]) -> Void) {
         let db = Firestore.firestore()
@@ -42,7 +41,6 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
             .document(channel.identifier)
             .collection(Message.firebaseCollectionName)
         self.refreshCallback = refresh
-        
     }
     
     deinit {
@@ -55,24 +53,30 @@ class MessagesFirebaseDataSource: MessagesApiRepository {
         self.listener = nil
     }
     
-    public func loadMessages(after message: Message?) {
+    public func loadAllMessages(_ completion: @escaping ([Message]) -> Void) {
         removeListener()
-        var queryRef: Query = messagesRef
-        if let message = message {
-            queryRef = queryRef.whereField("created", isGreaterThan: Timestamp(date: message.created.addingTimeInterval(1)))
-        }
-        listener = queryRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
+        var load = true
+        listener = messagesRef.addSnapshotListener { [weak self] (docsSnapshot, _) in
             guard let self = self, let snapshot = docsSnapshot, snapshot.documentChanges.count > 0 else { return }
             
-            let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap { Message(from: $0.document.data()) }
-            self.refreshCallback(newMessages)
+            if load {
+                let newMessages = snapshot.documents.compactMap { Message(from: $0.data(), id: $0.documentID) }
+                completion(newMessages)
+                load = false
+            } else {
+                let newMessages = snapshot.documentChanges.filter { $0.type == .added }.compactMap {
+                    Message(from: $0.document.data(), id: $0.document.documentID)
+                }
+                self.refreshCallback(newMessages)
+            }
         }
     }
     
-    func createMessage(_ message: Message, _ errorCallback: @escaping (Error) -> Void) {
-        messagesRef.addDocument(data: message.data) { error in
+    public func createMessage(from sender: User, with text: String, _ errorCallback: @escaping (Error) -> Void) {
+        let newMessageRef = messagesRef.document()
+        let newMessage = Message(id: newMessageRef.documentID, content: text, senderId: sender.id, senderName: sender.fullName)
+        newMessageRef.setData(newMessage.data) { error in
             if let error = error { errorCallback(error) }
         }
     }
-    
 }

@@ -54,6 +54,7 @@ class ThemeManager: FileDataManager {
         // NavigationBar
         UINavigationBar.appearance().barTintColor = theme.secondBackgroundColor
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.textColor]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.textColor]
         
         // UITextView
         UITextView.appearance().backgroundColor = theme.backgroundColor
