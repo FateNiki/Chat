@@ -19,16 +19,13 @@ class UserViewController: UIViewController {
     private let saveButtonCornerRadius: CGFloat = 14
     
     // MARK: - Variables
-    var currentUser: User?
-    weak var delegate: UserViewDelegate?
-    private var saveIsRequired: Bool {
-        guard let user = currentUser else { return false }
-        let equal = fullNameTextField.text == user.fullName &&
-            descriptionTextView.text == user.description &&
-            userAvatarView.avatar == user.avatar
-        return !equal
+    private var userData: UserStorageData {
+        return UserStorageData(
+            fullName: fullNameTextField.text ?? "",
+            description: descriptionTextView.text,
+            avatar: userAvatarView.avatar
+        )
     }
-    
     private var state: UserViewState = .viewing {
         didSet {
             switch state {
@@ -91,7 +88,18 @@ class UserViewController: UIViewController {
         return indicator
     }()
     
+    // MARK: - Dependencies
+    private let model: UserViewModelProtocol
+    
     // MARK: - Lifecycle
+    init(model: UserViewModelProtocol) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -107,8 +115,7 @@ class UserViewController: UIViewController {
         fullNameTextField.delegate = self
         descriptionTextView.delegate = self
         
-        initUserFields()
-        loadUser(by: GCDUserManager.shared)
+        model.loadUser()
     }
     
     private func configKeyboard() {
@@ -137,70 +144,10 @@ class UserViewController: UIViewController {
         }
     }
     
-    private func initUserFields() {
-        guard let user = currentUser else { return }
-        
-        fullNameTextField.text = user.fullName
-        descriptionTextView.text = user.description
-        userAvatarView.configure(with: user.avatarModel())
-    }
-    
     // MARK: - Helpers
     private func updateSaveButtons() {
-        let isEnabled = state == .editing ? saveIsRequired : false
+        let isEnabled = state == .editing ? model.needSave(data: userData) : false
         saveButtons.forEach { $0.isEnabled = isEnabled }
-    }
-    
-    private func loadUser<M: UserManager>(by manager: M) {
-        state = .loading
-        manager.loadFromFile { [weak self] (result, _) in
-            DispatchQueue.main.async {
-                guard let controller = self, let user = result else { return }
-                
-                controller.currentUser = user
-                controller.delegate?.userDidChange(newUser: user)
-                controller.initUserFields()
-                controller.state = .viewing
-            }
-        }
-    }
-
-    private func saveUser<M: UserManager>(by manager: M) {
-        state = .saving
-        manager.saveToFile(
-            data: .init(
-                fullName: fullNameTextField.text ?? "",
-                description: descriptionTextView.text,
-                avatar: userAvatarView.avatar
-            )
-        ) { [weak self] (result, errors) in
-            DispatchQueue.main.async {
-                guard let controller = self else { return }
-
-                if let user = result {
-                    controller.currentUser = user
-                    controller.delegate?.userDidChange(newUser: user)
-                }
-                
-                if let errors = errors {
-                    let messages = errors.joined(separator: "\r\n")
-                    let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
-                        controller.setEditing(false, animated: true)
-                    })
-                    let repeatButton = UIAlertAction(title: "Повторить", style: .default, handler: {_ in
-                        controller.saveUser(by: manager)
-                    })
-
-                    controller.openAlert(title: "Ошибка сохранения", message: messages, buttons: [
-                        okButton,
-                        repeatButton
-                    ])
-                } else {
-                    controller.openAlert(title: "Сохранено успешно", message: "")
-                    controller.setEditing(false, animated: true)
-                }
-            }
-        }
     }
     
     // MARK: - Inteface Actions
@@ -236,15 +183,15 @@ class UserViewController: UIViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         state = editing ? .editing : .viewing
-        initUserFields()
+        model.resetUserChanges()
     }
     
     @IBAction func saveByGCD() {
-        saveUser(by: GCDUserManager.shared)
+        model.saveUser(data: userData)
     }
     
     @IBAction func saveByOperations() {
-        saveUser(by: OperationsUserManager.shared)
+        model.saveUser(data: userData)
     }
     
     @IBAction func fullNameDidChange(_ sender: Any) {
@@ -265,6 +212,74 @@ class UserViewController: UIViewController {
     }
 }
 
+extension UserViewController: UserViewModelDelegate {
+    private func setup(user: User) {
+        fullNameTextField.text = user.fullName
+        descriptionTextView.text = user.description
+        userAvatarView.configure(with: user.avatarModel())
+    }
+    
+    // Reset
+    func userDidReset(user: User) {
+        setup(user: user)
+    }
+    
+    // Load
+    func userWillLoad() {
+        self.state = .loading
+    }
+    
+    func userDidLoad(user: User) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.state = .viewing
+            self.setup(user: user)
+        }
+    }
+    
+    func showLoadingError(errors: UserStorageError) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let messages = errors.joined(separator: "\r\n")
+            self.openAlert(title: "Ошибка сохранения", message: messages)
+        }
+    }
+    
+    // Save
+    func userWillSave() {
+        self.state = .saving
+    }
+    
+    func userDidSave(user: User) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.state = .viewing
+            self.setup(user: user)
+            self.openAlert(title: "Сохранено успешно", message: "")
+            self.setEditing(false, animated: true)
+        }
+    }
+
+    func retrySave(errors: UserStorageError) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let messages = errors.joined(separator: "\r\n")
+            let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: {_ in
+                self.setEditing(false, animated: true)
+            })
+            let repeatButton = UIAlertAction(title: "Повторить", style: .default, handler: {_ in
+                self.model.saveUser(data: self.userData)
+            })
+
+            self.openAlert(title: "Ошибка сохранения", message: messages, buttons: [
+                okButton,
+                repeatButton
+            ])
+        }
+    }
+}
+
+// MARK: - Work with textfields
 extension UserViewController: UITextFieldDelegate, UITextViewDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
@@ -305,8 +320,7 @@ extension UserViewController: UINavigationControllerDelegate, UIImagePickerContr
             openAlert(title: "Изображение", message: "Image not found!")
             return
         }
-        guard let user = currentUser else { return }
-        userAvatarView.configure(with: user.avatarModel(with: selectedImage.jpegData(compressionQuality: 1)))
+        userAvatarView.configure(avatar: selectedImage.jpegData(compressionQuality: 1))
         updateSaveButtons()
     }
         

@@ -40,6 +40,8 @@
 		5BA7E91025591289007B9F29 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E90F25591289007B9F29 /* UserStorage.swift */; };
 		5BA7E91E25591FC6007B9F29 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E91D25591FC6007B9F29 /* ServicesAssembly.swift */; };
 		5BA7E9222559200F007B9F29 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E9212559200F007B9F29 /* UserService.swift */; };
+		5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */; };
+		5BA7E92C25592752007B9F29 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E92B25592752007B9F29 /* UserViewModel.swift */; };
 		5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6876C2539BCB30040F1AF /* Channel.swift */; };
 		5BBE67E32543081700545557 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BBE67E12543081700545557 /* Chat.xcdatamodeld */; };
 		5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B73F250D4D770062C724 /* AppDelegate.swift */; };
@@ -102,6 +104,8 @@
 		5BA7E90F25591289007B9F29 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
 		5BA7E91D25591FC6007B9F29 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		5BA7E9212559200F007B9F29 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
+		5BA7E92B25592752007B9F29 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		5BB6876C2539BCB30040F1AF /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		5BBE67E22543081700545557 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		5BC2B73C250D4D770062C724 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				5BEF6A192527B7D600F88572 /* ThemesViewController */,
-				5BE20E062520B5F000D73A63 /* UserViewController */,
 				5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */,
 				5B100E8625211DF0002E75B4 /* ConversationViewController.swift */,
 				5B173465254B17E000F8614D /* RootViewController.swift */,
@@ -265,6 +268,31 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		5BA7E925255925B3007B9F29 /* Presentation Layer */ = {
+			isa = PBXGroup;
+			children = (
+				5BA7E9262559263D007B9F29 /* Assembly */,
+				5BA7E92A25592717007B9F29 /* Modules */,
+			);
+			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		5BA7E9262559263D007B9F29 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		5BA7E92A25592717007B9F29 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5BE20E062520B5F000D73A63 /* UserViewController */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		5BBE67E02543080A00545557 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +326,7 @@
 		5BC2B73E250D4D770062C724 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5BA7E925255925B3007B9F29 /* Presentation Layer */,
 				5BA7E91A25591F6A007B9F29 /* Service Layer */,
 				5BA7E909255911C6007B9F29 /* Core Layer */,
 				5BECAD44251FAA9900141621 /* Views */,
@@ -337,6 +366,7 @@
 		5BE20E062520B5F000D73A63 /* UserViewController */ = {
 			isa = PBXGroup;
 			children = (
+				5BA7E92B25592752007B9F29 /* UserViewModel.swift */,
 				5BE20E072520B60700D73A63 /* UserViewController.swift */,
 				5BE20E082520B60700D73A63 /* UserViewController.xib */,
 			);
@@ -571,6 +601,7 @@
 				5B0D0D54252B4C2E00CCBB3F /* ThemePickerDelegate.swift in Sources */,
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */,
+				5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */,
 				5B16E09E2546022600E0DF86 /* ChannelsService.swift in Sources */,
 				5BA7E91025591289007B9F29 /* UserStorage.swift in Sources */,
 				5B72E14925322CAA004BECDA /* FileDataManager.swift in Sources */,
@@ -582,6 +613,7 @@
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */,
 				5B72E1442532246D004BECDA /* TurnedOffTextField.swift in Sources */,
+				5BA7E92C25592752007B9F29 /* UserViewModel.swift in Sources */,
 				5BA7E90C25591207007B9F29 /* CoreAssembly.swift in Sources */,
 				5BC729C22547335B00A05B88 /* MessagesCoreDataCacheService.swift in Sources */,
 				5B16E0B32546045700E0DF86 /* ChannelsCoreDataService.swift in Sources */,
