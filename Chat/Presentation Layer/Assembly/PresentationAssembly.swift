@@ -20,7 +20,8 @@ class Router {
 
     func openUserView(modalFor controller: UIViewController) {
         let userVC = presentationAssembly.userViewController()
-        controller.present(userVC, animated: true, completion: nil)
+        let userNavController = UINavigationController(rootViewController: userVC)
+        controller.present(userNavController, animated: true, completion: nil)
     }
     
     func openConverationsList(in navigation: UINavigationController) {
