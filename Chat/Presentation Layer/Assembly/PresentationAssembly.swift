@@ -63,14 +63,14 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     // MARK: - UserViewController    
     func userViewController() -> UserViewController {
-        let model = userViewModel()
+        let model = userModel()
         let userVC = UserViewController(model: model)
         model.delegate = userVC
         return userVC
     }
     
-    private func userViewModel() -> UserViewModelProtocol {
-        return UserViewModel(userService: serviceAssembly.getUserService(for: .gcd))
+    private func userModel() -> UserModelProtocol {
+        return UserModel(userService: serviceAssembly.getUserService(for: .gcd))
     }
     
     // MARK: - ConversationsListViewController

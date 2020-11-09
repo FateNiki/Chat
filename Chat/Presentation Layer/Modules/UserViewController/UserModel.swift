@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol UserViewModelProtocol: class {
-    var delegate: UserViewModelDelegate? { get set }
+protocol UserModelProtocol: class {
+    var delegate: UserModelDelegate? { get set }
     
     func loadUser()
     func resetUserChanges()
@@ -17,7 +17,7 @@ protocol UserViewModelProtocol: class {
     func needSave(data: UserStorageData) -> Bool
 }
 
-protocol UserViewModelDelegate: class {
+protocol UserModelDelegate: class {
     func userDidReset(user: User)
     
     func userWillLoad()
@@ -29,9 +29,9 @@ protocol UserViewModelDelegate: class {
     func retrySave(errors: UserStorageError)
 }
 
-class UserViewModel: UserViewModelProtocol {
+class UserModel: UserModelProtocol {
     private var userService: UserServiceProtocol
-    weak var delegate: UserViewModelDelegate?
+    weak var delegate: UserModelDelegate?
     private var user: User?
     
     init(userService: UserServiceProtocol) {

@@ -89,10 +89,10 @@ class UserViewController: UIViewController {
     }()
     
     // MARK: - Dependencies
-    private let model: UserViewModelProtocol
+    private let model: UserModelProtocol
     
     // MARK: - Lifecycle
-    init(model: UserViewModelProtocol) {
+    init(model: UserModelProtocol) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -213,7 +213,7 @@ class UserViewController: UIViewController {
     }
 }
 
-extension UserViewController: UserViewModelDelegate {
+extension UserViewController: UserModelDelegate {
     private func setup(user: User) {
         fullNameTextField.text = user.fullName
         descriptionTextView.text = user.description
