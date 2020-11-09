@@ -9,6 +9,7 @@
 import UIKit
 
 class RootNavigationViewController: UINavigationController {
+    private let router: Router
     
     lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
@@ -31,6 +32,15 @@ class RootNavigationViewController: UINavigationController {
             }
         }
     }
+    
+    init(router: Router) {
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +53,7 @@ class RootNavigationViewController: UINavigationController {
         CoreDataStack.shared.config {
             DispatchQueue.main.async {
                 self.isReady = true
-                self.pushViewController(ConversationsListViewController(), animated: true)
+                self.router.openConverationsList(in: self)
             }
         }
     }

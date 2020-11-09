@@ -45,13 +45,11 @@ class ConversationsListViewController: UIViewController {
         return uaView
     }()
     
+    // MARK: - Dependencies
+    private let router: Router
+    private let service: UserServiceProtocol
+    
     // MARK: - Controllers
-    private var userViewController: UserViewController {
-        let uvController = UserViewController()
-        uvController.delegate = self
-        uvController.currentUser = currentUser
-        return uvController
-    }
     private var themesController: ThemesViewController {
         let themesController = ThemesViewController()
 //        themesController.delegate = self
@@ -62,6 +60,16 @@ class ConversationsListViewController: UIViewController {
     }
         
     // MARK: - Lifecycle
+    init(router: Router, service: UserServiceProtocol) {
+        self.router = router
+        self.service = service
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         self.view = ThemedView()
     }
@@ -77,7 +85,8 @@ class ConversationsListViewController: UIViewController {
         self.initTableView()
         self.initNavigation()
         self.channelsResultContoller = channelsService.resultController(for: nil)
-        GCDUserManager.shared.loadFromFile { (result, _) in
+        
+        service.getUser { (result, _) in
             guard let user = result else { return }
             DispatchQueue.main.async {
                 self.currentUser = user
@@ -127,9 +136,7 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Interface Actions
     func openUserEdit() {
         guard currentUser != nil else { return }
-        
-        let userNavigationController = UINavigationController(rootViewController: userViewController)
-        self.present(userNavigationController, animated: true, completion: nil)
+        router.openUserView(modalFor: self)
     }
     
     func openChannel(_ channel: Channel) {

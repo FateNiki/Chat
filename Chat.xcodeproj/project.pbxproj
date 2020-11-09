@@ -43,6 +43,7 @@
 		5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */; };
 		5BA7E92C25592752007B9F29 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E92B25592752007B9F29 /* UserViewModel.swift */; };
 		5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6876C2539BCB30040F1AF /* Channel.swift */; };
+		5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB72CCB25593D330055341C /* RootAssembly.swift */; };
 		5BBE67E32543081700545557 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BBE67E12543081700545557 /* Chat.xcdatamodeld */; };
 		5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2B73F250D4D770062C724 /* AppDelegate.swift */; };
 		5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2B748250D4D7C0062C724 /* Assets.xcassets */; };
@@ -107,6 +108,7 @@
 		5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		5BA7E92B25592752007B9F29 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		5BB6876C2539BCB30040F1AF /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		5BB72CCB25593D330055341C /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		5BBE67E22543081700545557 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		5BC2B73C250D4D770062C724 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC2B73F250D4D770062C724 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				5BC2B74A250D4D7C0062C724 /* LaunchScreen.storyboard */,
 				5B06426A253ACBD10019AB80 /* GoogleService-Info.plist */,
 				5BC2B74D250D4D7C0062C724 /* Info.plist */,
+				5BB72CCB25593D330055341C /* RootAssembly.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */,
+				5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */,
 				5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */,
 				5B5A8CED251A524E000A541A /* UIViewController+Alert.swift in Sources */,
 				5BC2B740250D4D770062C724 /* AppDelegate.swift in Sources */,
