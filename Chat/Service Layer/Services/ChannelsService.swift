@@ -8,26 +8,25 @@
 
 import CoreData
 
+protocol ChannelsService: class {
+    func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<ChannelDB>
+    func createChannel(with name: String, _ createCallback: @escaping(Channel?, Error?) -> Void)
+    func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
+}
+
 class ChannelsCoreDataService: ChannelsService {
+    private var cache: ChannelsCache
+    private var repository: ChannelsRepository
     
-    static let shared = ChannelsCoreDataService()
-    
-    private var cacheService: ChannelsCacheService
-    private var apiRepository: ChannelsApiRepository!
-    
-    private init() {
-        self.cacheService = ChannelsCoreDataCacheService()
-        
-        self.apiRepository = ChannelsFirebaseDataSource { [weak self] diff in
-            self?.cacheService.syncChanges(diff)
-        }
-        
+    init(cache: ChannelsCache, repo: ChannelsRepository) {
+        self.cache = cache
+        self.repository = repo        
         getChannelsFromServer()
     }
     
     private func getChannelsFromServer() {
-        apiRepository.loadAllChannels { [weak self] channels in
-            self?.cacheService.reloadChannels(channels)
+        repository.loadAllChannels { [weak self] channels in
+            self?.cache.reloadChannels(channels)
         }
     }
     
@@ -47,10 +46,10 @@ class ChannelsCoreDataService: ChannelsService {
             createCallback(nil, ErrorWithMessage(message: "Пустая строка"))
             return
         }
-        apiRepository.createChannel(with: trimName, createCallback)
+        repository.createChannel(with: trimName, createCallback)
     }
     
     public func deleteChannel(with identifier: String, _ deleteCallback: @escaping (Error?) -> Void) {
-        apiRepository.deleteChannel(with: identifier, deleteCallback)
+        repository.deleteChannel(with: identifier, deleteCallback)
     }
 }

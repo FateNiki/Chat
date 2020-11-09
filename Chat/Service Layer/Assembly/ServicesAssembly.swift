@@ -14,6 +14,8 @@ enum AllowedUserStorages {
 
 protocol ServicesAssemblyProtocol {
     func getUserService(for userStorage: AllowedUserStorages) -> UserServiceProtocol
+    
+    func getChannelsService() -> ChannelsService
 }
 
 class ServicesAssembly: ServicesAssemblyProtocol {
@@ -30,5 +32,13 @@ class ServicesAssembly: ServicesAssemblyProtocol {
         case .operations:
             return UserService(storage: coreAssembly.userOperationsStorage)
         }
+    }
+    
+    func getChannelsService() -> ChannelsService {
+        let cache = coreAssembly.channelsCache
+        let repo = coreAssembly.channelsRepo(refresh: { [weak cache] diff in
+            cache?.syncChanges(diff)
+        })
+        return ChannelsCoreDataService(cache: cache, repo: repo)
     }
 }

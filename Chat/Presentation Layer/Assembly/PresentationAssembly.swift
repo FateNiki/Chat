@@ -53,8 +53,9 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     // MARK: - conversationsListViewController
     func conversationsListViewController(router: Router) -> ConversationsListViewController {
-        let service = serviceAssembly.getUserService(for: .gcd)
-        return ConversationsListViewController(router: router, service: service)
+        let userService = serviceAssembly.getUserService(for: .gcd)
+        let channelsService = serviceAssembly.getChannelsService()
+        return ConversationsListViewController(router: router, userService: userService, channelsService: channelsService)
     }
     
     // MARK: - UserViewController    

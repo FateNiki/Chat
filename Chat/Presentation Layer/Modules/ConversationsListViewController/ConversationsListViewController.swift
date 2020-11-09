@@ -19,7 +19,6 @@ class ConversationsListViewController: UIViewController {
             userAvatarView.configure(with: user.avatarModel())
         }
     }
-    private var channelsService: ChannelsService = ChannelsCoreDataService.shared
     private var channelsResultContoller: NSFetchedResultsController<ChannelDB>? {
         didSet {
             guard let controller = channelsResultContoller else { return }
@@ -47,7 +46,8 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Dependencies
     private let router: Router
-    private let service: UserServiceProtocol
+    private let userService: UserServiceProtocol
+    private var channelsService: ChannelsService
     
     // MARK: - Controllers
     private var themesController: ThemesViewController {
@@ -60,9 +60,10 @@ class ConversationsListViewController: UIViewController {
     }
         
     // MARK: - Lifecycle
-    init(router: Router, service: UserServiceProtocol) {
+    init(router: Router, userService: UserServiceProtocol, channelsService: ChannelsService) {
         self.router = router
-        self.service = service
+        self.userService = userService
+        self.channelsService = channelsService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -86,7 +87,7 @@ class ConversationsListViewController: UIViewController {
         self.initNavigation()
         self.channelsResultContoller = channelsService.resultController(for: nil)
         
-        service.getUser { (result, _) in
+        userService.getUser { (result, _) in
             guard let user = result else { return }
             DispatchQueue.main.async {
                 self.currentUser = user

@@ -23,3 +23,12 @@ struct Channel {
         self.lastActivity = nil
     }
 }
+
+struct ChannelsChanges {
+    enum Event {
+        case create, update, delete
+    }
+    
+    let event: Event
+    let channel: Channel
+}

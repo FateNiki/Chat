@@ -8,7 +8,12 @@
 import Foundation
 import CoreData
 
-class ChannelsCoreDataCacheService: ChannelsCacheService {
+protocol ChannelsCache: class {
+    func reloadChannels(_ channels: [Channel])
+    func syncChanges(_ channelsChanges: [ChannelsChanges])
+}
+
+class ChannelsCoreDataCache: ChannelsCache {
     private let coreDataStack = CoreDataStack.shared
     
     func reloadChannels(_ channels: [Channel]) {

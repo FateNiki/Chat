@@ -43,7 +43,15 @@ fileprivate extension ChannelsChanges.Event {
     }
 }
 
-class ChannelsFirebaseDataSource: ChannelsApiRepository {
+protocol ChannelsRepository: class {
+    var refreshCallback: ([ChannelsChanges]) -> Void { get }
+    
+    func loadAllChannels(_ completion: @escaping([Channel]) -> Void)
+    func createChannel(with name: String, _ completion: @escaping(Channel?, Error?) -> Void)
+    func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
+}
+
+class ChannelsFirebaseDataSource: ChannelsRepository {
     private var listener: ListenerRegistration?
     private lazy var channelsRef: CollectionReference = {
         let db = Firestore.firestore()
