@@ -14,11 +14,11 @@ protocol MessagesService: class {
 }
 
 class MessagesCoreDataService: MessagesService {
-    private let cache: MessagesCache
-    private let repository: MessagesRepository!
+    private let cache: MessagesCacheProtocol
+    private let repository: MessagesRepositoryProtocol!
     private let channel: Channel
     
-    init(for channel: Channel, cache: MessagesCache, repository: MessagesRepository) {
+    init(for channel: Channel, cache: MessagesCacheProtocol, repository: MessagesRepositoryProtocol) {
         self.channel = channel
         self.cache = cache
         self.repository = repository

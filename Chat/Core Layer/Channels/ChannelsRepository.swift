@@ -43,7 +43,7 @@ fileprivate extension ChannelsChanges.Event {
     }
 }
 
-protocol ChannelsRepository: class {
+protocol ChannelsRepositoryProtocol: class {
     var refreshCallback: ([ChannelsChanges]) -> Void { get }
     
     func loadAllChannels(_ completion: @escaping([Channel]) -> Void)
@@ -51,7 +51,7 @@ protocol ChannelsRepository: class {
     func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
 }
 
-class ChannelsFirebaseDataSource: ChannelsRepository {
+class ChannelsFirebaseRepository: ChannelsRepositoryProtocol {
     private var listener: ListenerRegistration?
     private lazy var channelsRef: CollectionReference = {
         let db = Firestore.firestore()

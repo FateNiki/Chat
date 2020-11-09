@@ -15,10 +15,10 @@ protocol ChannelsService: class {
 }
 
 class ChannelsCoreDataService: ChannelsService {
-    private var cache: ChannelsCache
-    private var repository: ChannelsRepository
+    private var cache: ChannelsCacheProtocol
+    private var repository: ChannelsRepositoryProtocol
     
-    init(cache: ChannelsCache, repo: ChannelsRepository) {
+    init(cache: ChannelsCacheProtocol, repo: ChannelsRepositoryProtocol) {
         self.cache = cache
         self.repository = repo        
         getChannelsFromServer()

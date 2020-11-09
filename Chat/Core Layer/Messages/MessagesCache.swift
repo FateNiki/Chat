@@ -8,12 +8,12 @@
 
 import CoreData
 
-protocol MessagesCache: class {
+protocol MessagesCacheProtocol: class {
     func reloadMessages(_ messages: [Message])
     func syncChanges(newMessages: [Message])
 }
 
-class MessagesCoreDataCache: MessagesCache {
+class MessagesCoreDataCache: MessagesCacheProtocol {
     private let coreDataStack = CoreDataStack.shared
     private let channel: Channel
     

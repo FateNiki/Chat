@@ -12,11 +12,11 @@ protocol CoreAssemblyProtocol {
     var userCGDStorage: UserStorageProtocol { get }
     var userOperationsStorage: UserStorageProtocol { get }
     
-    var channelsCache: ChannelsCache { get }
-    func channelsRepo(refresh: @escaping ([ChannelsChanges]) -> Void) -> ChannelsRepository
+    var channelsCache: ChannelsCacheProtocol { get }
+    func channelsRepo(refresh: @escaping ([ChannelsChanges]) -> Void) -> ChannelsRepositoryProtocol
     
-    func messagesCache(for channel: Channel) -> MessagesCache
-    func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepository
+    func messagesCache(for channel: Channel) -> MessagesCacheProtocol
+    func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepositoryProtocol
 }
 
 class CoreAssembly: CoreAssemblyProtocol {
@@ -25,16 +25,16 @@ class CoreAssembly: CoreAssemblyProtocol {
     lazy var userOperationsStorage: UserStorageProtocol = OperationsUserStorage.shared
     
     // MARK: Channels
-    lazy var channelsCache: ChannelsCache = ChannelsCoreDataCache()
-    func channelsRepo(refresh: @escaping ([ChannelsChanges]) -> Void) -> ChannelsRepository {
-        ChannelsFirebaseDataSource(refresh: refresh)
+    lazy var channelsCache: ChannelsCacheProtocol = ChannelsCoreDataCache()
+    func channelsRepo(refresh: @escaping ([ChannelsChanges]) -> Void) -> ChannelsRepositoryProtocol {
+        ChannelsFirebaseRepository(refresh: refresh)
     }
     
     // MARK: Messages
-    func messagesCache(for channel: Channel) -> MessagesCache {
+    func messagesCache(for channel: Channel) -> MessagesCacheProtocol {
         MessagesCoreDataCache(for: channel)
     }    
-    func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepository {
-        MessagesFirebaseDataSource(for: channel, refresh: refresh)
+    func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepositoryProtocol {
+        MessagesFirebaseRepository(for: channel, refresh: refresh)
     }
 }

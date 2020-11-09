@@ -8,7 +8,7 @@
 
 import Firebase
 
-protocol MessagesRepository {
+protocol MessagesRepositoryProtocol {
     func loadAllMessages(_ completion: @escaping([Message]) -> Void)
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
@@ -35,7 +35,7 @@ fileprivate extension Message {
     ]}
 }
 
-class MessagesFirebaseDataSource: MessagesRepository {
+class MessagesFirebaseRepository: MessagesRepositoryProtocol {
     private var listener: ListenerRegistration?
     private var messagesRef: CollectionReference
     private let refreshCallback: ([Message]) -> Void
