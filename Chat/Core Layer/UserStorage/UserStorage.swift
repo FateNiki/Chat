@@ -14,6 +14,8 @@ struct UserStorageData {
     let avatar: Data?
 }
 
+typealias UserStorageError = [String]
+
 private enum FieldFileName: String {
     case firstName = "userFirstName.txt"
     case lastName = "userLastName.txt"
@@ -46,20 +48,20 @@ enum UserSaveError: LocalizedError {
 }
 
 protocol UserStorageProtocol: class {
-    func loadFromFile(completion: ((User?, [String]?) -> Void)?)
-    func saveToFile(data: UserStorageData, completion: ((User?, [String]?) -> Void)?)
+    func loadFromFile(completion: ((User?, UserStorageError?) -> Void)?)
+    func saveToFile(data: UserStorageData, completion: ((User?, UserStorageError?) -> Void)?)
     
     var user: User { get set }
 }
 
 extension UserStorageProtocol {
     
-    func getDocumentsDirectory() -> URL {
+    fileprivate func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
-    var userId: String {
+    fileprivate var userId: String {
         let userIdKey = "userId"
         if let userId = UserDefaults.standard.value(forKey: userIdKey) as? String {
             return userId
@@ -71,7 +73,7 @@ extension UserStorageProtocol {
         }
     }
     
-    func loadUserFromFile() -> User {
+    fileprivate func loadUserFromFile() -> User {
         let docsDirectory = getDocumentsDirectory()
         let firstNameFile = docsDirectory.appendingPathComponent(FieldFileName.firstName.rawValue)
         let lastNameFile = docsDirectory.appendingPathComponent(FieldFileName.lastName.rawValue)
@@ -104,7 +106,7 @@ extension UserStorageProtocol {
         return user
     }
     
-    func save(firstName: String) throws {
+    fileprivate func save(firstName: String) throws {
         guard firstName != user.firstName else { return }
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.firstName.rawValue)
@@ -116,7 +118,7 @@ extension UserStorageProtocol {
         }
     }
     
-    func save(lastName: String) throws {
+    fileprivate func save(lastName: String) throws {
         guard lastName != user.lastName else { return }
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.lastName.rawValue)
@@ -128,7 +130,7 @@ extension UserStorageProtocol {
         }
     }
     
-    func save(description: String) throws {
+    fileprivate func save(description: String) throws {
         guard description != user.description else { return }
 
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
@@ -147,7 +149,7 @@ extension UserStorageProtocol {
         }
     }
     
-    func save(avatar: Data?) throws {
+    fileprivate func save(avatar: Data?) throws {
         guard avatar != user.avatar else { return }
         
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.avatar.rawValue)
@@ -168,4 +170,184 @@ extension UserStorageProtocol {
             }
         }
     }
+}
+
+class GCDUserStorage: UserStorageProtocol {
+    static let shared = GCDUserStorage()
+    
+    private var errorArray = SafeArray<String>()
+    lazy var user: User = {
+        return User(id: self.userId)
+    }()
+    
+    func saveToFile(data: UserStorageData, completion: ((User?, [String]?) -> Void)?) {
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global(qos: .userInitiated)
+        
+        let names = data.fullName.split(separator: Character(" "), maxSplits: 1, omittingEmptySubsequences: true)
+        
+        errorArray.reset()
+        group.enter()
+        queue.async {
+            do {
+                try self.save(firstName: names.count > 0 ? String(names[0]) : "")
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        queue.async {
+            do {
+                try self.save(lastName: names.count > 1 ? String(names[1]) : "")
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        queue.async {
+            do {
+                try self.save(description: data.description)
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        queue.async {
+            do {
+                try self.save(avatar: data.avatar)
+            } catch {
+                self.errorArray.append(error.localizedDescription)
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: queue) {
+            let errors = self.errorArray.value
+            completion?(self.user, errors.isEmpty ? nil : errors)
+        }
+    }
+    
+    func loadFromFile(completion: ((User?, [String]?) -> Void)?) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.user = self.loadUserFromFile()
+            completion?(self.user, nil)
+        }
+    }
+    
+    private init() { }
+}
+
+class OperationsUserStorage: UserStorageProtocol {
+    static let shared = OperationsUserStorage()
+    
+    private class FieldSaveOperation<T>: Operation {
+        var field: T?
+        var saveClosure: ((T) throws -> Void)?
+        var errorMessage: String?
+        
+        override func main() {
+            guard let field = field, let saveClosure = saveClosure else { return }
+            do {
+                try saveClosure(field)
+            } catch {
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private class LoadOperation: Operation {
+        var loadClosure: (() -> User)?
+        var result: User?
+        
+        override func main() {
+            guard let loadClosure = loadClosure else { return }
+            result = loadClosure()
+        }
+    }
+    
+    private class SaveOperation: Operation {
+        var firstNameError: String? {
+            let operation = dependencies[0] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        var lastNameError: String? {
+            let operation = dependencies[1] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        var descriptionError: String? {
+            let operation = dependencies[2] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        var avatarError: String? {
+            let operation = dependencies[3] as? FieldSaveOperation<String>
+            return operation?.errorMessage
+        }
+        
+        var errors: [String]? {
+            if let errors = [firstNameError, lastNameError, descriptionError, avatarError].filter({ $0 != nil }) as? [String] {
+                return errors.isEmpty ? nil : errors
+            }
+            return nil
+        }
+    }
+    
+    lazy var user: User = {
+        return User(id: self.userId)
+    }()
+    
+    func saveToFile(data: UserStorageData, completion: ((User?, [String]?) -> Void)?) {
+        let names = data.fullName.split(separator: Character(" "), maxSplits: 1, omittingEmptySubsequences: true)
+        
+        let firstNameOperation = FieldSaveOperation<String>()
+        firstNameOperation.field = names.count > 0 ? String(names[0]) : ""
+        firstNameOperation.saveClosure = save(firstName:)
+        
+        let lastNameOperation = FieldSaveOperation<String>()
+        lastNameOperation.field = names.count > 1 ? String(names[1]) : ""
+        lastNameOperation.saveClosure = save(lastName:)
+        
+        let descrOperation = FieldSaveOperation<String>()
+        descrOperation.field = data.description
+        descrOperation.saveClosure = save(description:)
+        
+        let avatarOperation = FieldSaveOperation<Data?>()
+        avatarOperation.field = data.avatar
+        avatarOperation.saveClosure = save(avatar: )
+        
+        let saveOperation = SaveOperation()
+        saveOperation.completionBlock = {
+            completion?(self.user, saveOperation.errors)
+        }
+        
+        saveOperation.addDependency(firstNameOperation)
+        saveOperation.addDependency(lastNameOperation)
+        saveOperation.addDependency(descrOperation)
+        saveOperation.addDependency(avatarOperation)
+        
+        let queue = OperationQueue()
+        queue.qualityOfService = .userInitiated
+        queue.maxConcurrentOperationCount = 4
+        queue.addOperations([firstNameOperation, lastNameOperation, descrOperation, avatarOperation, saveOperation], waitUntilFinished: false)
+    }
+    
+    func loadFromFile(completion: ((User?, [String]?) -> Void)?) {
+        let loadOperation = LoadOperation()
+        loadOperation.loadClosure = loadUserFromFile
+        loadOperation.completionBlock = {
+            guard let user = loadOperation.result else { return }
+            self.user = user
+            completion?(user, nil)
+        }
+        
+        let queue = OperationQueue()
+        queue.addOperations([loadOperation], waitUntilFinished: false)
+    }
+    
+    private init() { }
 }
