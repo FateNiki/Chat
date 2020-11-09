@@ -27,11 +27,11 @@ protocol ConversationsListModelDelegate: class {
 }
 
 class ConversationsListModel: ConversationsListModelProtocol {
-    private let channelsService: ChannelsService
+    private let channelsService: ChannelsServiceProtocol
     private let userService: UserServiceProtocol
     weak var delegate: ConversationsListModelDelegate?
     
-    init(channelsService: ChannelsService, userService: UserServiceProtocol) {
+    init(channelsService: ChannelsServiceProtocol, userService: UserServiceProtocol) {
         self.channelsService = channelsService
         self.userService = userService
     }

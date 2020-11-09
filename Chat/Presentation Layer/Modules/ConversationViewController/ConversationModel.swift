@@ -21,10 +21,10 @@ protocol ConversationModelDelegate: class {
 }
 
 class ConversationModel: ConversationModelProtocol {
-    private var messagesService: MessagesService
+    private var messagesService: MessagesServiceProtocol
     weak var delegate: ConversationModelDelegate?
     
-    init(messagesService: MessagesService) {
+    init(messagesService: MessagesServiceProtocol) {
         self.messagesService = messagesService
     }
     

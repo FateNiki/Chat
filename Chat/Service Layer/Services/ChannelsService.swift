@@ -8,13 +8,13 @@
 
 import CoreData
 
-protocol ChannelsService: class {
+protocol ChannelsServiceProtocol: class {
     func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<ChannelDB>
     func createChannel(with name: String, _ createCallback: @escaping(Channel?, Error?) -> Void)
     func deleteChannel(with identifier: String, _ deleteCallback: @escaping(Error?) -> Void)
 }
 
-class ChannelsCoreDataService: ChannelsService {
+class ChannelsService: ChannelsServiceProtocol {
     private var cache: ChannelsCacheProtocol
     private var repository: ChannelsRepositoryProtocol
     

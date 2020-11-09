@@ -8,12 +8,12 @@
 
 import CoreData
 
-protocol MessagesService: class {
+protocol MessagesServiceProtocol: class {
     func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB>
     func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
 }
 
-class MessagesCoreDataService: MessagesService {
+class MessagesService: MessagesServiceProtocol {
     private let cache: MessagesCacheProtocol
     private let repository: MessagesRepositoryProtocol!
     private let channel: Channel
