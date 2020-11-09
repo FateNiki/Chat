@@ -13,7 +13,6 @@ import CoreData
 class ConversationViewController: UIViewController {
     // MARK: - Constants
     private let messageCellIdentifier = String(describing: MessageTableViewCell.self)
-    private var messageService: MessagesService
     private var messageResultController: NSFetchedResultsController<MessageDB>? {
         didSet {
             guard let controller = messageResultController else { return }
@@ -22,16 +21,8 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    init(channel: Channel, user: User) {
-        self.user = user
-        self.channel = channel
-        self.messageService = MessagesCoreDataService(for: channel)
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Dependencies
+    private let model: ConversationModelProtocol
     
     // MARK: - Variables
     var user: User
@@ -58,6 +49,17 @@ class ConversationViewController: UIViewController {
     private var messageViewBottom: NSLayoutConstraint?
     
     // MARK: - Lifecycle
+    init(channel: Channel, user: User, model: ConversationModelProtocol) {
+        self.user = user
+        self.channel = channel
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         self.view = ThemedView()
     }
@@ -74,7 +76,8 @@ class ConversationViewController: UIViewController {
         initTableView()
         initNavigation()
         configKeyboard()
-        messageResultController = messageService.resultController(for: nil)
+        
+        messageResultController = model.fetch()
     }
     
     private func configKeyboard() {
@@ -190,8 +193,12 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 
 extension ConversationViewController: SendMessageViewDelegate {
     func sendMessage(with text: String) {
-        messageService.createMessage(from: user, with: text) { error in
-            print("SEND MESSAGE ERROR: \(error.localizedDescription)")
-        }
+        model.createMessage(from: user, with: text)
+    }
+}
+
+extension ConversationViewController: ConversationModelDelegate {
+    func showMessageError(error: String) {
+        print("SEND MESSAGE ERROR: \(error)")
     }
 }

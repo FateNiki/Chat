@@ -8,19 +8,23 @@
 
 import CoreData
 
+protocol MessagesService: class {
+    func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB>
+    func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
+}
+
 class MessagesCoreDataService: MessagesService {
-    private var cacheService: MessagesCacheService
-    private var apiRepository: MessagesApiRepository!
+    private let cache: MessagesCache
+    private let repository: MessagesRepository!
     private let channel: Channel
     
-    init(for channel: Channel) {
+    init(for channel: Channel, cache: MessagesCache, repository: MessagesRepository) {
         self.channel = channel
-        self.cacheService = MessagesCoreDataCacheService(for: channel)
-        self.apiRepository = MessagesFirebaseDataSource(for: channel) { [weak self] newMessages in
-            self?.cacheService.syncChanges(newMessages: newMessages)
-        }
-        self.apiRepository.loadAllMessages { [weak self] allMessages in
-            self?.cacheService.reloadMessages(allMessages)
+        self.cache = cache
+        self.repository = repository
+        
+        self.repository.loadAllMessages { [weak self] allMessages in
+            self?.cache.reloadMessages(allMessages)
         }
     }
     
@@ -31,7 +35,7 @@ class MessagesCoreDataService: MessagesService {
             return
         }
         
-        apiRepository.createMessage(from: sender, with: text, errorCallback)
+        repository.createMessage(from: sender, with: text, errorCallback)
     }
     
     public func resultController(for predicate: NSPredicate?) -> NSFetchedResultsController<MessageDB> {

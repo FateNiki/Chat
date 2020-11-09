@@ -8,6 +8,11 @@
 
 import Firebase
 
+protocol MessagesRepository {
+    func loadAllMessages(_ completion: @escaping([Message]) -> Void)
+    func createMessage(from sender: User, with text: String, _ errorCallback: @escaping(Error) -> Void)
+}
+
 fileprivate extension Message {
     init?(from data: [String: Any], id: String) {
         guard let content = data["content"] as? String,
@@ -30,7 +35,7 @@ fileprivate extension Message {
     ]}
 }
 
-class MessagesFirebaseDataSource: MessagesApiRepository {
+class MessagesFirebaseDataSource: MessagesRepository {
     private var listener: ListenerRegistration?
     private var messagesRef: CollectionReference
     private let refreshCallback: ([Message]) -> Void

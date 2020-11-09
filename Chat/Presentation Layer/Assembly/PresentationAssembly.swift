@@ -28,15 +28,25 @@ class Router {
         let converationsVC = presentationAssembly.conversationsListViewController(router: self)
         navigation.pushViewController(converationsVC, animated: true)
     }
+    
+    func openConveration(for channel: Channel, user: User, in navigation: UINavigationController) {
+        let conversationVC = presentationAssembly.conversationViewController(channel: channel, user: user, router: self)
+        navigation.pushViewController(conversationVC, animated: true)
+    }
 }
 
 protocol PresentationAssemblyProtocol {
+    /// Создает корневой экран
     func rootController(router: Router) -> RootNavigationViewController
     
     /// Создает экран редактирования и просмотра пользователя
     func userViewController() -> UserViewController
     
+    /// Создает экран списка диалогов
     func conversationsListViewController(router: Router) -> ConversationsListViewController
+    
+    /// Создает экран списка сообщений
+    func conversationViewController(channel: Channel, user: User, router: Router) -> ConversationViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -51,13 +61,6 @@ class PresentationAssembly: PresentationAssemblyProtocol {
         RootNavigationViewController(router: router)
     }
     
-    // MARK: - conversationsListViewController
-    func conversationsListViewController(router: Router) -> ConversationsListViewController {
-        let userService = serviceAssembly.getUserService(for: .gcd)
-        let channelsService = serviceAssembly.getChannelsService()
-        return ConversationsListViewController(router: router, userService: userService, channelsService: channelsService)
-    }
-    
     // MARK: - UserViewController    
     func userViewController() -> UserViewController {
         let model = userViewModel()
@@ -68,5 +71,31 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     private func userViewModel() -> UserViewModelProtocol {
         return UserViewModel(userService: serviceAssembly.getUserService(for: .gcd))
+    }
+    
+    // MARK: - ConversationsListViewController
+    func conversationsListViewController(router: Router) -> ConversationsListViewController {
+        let model = conversationsListModel()
+        let converationsVC = ConversationsListViewController(router: router, model: model)
+        model.delegate = converationsVC
+        return converationsVC
+    }
+    
+    private func conversationsListModel() -> ConversationsListModel {
+        let userService = serviceAssembly.getUserService(for: .gcd)
+        let channelsService = serviceAssembly.getChannelsService()
+        return ConversationsListModel(channelsService: channelsService, userService: userService)
+    }
+    
+    // MARK: - ConversationViewController
+    func conversationViewController(channel: Channel, user: User, router: Router) -> ConversationViewController {
+        let model = conversationModel(for: channel)
+        let conversationVC = ConversationViewController(channel: channel, user: user, model: model)
+        model.delegate = conversationVC
+        return conversationVC
+    }
+    
+    private func conversationModel(for channel: Channel) -> ConversationModelProtocol {
+        return ConversationModel(messagesService: serviceAssembly.getMessagesService(for: channel))
     }
 }

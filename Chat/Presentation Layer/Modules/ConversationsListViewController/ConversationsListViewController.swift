@@ -46,8 +46,7 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Dependencies
     private let router: Router
-    private let userService: UserServiceProtocol
-    private var channelsService: ChannelsService
+    private let model: ConversationsListModelProtocol
     
     // MARK: - Controllers
     private var themesController: ThemesViewController {
@@ -60,10 +59,9 @@ class ConversationsListViewController: UIViewController {
     }
         
     // MARK: - Lifecycle
-    init(router: Router, userService: UserServiceProtocol, channelsService: ChannelsService) {
+    init(router: Router, model: ConversationsListModelProtocol) {
         self.router = router
-        self.userService = userService
-        self.channelsService = channelsService
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -85,18 +83,9 @@ class ConversationsListViewController: UIViewController {
     private func setupView() {
         self.initTableView()
         self.initNavigation()
-        self.channelsResultContoller = channelsService.resultController(for: nil)
+        self.channelsResultContoller = model.fetch()
         
-        userService.getUser { (result, _) in
-            guard let user = result else { return }
-            DispatchQueue.main.async {
-                self.currentUser = user
-                self.navigationItem.rightBarButtonItems = [
-                    UIBarButtonItem(customView: self.userAvatarView),
-                    UIBarButtonItem(title: "➕", style: .plain, target: self, action: #selector(self.openCreateChannelAlert))
-                ]
-            }
-        }
+        model.loadUser()
     }
     
     private func initTableView() {
@@ -125,13 +114,7 @@ class ConversationsListViewController: UIViewController {
     
     // MARK: - Helpers
     private func createChannel(with name: String) {
-        channelsService.createChannel(with: name) {[weak self] (newChannel, error) in
-            if let error = error {
-                self?.openAlert(title: "Ошибка сохранения", message: error.localizedDescription)
-            } else if let newChannel = newChannel {
-                self?.openChannel(newChannel)
-            }
-        }       
+        model.createChannel(with: name)
     }
     
     // MARK: - Interface Actions
@@ -141,9 +124,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     func openChannel(_ channel: Channel) {
-        guard let user = currentUser else { return }
-        let conversationController = ConversationViewController(channel: channel, user: user)
-        navigationController?.pushViewController(conversationController, animated: true)
+        guard let user = currentUser, let navigation = navigationController else { return }
+        router.openConveration(for: channel, user: user, in: navigation)
     }
     
     @objc func openThemeChoice() {
@@ -180,10 +162,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete, let channel = getChannel(at: indexPath) else { return }
-        channelsService.deleteChannel(with: channel.identifier) { [weak self] error in
-            guard let self = self, let error = error else { return }
-            self.openAlert(title: "Ошибка удаления", message: error.localizedDescription)
-        }
+        model.deleteChannel(channel: channel)
     }
 }
 
@@ -263,5 +242,29 @@ extension ConversationsListViewController: ThemePickerDelegate {
 extension ConversationsListViewController: UserViewDelegate {
     func userDidChange(newUser: User) {
         currentUser = newUser
+    }
+}
+
+extension ConversationsListViewController: ConversationsListModelDelegate {
+    func channelDidCreate(channel: Channel) {
+        self.openChannel(channel)
+    }
+    
+    func showCreatingError(error: String) {
+        self.openAlert(title: "Ошибка сохранения", message: error)
+    }
+    
+    func showDeletingError(error: String) {
+        self.openAlert(title: "Ошибка удаления", message: error)
+    }
+    
+    func userDidLoad(user: User) {
+        DispatchQueue.main.async {
+            self.currentUser = user
+            self.navigationItem.rightBarButtonItems = [
+                UIBarButtonItem(customView: self.userAvatarView),
+                UIBarButtonItem(title: "➕", style: .plain, target: self, action: #selector(self.openCreateChannelAlert))
+            ]
+        }
     }
 }

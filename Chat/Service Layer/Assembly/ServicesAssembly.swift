@@ -16,6 +16,8 @@ protocol ServicesAssemblyProtocol {
     func getUserService(for userStorage: AllowedUserStorages) -> UserServiceProtocol
     
     func getChannelsService() -> ChannelsService
+    
+    func getMessagesService(for channel: Channel) -> MessagesService
 }
 
 class ServicesAssembly: ServicesAssemblyProtocol {
@@ -40,5 +42,13 @@ class ServicesAssembly: ServicesAssemblyProtocol {
             cache?.syncChanges(diff)
         })
         return ChannelsCoreDataService(cache: cache, repo: repo)
+    }
+    
+    func getMessagesService(for channel: Channel) -> MessagesService {
+        let cache = coreAssembly.messagesCache(for: channel)
+        let repo = coreAssembly.messagesRepo(for: channel, refresh: { [weak cache] newMessages in
+            cache?.syncChanges(newMessages: newMessages)
+        })
+        return MessagesCoreDataService(for: channel, cache: cache, repository: repo)
     }
 }

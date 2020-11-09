@@ -11,8 +11,12 @@ import Foundation
 protocol CoreAssemblyProtocol {    
     var userCGDStorage: UserStorageProtocol { get }
     var userOperationsStorage: UserStorageProtocol { get }
+    
     var channelsCache: ChannelsCache { get }
     func channelsRepo(refresh: @escaping ([ChannelsChanges]) -> Void) -> ChannelsRepository
+    
+    func messagesCache(for channel: Channel) -> MessagesCache
+    func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepository
 }
 
 class CoreAssembly: CoreAssemblyProtocol {
@@ -24,5 +28,13 @@ class CoreAssembly: CoreAssemblyProtocol {
     lazy var channelsCache: ChannelsCache = ChannelsCoreDataCache()
     func channelsRepo(refresh: @escaping ([ChannelsChanges]) -> Void) -> ChannelsRepository {
         ChannelsFirebaseDataSource(refresh: refresh)
+    }
+    
+    // MARK: Messages
+    func messagesCache(for channel: Channel) -> MessagesCache {
+        MessagesCoreDataCache(for: channel)
+    }    
+    func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepository {
+        MessagesFirebaseDataSource(for: channel, refresh: refresh)
     }
 }
