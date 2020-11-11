@@ -34,8 +34,8 @@ class Router {
         navigation.pushViewController(conversationVC, animated: true)
     }
     
-    func openThemePicker(in navigation: UINavigationController) {
-        let pickerVC = presentationAssembly.themePickerViewController(router: self)
+    func openThemePicker(in navigation: UINavigationController, delegate: ThemePickerDelegate) {
+        let pickerVC = presentationAssembly.themePickerViewController(delegate: delegate, router: self)
         navigation.pushViewController(pickerVC, animated: true)
     }
 }
@@ -54,7 +54,7 @@ protocol PresentationAssemblyProtocol {
     func conversationViewController(channel: Channel, user: User, router: Router) -> ConversationViewController
     
     /// Создает экран выбора темы
-    func themePickerViewController(router: Router) -> ThemesViewController
+    func themePickerViewController(delegate: ThemePickerDelegate, router: Router) -> ThemesViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -115,9 +115,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     }
     
     // MARK: - ThemesViewController
-    func themePickerViewController(router: Router) -> ThemesViewController {
+    func themePickerViewController(delegate: ThemePickerDelegate, router: Router) -> ThemesViewController {
         let model = themePickerModel()
         let pickerVC = ThemesViewController(router: router, model: model)
+        pickerVC.delegate = delegate
         model.delegate = pickerVC
         return pickerVC
     }

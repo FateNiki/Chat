@@ -16,8 +16,10 @@ class ThemesViewController: UIViewController {
     private var currentTheme: ThemeName? {
         didSet {
             guard let theme = currentTheme else { return }
-            updateActive(for: theme)
-            updateColor(for: theme)
+            DispatchQueue.main.async {
+                self.updateActive(for: theme)
+                self.updateColor(for: theme)
+            }
         }
     }
     weak var delegate: ThemePickerDelegate?
@@ -50,8 +52,7 @@ class ThemesViewController: UIViewController {
         currentTheme = model.currentTheme
     }
     
-    // MARK: - Private Methods
-    
+    // MARK: - Private Methods    
     private func updateActive(for themeName: ThemeName) {
         for (index, theme) in model.themes.enumerated() where index < placeholders.count {
             placeholders[index].configure(with: theme)

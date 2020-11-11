@@ -120,7 +120,7 @@ class ConversationsListViewController: UIViewController {
     
     @objc func openThemeChoice() {
         guard let navigation = navigationController else { return }
-        router.openThemePicker(in: navigation)
+        router.openThemePicker(in: navigation, delegate: self)
     }
     
     @objc func openCreateChannelAlert() {
