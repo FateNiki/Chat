@@ -33,6 +33,11 @@ class Router {
         let conversationVC = presentationAssembly.conversationViewController(channel: channel, user: user, router: self)
         navigation.pushViewController(conversationVC, animated: true)
     }
+    
+    func openThemePicker(in navigation: UINavigationController) {
+        let pickerVC = presentationAssembly.themePickerViewController(router: self)
+        navigation.pushViewController(pickerVC, animated: true)
+    }
 }
 
 protocol PresentationAssemblyProtocol {
@@ -47,6 +52,9 @@ protocol PresentationAssemblyProtocol {
     
     /// Создает экран списка сообщений
     func conversationViewController(channel: Channel, user: User, router: Router) -> ConversationViewController
+    
+    /// Создает экран выбора темы
+    func themePickerViewController(router: Router) -> ThemesViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -98,4 +106,17 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     private func conversationModel(for channel: Channel) -> ConversationModelProtocol {
         return ConversationModel(messagesService: serviceAssembly.getMessagesService(for: channel))
     }
+    
+    // MARK: - ThemesViewController
+    func themePickerViewController(router: Router) -> ThemesViewController {
+        let model = themePickerModel()
+        let pickerVC = ThemesViewController(router: router, model: model)
+        model.delegate = pickerVC
+        return pickerVC
+    }
+    
+    private func themePickerModel() -> ThemePickerModelProtocol {
+        return ThemePickerModel(themeService: serviceAssembly.getThemeService())
+    }
+
 }

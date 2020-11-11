@@ -47,16 +47,6 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Dependencies
     private let router: Router
     private let model: ConversationsListModelProtocol
-    
-    // MARK: - Controllers
-    private var themesController: ThemesViewController {
-        let themesController = ThemesViewController()
-//        themesController.delegate = self
-        themesController.selectThemeClosure = { [weak self] (themeName) in
-            self?.pickTheme(with: themeName)
-        }
-        return themesController
-    }
         
     // MARK: - Lifecycle
     init(router: Router, model: ConversationsListModelProtocol) {
@@ -129,7 +119,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     @objc func openThemeChoice() {
-        navigationController?.pushViewController(themesController, animated: true)
+        guard let navigation = navigationController else { return }
+        router.openThemePicker(in: navigation)
     }
     
     @objc func openCreateChannelAlert() {
@@ -223,18 +214,15 @@ extension ConversationsListViewController: UserAvatarViewDelegate {
     }
 }
 
-extension ConversationsListViewController: ThemePickerDelegate {
-    func pickTheme(with name: ThemeName) {
-        ThemeManager.shared.saveToFile(data: name) { (savedTheme, _) in
-            guard let theme = savedTheme?.theme else { return }
-
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.tableView.reloadData()
-                self.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
-                self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
-                self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: theme.textColor]
-            }
+extension ConversationsListViewController: ThemePickerDelegate {    
+    func themeDidPick(with name: ThemeName) {
+        DispatchQueue.main.async { [weak self] in
+            let theme = name.theme
+            guard let self = self else { return }
+            self.tableView.reloadData()
+            self.navigationController?.navigationBar.barTintColor = theme.secondBackgroundColor
+            self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: theme.textColor]
         }
     }
 }

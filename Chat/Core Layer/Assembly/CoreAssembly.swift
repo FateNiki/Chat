@@ -17,6 +17,8 @@ protocol CoreAssemblyProtocol {
     
     func messagesCache(for channel: Channel) -> MessagesCacheProtocol
     func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepositoryProtocol
+    
+    var themeStorage: ThemeStorageProtocol { get }
 }
 
 class CoreAssembly: CoreAssemblyProtocol {
@@ -37,4 +39,8 @@ class CoreAssembly: CoreAssemblyProtocol {
     func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepositoryProtocol {
         MessagesFirebaseRepository(for: channel, refresh: refresh)
     }
+    
+    // MARK: Theme
+    var themeStorage: ThemeStorageProtocol = ThemeFileStorage.shared
+
 }

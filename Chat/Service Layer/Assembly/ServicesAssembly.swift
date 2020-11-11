@@ -18,6 +18,8 @@ protocol ServicesAssemblyProtocol {
     func getChannelsService() -> ChannelsServiceProtocol
     
     func getMessagesService(for channel: Channel) -> MessagesServiceProtocol
+    
+    func getThemeService() -> ThemeServiceProtocol
 }
 
 class ServicesAssembly: ServicesAssemblyProtocol {
@@ -50,5 +52,9 @@ class ServicesAssembly: ServicesAssemblyProtocol {
             cache?.syncChanges(newMessages: newMessages)
         })
         return MessagesService(for: channel, cache: cache, repository: repo)
+    }
+    
+    func getThemeService() -> ThemeServiceProtocol {
+        return ThemeService(storage: coreAssembly.themeStorage)
     }
 }

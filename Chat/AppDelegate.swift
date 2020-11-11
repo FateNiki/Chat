@@ -22,9 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = rootNavigationController
         window!.makeKeyAndVisible()
         
-        ThemeManager.shared.loadFromFile { themeName, _ in
-            rootNavigationController.view.backgroundColor = themeName?.theme.backgroundColor
-        }
+        // TODO
+//        ThemeManager.shared.loadFromFile { themeName, _ in
+//            rootNavigationController.view.backgroundColor = themeName?.theme.backgroundColor
+//        }
         FirebaseApp.configure()
         
         return true

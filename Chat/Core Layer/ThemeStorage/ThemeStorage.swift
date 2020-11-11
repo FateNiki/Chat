@@ -1,15 +1,21 @@
 //
-//  ThemeManager.swift
+//  ThemeStorage.swift
 //  Chat
 //
-//  Created by Алексей Никитин on 13.10.2020.
+//  Created by Алексей Никитин on 11.11.2020.
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
 import UIKit
 
-class ThemeManager: FileDataManager {
-    static let shared = ThemeManager()
+protocol ThemeStorageProtocol {
+    var currentThemeName: ThemeName { get }
+    func loadAndApply(completion: ((ThemeName?, String?) -> Void)?)
+    func saveAndApply(theme: ThemeName, completion: ((ThemeName?, String?) -> Void)?)
+}
+
+class ThemeFileStorage: ThemeStorageProtocol {
+    static let shared = ThemeFileStorage()
     private static let keyForStorage = "currentTheme"
     
     private(set) var currentThemeName: ThemeName = .classic {
@@ -20,7 +26,7 @@ class ThemeManager: FileDataManager {
     
     private init() {}
     
-    public func loadFromFile(completion: ((ThemeName?, String?) -> Void)?) {
+    public func loadAndApply(completion: ((ThemeName?, String?) -> Void)?) {
         let storedThemeAsAny = UserDefaults.standard.value(forKey: Self.keyForStorage)
         
         if let storedThemeAsString = storedThemeAsAny as? String,
@@ -32,10 +38,10 @@ class ThemeManager: FileDataManager {
         completion?(self.currentThemeName, nil)
     }
     
-    func saveToFile(data: ThemeName, completion: ((ThemeName?, String?) -> Void)?) {
+    func saveAndApply(theme: ThemeName, completion: ((ThemeName?, String?) -> Void)?) {
         DispatchQueue.global(qos: .userInitiated).async {
-            UserDefaults.standard.set(data.rawValue, forKey: Self.keyForStorage)
-            self.currentThemeName = data
+            UserDefaults.standard.set(theme.rawValue, forKey: Self.keyForStorage)
+            self.currentThemeName = theme
             completion?(self.currentThemeName, nil)
         }
     }
