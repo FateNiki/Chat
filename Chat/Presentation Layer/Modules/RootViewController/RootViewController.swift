@@ -9,8 +9,6 @@
 import UIKit
 
 class RootNavigationViewController: UINavigationController {
-    private let router: Router
-    
     lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
@@ -33,8 +31,13 @@ class RootNavigationViewController: UINavigationController {
         }
     }
     
-    init(router: Router) {
+    // MARK: - Dependencies
+    private let router: Router
+    private let model: RootModelProtocol
+    
+    init(router: Router, model: RootModelProtocol) {
         self.router = router
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,10 +54,18 @@ class RootNavigationViewController: UINavigationController {
         
         isReady = false
         CoreDataStack.shared.config {
-            DispatchQueue.main.async {
-                self.isReady = true
-                self.router.openConverationsList(in: self)
-            }
+            self.model.loadTheme()            
+        }
+    }
+}
+
+extension RootNavigationViewController: RootModelDelegate {
+    func themeDidLoad(themeName: ThemeName) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.isReady = true
+            self.view.backgroundColor = themeName.theme.backgroundColor
+            self.router.openConverationsList(in: self)
         }
     }
 }

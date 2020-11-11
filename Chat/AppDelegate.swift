@@ -21,13 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootNavigationController = rootAssembly.router.rootController
         window!.rootViewController = rootNavigationController
         window!.makeKeyAndVisible()
-        
-        // TODO
-//        ThemeManager.shared.loadFromFile { themeName, _ in
-//            rootNavigationController.view.backgroundColor = themeName?.theme.backgroundColor
-//        }
-        FirebaseApp.configure()
-        
+        FirebaseApp.configure()        
         return true
     }   
 }

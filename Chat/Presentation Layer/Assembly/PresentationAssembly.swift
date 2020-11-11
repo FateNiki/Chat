@@ -66,7 +66,14 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     // MARK: - Root
     func rootController(router: Router) -> RootNavigationViewController {
-        RootNavigationViewController(router: router)
+        let model = rootModel()
+        let rootVC = RootNavigationViewController(router: router, model: model)
+        model.delegate = rootVC
+        return rootVC
+    }
+    
+    private func rootModel() -> RootModelProtocol {
+        return RootModel(themeService: serviceAssembly.getThemeService())
     }
     
     // MARK: - UserViewController    
