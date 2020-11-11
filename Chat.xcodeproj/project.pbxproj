@@ -162,6 +162,7 @@
 			children = (
 				5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */,
 				5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */,
+				5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */,
 			);
 			path = ThemePlaceholderView;
 			sourceTree = "<group>";
@@ -193,6 +194,15 @@
 				5B8586532527BA0800DCCD63 /* Theme.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5B6DAEED255C6F0400FE52E6 /* SendMessageView */ = {
+			isa = PBXGroup;
+			children = (
+				5BE44802253D837C0015A6AF /* SendMessageView.swift */,
+				5BE44805253D9B490015A6AF /* SendMessageViewDelegate.swift */,
+			);
+			path = SendMessageView;
 			sourceTree = "<group>";
 		};
 		5B79C34D251FA41900963D06 /* Controllers */ = {
@@ -342,7 +352,6 @@
 				5BA7E909255911C6007B9F29 /* Core Layer */,
 				5BECAD44251FAA9900141621 /* Views */,
 				5B79C34D251FA41900963D06 /* Controllers */,
-				5BECAD4A251FB94B00141621 /* Delegates */,
 				5B5A8CEB251A5224000A541A /* Extensions */,
 				5B6C09182517A389007F58E3 /* Models */,
 				5B85865D2527BAE400DCCD63 /* ViewModel */,
@@ -399,6 +408,7 @@
 			children = (
 				5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */,
 				5BE20E1F2520CE9000D73A63 /* UserAvatarView.swift */,
+				5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */,
 			);
 			path = UserAvatarView;
 			sourceTree = "<group>";
@@ -406,6 +416,7 @@
 		5BECAD44251FAA9900141621 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B6DAEED255C6F0400FE52E6 /* SendMessageView */,
 				5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */,
 				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
 				5BCE62922521E01700107339 /* MessageTableViewCell */,
@@ -414,21 +425,9 @@
 				5BECAD4B251FB96A00141621 /* ConfigurableView.swift */,
 				5B72E1432532246D004BECDA /* TurnedOffTextField.swift */,
 				5B74D79F2530718D002C2363 /* MessageView.swift */,
-				5BE44802253D837C0015A6AF /* SendMessageView.swift */,
 				5B16A56925507AC1005CB96B /* ChannelTitleView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		5BECAD4A251FB94B00141621 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */,
-				5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */,
-				5BE8FA1B252B62A200B06809 /* ThemePlaceholderDelegate.swift */,
-				5BE44805253D9B490015A6AF /* SendMessageViewDelegate.swift */,
-			);
-			path = Delegates;
 			sourceTree = "<group>";
 		};
 		5BEF6A192527B7D600F88572 /* ThemesViewController */ = {
@@ -436,6 +435,7 @@
 			children = (
 				5BEF6A1A2527B7FA00F88572 /* ThemesViewController.swift */,
 				5BEF6A1B2527B7FA00F88572 /* ThemesViewController.xib */,
+				5B0D0D53252B4C2E00CCBB3F /* ThemePickerDelegate.swift */,
 			);
 			path = ThemesViewController;
 			sourceTree = "<group>";
