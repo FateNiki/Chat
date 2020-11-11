@@ -63,8 +63,12 @@ extension RootNavigationViewController: RootModelDelegate {
     func themeDidLoad(themeName: ThemeName) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            let theme = themeName.theme
             self.isReady = true
-            self.view.backgroundColor = themeName.theme.backgroundColor
+            self.view.backgroundColor = theme.backgroundColor
+            self.navigationBar.barTintColor = theme.secondBackgroundColor
+            self.navigationBar.titleTextAttributes = [.foregroundColor: theme.textColor]
+            self.navigationBar.largeTitleTextAttributes = [.foregroundColor: theme.textColor]
             self.router.openConverationsList(in: self)
         }
     }
