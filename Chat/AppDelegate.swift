@@ -11,20 +11,17 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    private let rootAssembly = RootAssembly()
+    
     var window: UIWindow?
 
     // MARK: - Lifecycle
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let rootNavigationController = RootNavigationViewController()
+        let rootNavigationController = rootAssembly.router.rootController
         window!.rootViewController = rootNavigationController
         window!.makeKeyAndVisible()
-        
-        ThemeManager.shared.loadFromFile { themeName, _ in
-            rootNavigationController.view.backgroundColor = themeName?.theme.backgroundColor
-        }
-        FirebaseApp.configure()
-        
+        FirebaseApp.configure()        
         return true
     }   
 }
