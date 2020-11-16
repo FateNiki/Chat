@@ -54,6 +54,7 @@
 		5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE62942521E03C00107339 /* MessageTableViewCell.xib */; };
 		5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */; };
 		5BDED39A2539972100B3A8EE /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5BDED3992539972100B3A8EE /* .swiftlint.yml */; };
+		5BE0571025630A2800CAA764 /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0570F25630A2800CAA764 /* UserAvatar.swift */; };
 		5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E072520B60700D73A63 /* UserViewController.swift */; };
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
 		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
@@ -122,6 +123,7 @@
 		5BCE62942521E03C00107339 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationModel.swift; sourceTree = "<group>"; };
 		5BDED3992539972100B3A8EE /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		5BE0570F25630A2800CAA764 /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
 		5BE20E072520B60700D73A63 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA7E92B25592752007B9F29 /* UserModel.swift */,
+				5BE0570F25630A2800CAA764 /* UserAvatar.swift */,
 				5BE20E072520B60700D73A63 /* UserViewController.swift */,
 				5BE20E082520B60700D73A63 /* UserViewController.xib */,
 			);
@@ -651,6 +654,7 @@
 				5B8586542527BA0800DCCD63 /* Theme.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
+				5BE0571025630A2800CAA764 /* UserAvatar.swift in Sources */,
 				5B74D7A02530718D002C2363 /* MessageView.swift in Sources */,
 				5B16E0F325461E1200E0DF86 /* MessagesService.swift in Sources */,
 				5B6FEF31255C7FCB003853B9 /* RootModel.swift in Sources */,
