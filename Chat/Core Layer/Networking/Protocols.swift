@@ -19,8 +19,6 @@ protocol RequestConfig {
     associatedtype ParserProtocol: NetworkParser
     associatedtype AllowedRequest
         
-    var parser: ParserProtocol { get }
-    var components: URLComponents { get }
-    
+    var parser: ParserProtocol { get }    
     func createRequestTask(for request: AllowedRequest, _ completion: @escaping (ParserProtocol.ParserResult) -> Void) -> URLSessionDataTask
 }

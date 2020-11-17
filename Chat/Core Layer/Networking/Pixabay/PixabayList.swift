@@ -9,6 +9,7 @@
 import Foundation
 
 struct PixabayListImages {
+    private init() { }
     class Parser: NetworkParser {
         struct Response: Codable {
             struct Hit: Codable {

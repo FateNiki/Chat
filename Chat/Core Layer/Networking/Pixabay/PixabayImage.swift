@@ -6,8 +6,44 @@
 //  Copyright © 2020 Алексей Никитин. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct <#name#> {
-    <#fields#>
+struct PixabayImage {
+    private init() { }
+    
+    class Parser: NetworkParser {
+        func parse(data: Data) -> Result<UIImage, ErrorWithMessage> {
+            guard let image = UIImage(data: data) else {
+                return .failure(ErrorWithMessage(message: "Invalid json"))
+            }
+            return .success(image)
+        }
+    }
+    
+    class PixabayRequestConfig: RequestConfig {
+        typealias ParserProtocol = Parser
+        typealias AllowedRequest = String
+        
+        private(set) var parser = Parser()
+        
+        func createRequestTask(for request: String, _ completion: @escaping (ParserProtocol.ParserResult) -> Void) -> URLSessionDataTask {
+            guard let url = URL(string: request) else {
+                fatalError("Invalid UrlComponents")
+            }
+            return URLSession.shared.dataTask(with: url) {data, response, error in
+                if let message = error?.localizedDescription {
+                    completion(.failure(ErrorWithMessage(message: message)))
+                    return
+                }
+                guard let response = response as? HTTPURLResponse,
+                      (200..<300).contains(response.statusCode),
+                      let data = data else {
+                    completion(.failure(ErrorWithMessage(message: "Response error")))
+                    return
+                }
+                
+                completion(self.parser.parse(data: data))
+            }
+        }
+    }
 }
