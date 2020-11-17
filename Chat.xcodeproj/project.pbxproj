@@ -43,8 +43,8 @@
 		5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */; };
 		5BA7E92C25592752007B9F29 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E92B25592752007B9F29 /* UserModel.swift */; };
 		5BB1275D2564423A00A917AF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB1275C2564423A00A917AF /* Protocols.swift */; };
-		5BB127622564494100A917AF /* PixabayParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB127612564494100A917AF /* PixabayParser.swift */; };
-		5BB1276525644A0B00A917AF /* PixabayRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB1276425644A0B00A917AF /* PixabayRequest.swift */; };
+		5BB127622564494100A917AF /* PixabayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB127612564494100A917AF /* PixabayList.swift */; };
+		5BB1276525644A0B00A917AF /* PixabayImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB1276425644A0B00A917AF /* PixabayImage.swift */; };
 		5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6876C2539BCB30040F1AF /* Channel.swift */; };
 		5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB72CCB25593D330055341C /* RootAssembly.swift */; };
 		5BB911DD2559B28F00430B02 /* ConversationsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB911DC2559B28F00430B02 /* ConversationsListModel.swift */; };
@@ -113,8 +113,8 @@
 		5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		5BA7E92B25592752007B9F29 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		5BB1275C2564423A00A917AF /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		5BB127612564494100A917AF /* PixabayParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayParser.swift; sourceTree = "<group>"; };
-		5BB1276425644A0B00A917AF /* PixabayRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayRequest.swift; sourceTree = "<group>"; };
+		5BB127612564494100A917AF /* PixabayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayList.swift; sourceTree = "<group>"; };
+		5BB1276425644A0B00A917AF /* PixabayImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImage.swift; sourceTree = "<group>"; };
 		5BB6876C2539BCB30040F1AF /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		5BB72CCB25593D330055341C /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		5BB911DC2559B28F00430B02 /* ConversationsListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListModel.swift; sourceTree = "<group>"; };
@@ -340,8 +340,8 @@
 		5BB127602564491000A917AF /* Pixabay */ = {
 			isa = PBXGroup;
 			children = (
-				5BB127612564494100A917AF /* PixabayParser.swift */,
-				5BB1276425644A0B00A917AF /* PixabayRequest.swift */,
+				5BB127612564494100A917AF /* PixabayList.swift */,
+				5BB1276425644A0B00A917AF /* PixabayImage.swift */,
 			);
 			path = Pixabay;
 			sourceTree = "<group>";
@@ -640,7 +640,7 @@
 			files = (
 				5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */,
 				5BB1275D2564423A00A917AF /* Protocols.swift in Sources */,
-				5BB1276525644A0B00A917AF /* PixabayRequest.swift in Sources */,
+				5BB1276525644A0B00A917AF /* PixabayImage.swift in Sources */,
 				5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */,
 				5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */,
 				5B5A8CED251A524E000A541A /* UIViewController+Alert.swift in Sources */,
@@ -686,7 +686,7 @@
 				5B16E0F325461E1200E0DF86 /* MessagesService.swift in Sources */,
 				5B6FEF31255C7FCB003853B9 /* RootModel.swift in Sources */,
 				5B173466254B17E000F8614D /* RootViewController.swift in Sources */,
-				5BB127622564494100A917AF /* PixabayParser.swift in Sources */,
+				5BB127622564494100A917AF /* PixabayList.swift in Sources */,
 				5B16A56A25507AC1005CB96B /* ChannelTitleView.swift in Sources */,
 				5BA7E9222559200F007B9F29 /* UserService.swift in Sources */,
 				5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */,
