@@ -22,15 +22,12 @@ struct PixabayImage {
     
     class PixabayRequestConfig: RequestConfig {
         typealias ParserProtocol = Parser
-        typealias AllowedRequest = String
+        typealias AllowedRequest = URL
         
         private(set) var parser = Parser()
         
-        func createRequestTask(for request: String, _ completion: @escaping (ParserProtocol.ParserResult) -> Void) -> URLSessionDataTask {
-            guard let url = URL(string: request) else {
-                fatalError("Invalid UrlComponents")
-            }
-            return URLSession.shared.dataTask(with: url) {data, response, error in
+        func createRequestTask(for request: URL, _ completion: @escaping (ParserProtocol.ParserResult) -> Void) -> URLSessionDataTask {
+            return URLSession.shared.dataTask(with: request) {data, response, error in
                 if let message = error?.localizedDescription {
                     completion(.failure(ErrorWithMessage(message: message)))
                     return
