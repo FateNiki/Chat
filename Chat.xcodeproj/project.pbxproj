@@ -21,6 +21,9 @@
 		5B411CDA2535DBEC001859F0 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B411CD92535DBEC001859F0 /* SafeArray.swift */; };
 		5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */; };
 		5B4B7C372565AFE5006FDF89 /* OnlineImageLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */; };
+		5B4B7C3C2565BC0D006FDF89 /* ImageLibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C3B2565BC0D006FDF89 /* ImageLibraryModel.swift */; };
+		5B4B7C402565BC5D006FDF89 /* ImageLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C3E2565BC5D006FDF89 /* ImageLibraryViewController.swift */; };
+		5B4B7C412565BC5D006FDF89 /* ImageLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4B7C3F2565BC5D006FDF89 /* ImageLibraryViewController.xib */; };
 		5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */; };
 		5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */; };
 		5B5684CE254317ED00549998 /* ChannelDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5684CA254317ED00549998 /* ChannelDB.swift */; };
@@ -92,6 +95,9 @@
 		5B411CD92535DBEC001859F0 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
 		5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewDelegate.swift; sourceTree = "<group>"; };
 		5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineImageLibrary.swift; sourceTree = "<group>"; };
+		5B4B7C3B2565BC0D006FDF89 /* ImageLibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLibraryModel.swift; sourceTree = "<group>"; };
+		5B4B7C3E2565BC5D006FDF89 /* ImageLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLibraryViewController.swift; sourceTree = "<group>"; };
+		5B4B7C3F2565BC5D006FDF89 /* ImageLibraryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageLibraryViewController.xib; sourceTree = "<group>"; };
 		5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholderView.swift; sourceTree = "<group>"; };
 		5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePlaceholderView.xib; sourceTree = "<group>"; };
 		5B5684CA254317ED00549998 /* ChannelDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDB.swift; sourceTree = "<group>"; };
@@ -167,6 +173,16 @@
 				5B23EFD42546CD87003A1BD6 /* ChannelsCache.swift */,
 			);
 			path = Channels;
+			sourceTree = "<group>";
+		};
+		5B4B7C3A2565BBE4006FDF89 /* ImageLibraryController */ = {
+			isa = PBXGroup;
+			children = (
+				5B4B7C3B2565BC0D006FDF89 /* ImageLibraryModel.swift */,
+				5B4B7C3E2565BC5D006FDF89 /* ImageLibraryViewController.swift */,
+				5B4B7C3F2565BC5D006FDF89 /* ImageLibraryViewController.xib */,
+			);
+			path = ImageLibraryController;
 			sourceTree = "<group>";
 		};
 		5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */ = {
@@ -327,6 +343,7 @@
 				5B586AE02559C789001BEB88 /* ConversationViewController */,
 				5BB911DB2559B22E00430B02 /* ConversationsListViewController */,
 				5BE20E062520B5F000D73A63 /* UserViewController */,
+				5B4B7C3A2565BBE4006FDF89 /* ImageLibraryController */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -564,6 +581,7 @@
 				5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */,
 				5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */,
 				5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */,
+				5B4B7C412565BC5D006FDF89 /* ImageLibraryViewController.xib in Resources */,
 				5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */,
 				5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */,
 				5B06426B253ACBD10019AB80 /* GoogleService-Info.plist in Resources */,
@@ -644,6 +662,7 @@
 				5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */,
 				5BB1275D2564423A00A917AF /* Protocols.swift in Sources */,
 				5BB1276525644A0B00A917AF /* PixabayImage.swift in Sources */,
+				5B4B7C3C2565BC0D006FDF89 /* ImageLibraryModel.swift in Sources */,
 				5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */,
 				5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */,
 				5B5A8CED251A524E000A541A /* UIViewController+Alert.swift in Sources */,
@@ -688,6 +707,7 @@
 				5BE0571025630A2800CAA764 /* UserAvatar.swift in Sources */,
 				5B74D7A02530718D002C2363 /* MessageView.swift in Sources */,
 				5B16E0F325461E1200E0DF86 /* MessagesService.swift in Sources */,
+				5B4B7C402565BC5D006FDF89 /* ImageLibraryViewController.swift in Sources */,
 				5B6FEF31255C7FCB003853B9 /* RootModel.swift in Sources */,
 				5B173466254B17E000F8614D /* RootViewController.swift in Sources */,
 				5BB127622564494100A917AF /* PixabayList.swift in Sources */,
