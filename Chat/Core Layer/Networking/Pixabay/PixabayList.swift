@@ -28,15 +28,16 @@ struct PixabayListImages {
         }
     }
     
+    enum AllowedRequests: String {
+        case images = "/"
+        
+        var path: String { "/api\(self.rawValue)" }
+    }
+    
     class PixabayRequestConfig: RequestConfig {
-        typealias ParserProtocol = PixabayListImages.Parser
+        typealias ParserProtocol = Parser
         typealias AllowedRequest = AllowedRequests
         
-        enum AllowedRequests: String {
-            case images = "/"
-            
-            var path: String { "/api\(self.rawValue)" }
-        }
         private let apiKey: String
         private(set) var parser = PixabayListImages.Parser()
         private(set) lazy var components: URLComponents = {
