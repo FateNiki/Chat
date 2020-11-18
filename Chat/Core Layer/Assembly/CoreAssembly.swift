@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CoreAssemblyProtocol {    
+protocol CoreAssemblyProtocol {
     var userCGDStorage: UserStorageProtocol { get }
     var userOperationsStorage: UserStorageProtocol { get }
     
@@ -19,6 +19,9 @@ protocol CoreAssemblyProtocol {
     func messagesRepo(for channel: Channel, refresh: @escaping ([Message]) -> Void) -> MessagesRepositoryProtocol
     
     var themeStorage: ThemeStorageProtocol { get }
+    
+    var imagesListNetwork: PixabayListImages.PixabayRequestConfig { get }
+    var imageNetwork: PixabayImage.PixabayRequestConfig { get }
 }
 
 class CoreAssembly: CoreAssemblyProtocol {
@@ -42,5 +45,8 @@ class CoreAssembly: CoreAssemblyProtocol {
     
     // MARK: Theme
     var themeStorage: ThemeStorageProtocol = ThemeFileStorage.shared
-
+    
+    // MARK: Images
+    lazy var imagesListNetwork = PixabayListImages.PixabayRequestConfig(apiKey: "19155312-87cdfcaf15293d9b1c086517b")
+    lazy var imageNetwork = PixabayImage.PixabayRequestConfig()
 }
