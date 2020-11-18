@@ -245,8 +245,8 @@
 		5BA7E909255911C6007B9F29 /* Core Layer */ = {
 			isa = PBXGroup;
 			children = (
-				5BB1275B2564422100A917AF /* Networking */,
 				5BA7E90A255911DF007B9F29 /* Assembly */,
+				5BB1275B2564422100A917AF /* Networking */,
 				5B6DAEEF255C700600FE52E6 /* ThemeStorage */,
 				5BA7E90E25591274007B9F29 /* UserStorage */,
 				5B16E0B12546041F00E0DF86 /* Channels */,
