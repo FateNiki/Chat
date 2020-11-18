@@ -20,6 +20,8 @@ protocol ServicesAssemblyProtocol {
     func getMessagesService(for channel: Channel) -> MessagesServiceProtocol
     
     func getThemeService() -> ThemeServiceProtocol
+    
+    func getOnlineImageLibrary() -> OnlineImageLibrary
 }
 
 class ServicesAssembly: ServicesAssemblyProtocol {
@@ -56,5 +58,10 @@ class ServicesAssembly: ServicesAssemblyProtocol {
     
     func getThemeService() -> ThemeServiceProtocol {
         return ThemeService(storage: coreAssembly.themeStorage)
+    }
+    
+    func getOnlineImageLibrary() -> OnlineImageLibrary {
+        return PixabayImageLibrary(listRequest: coreAssembly.imagesListNetwork,
+                                   imageRequest: coreAssembly.imageNetwork)
     }
 }

@@ -20,6 +20,7 @@
 		5B23EFD52546CD87003A1BD6 /* ChannelsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B23EFD42546CD87003A1BD6 /* ChannelsCache.swift */; };
 		5B411CDA2535DBEC001859F0 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B411CD92535DBEC001859F0 /* SafeArray.swift */; };
 		5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */; };
+		5B4B7C372565AFE5006FDF89 /* OnlineImageLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */; };
 		5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */; };
 		5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */; };
 		5B5684CE254317ED00549998 /* ChannelDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5684CA254317ED00549998 /* ChannelDB.swift */; };
@@ -90,6 +91,7 @@
 		5B23EFD42546CD87003A1BD6 /* ChannelsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsCache.swift; sourceTree = "<group>"; };
 		5B411CD92535DBEC001859F0 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
 		5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewDelegate.swift; sourceTree = "<group>"; };
+		5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineImageLibrary.swift; sourceTree = "<group>"; };
 		5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholderView.swift; sourceTree = "<group>"; };
 		5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePlaceholderView.xib; sourceTree = "<group>"; };
 		5B5684CA254317ED00549998 /* ChannelDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDB.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				5B16E0F225461E1200E0DF86 /* MessagesService.swift */,
 				5BA7E9212559200F007B9F29 /* UserService.swift */,
 				5B6DAEF6255C732B00FE52E6 /* ThemeService.swift */,
+				5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				5B5684CE254317ED00549998 /* ChannelDB.swift in Sources */,
 				5BCE62952521E03C00107339 /* MessageTableViewCell.swift in Sources */,
 				5B5684CF254317ED00549998 /* MessageDB.swift in Sources */,
+				5B4B7C372565AFE5006FDF89 /* OnlineImageLibrary.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */,
 				5B72E1442532246D004BECDA /* TurnedOffTextField.swift in Sources */,
