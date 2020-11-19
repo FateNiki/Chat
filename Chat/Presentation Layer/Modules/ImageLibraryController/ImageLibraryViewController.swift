@@ -54,3 +54,15 @@ extension ImageLibraryViewController: UICollectionViewDataSource {
 extension ImageLibraryViewController: UICollectionViewDelegate {
     
 }
+
+extension ImageLibraryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let spacing: CGFloat = 5
+        let countOfRows: CGFloat = 3
+        let width = (view.bounds.width - (spacing * (countOfRows + 1))) / countOfRows
+        guard width > 0 else {
+            return .zero
+        }
+        return CGSize(width: width, height: width)
+    }
+}
