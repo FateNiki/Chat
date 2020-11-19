@@ -88,13 +88,15 @@ extension ImageLibraryViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let result = model.getImageResult(for: indexPath.item)
-        switch result {
-        case let .success(image):
-            delegate?.userAvatarDidChange(avatar: image.jpegData(compressionQuality: 1))
-            close()
-        default:
-            return
+        model.getFullImage(for: indexPath.item) {[weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(fullImage):
+                self.delegate?.userAvatarDidChange(avatar: fullImage.jpegData(compressionQuality: 1))
+            case let .failure(error):
+                self.openAlert(title: "Загрузка полного изображения", message: error.message)
+            }
+            self.close()
         }
     }
 }

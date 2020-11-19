@@ -31,6 +31,7 @@ extension PixabayListImages.Parser.Response.Hit {
 protocol OnlineImageLibrary {
     func getImagesList(_ completion: @escaping (ErrorWithMessage?) -> Void)
     func getImage(for index: Int, _ completion: @escaping (UIImage, Int) -> Void) -> ImageResult
+    func getFullImage(for index: Int, completion: @escaping (Result<UIImage, ErrorWithMessage>) -> Void)
     var count: Int { get }
 }
 
@@ -95,5 +96,15 @@ class PixabayImageLibrary: OnlineImageLibrary {
         }
         imageResults[index] = .loading(task)
         return .loading(task)
+    }
+    
+    func getFullImage(for index: Int, completion: @escaping (Result<UIImage, ErrorWithMessage>) -> Void) {
+        guard (0..<images.count).contains(index) else {
+            fatalError("INDEX ERROR")
+        }
+        
+        let fullImageUrl = images[index].originUrl
+        let task = imageRequest.createRequestTask(for: fullImageUrl, completion)
+        task.resume()
     }
 }

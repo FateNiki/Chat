@@ -6,6 +6,7 @@ protocol ImageLibraryModelProtocol: class {
     func fetch()
     func getCount() -> Int
     func getImageResult(for index: Int) -> ImageResult
+    func getFullImage(for index: Int, _ completion: @escaping (Result<UIImage, ErrorWithMessage>) -> Void)
 }
 
 protocol ImageLibraryModelDelegate: class {
@@ -42,5 +43,13 @@ class ImageLibraryModel: ImageLibraryModelProtocol {
                 delegate?.updateRow(at: indexForReload)
             }
         }
-    }    
+    }
+    
+    func getFullImage(for index: Int, _ completion: @escaping (Result<UIImage, ErrorWithMessage>) -> Void) {
+        libraryService.getFullImage(for: index) { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+    }
 }
