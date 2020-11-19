@@ -57,6 +57,9 @@ class ThemeFileStorage: ThemeStorageProtocol {
         // UITableView
         UITableView.appearance().backgroundColor = theme.backgroundColor
         
+        // UICollectionView
+        UICollectionView.appearance().backgroundColor = theme.backgroundColor
+        
         // NavigationBar
         UINavigationBar.appearance().barTintColor = theme.secondBackgroundColor
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.textColor]
@@ -89,5 +92,8 @@ class ThemeFileStorage: ThemeStorageProtocol {
         MessageTableViewCell.appearance().outcomeDateTextColor = theme.outcomeDateTextColor
         MessageTableViewCell.appearance().incomeMessageTextColor = theme.incomeMessageTextColor
         MessageTableViewCell.appearance().outcomeMessageTextColor = theme.outcomeMessageTextColor
+        
+        // ImageCollectionViewCell
+        ImageCollectionViewCell.appearance().backgroundColor = theme.secondBackgroundColor
     }
 }
