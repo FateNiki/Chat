@@ -30,6 +30,7 @@
 		5B5684CF254317ED00549998 /* MessageDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5684CB254317ED00549998 /* MessageDB.swift */; };
 		5B586AE42559C7D4001BEB88 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B586AE32559C7D4001BEB88 /* ConversationModel.swift */; };
 		5B5A8CED251A524E000A541A /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A8CEC251A524E000A541A /* UIViewController+Alert.swift */; };
+		5B60C23725667113007ADB20 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60C23625667113007ADB20 /* Router.swift */; };
 		5B6C091A2517A3A2007F58E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09192517A3A2007F58E3 /* User.swift */; };
 		5B6DAEF1255C711200FE52E6 /* ThemeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DAEF0255C711200FE52E6 /* ThemeStorage.swift */; };
 		5B6DAEF7255C732B00FE52E6 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DAEF6255C732B00FE52E6 /* ThemeService.swift */; };
@@ -106,6 +107,7 @@
 		5B5684CB254317ED00549998 /* MessageDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDB.swift; sourceTree = "<group>"; };
 		5B586AE32559C7D4001BEB88 /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
 		5B5A8CEC251A524E000A541A /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		5B60C23625667113007ADB20 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		5B6C09192517A3A2007F58E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5B6DAEF0255C711200FE52E6 /* ThemeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStorage.swift; sourceTree = "<group>"; };
 		5B6DAEF6255C732B00FE52E6 /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 			children = (
 				5BA7E9262559263D007B9F29 /* Assembly */,
 				5BA7E92A25592717007B9F29 /* Modules */,
+				5B60C23625667113007ADB20 /* Router.swift */,
 			);
 			path = "Presentation Layer";
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5B6DAEF1255C711200FE52E6 /* ThemeStorage.swift in Sources */,
 				5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */,
+				5B60C23725667113007ADB20 /* Router.swift in Sources */,
 				5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */,
 				5BA7E91025591289007B9F29 /* UserStorage.swift in Sources */,
 				5BA7E91E25591FC6007B9F29 /* ServicesAssembly.swift in Sources */,
