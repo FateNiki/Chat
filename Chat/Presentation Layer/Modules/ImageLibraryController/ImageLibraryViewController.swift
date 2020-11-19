@@ -16,7 +16,7 @@ class ImageLibraryViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Delegate
-    weak var delegate: ImageLibraryDelegate?
+    weak var delegate: UserAvatarPickerDelegate?
     
     // MARK: - Dependencies
     private let model: ImageLibraryModelProtocol
@@ -91,7 +91,7 @@ extension ImageLibraryViewController: UICollectionViewDelegate {
         let result = model.getImageResult(for: indexPath.item)
         switch result {
         case let .success(image):
-            delegate?.imageDidPick(image: image)
+            delegate?.userAvatarDidChange(avatar: image.jpegData(compressionQuality: 1))
             close()
         default:
             return

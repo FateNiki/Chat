@@ -38,8 +38,8 @@ class Router {
         navigation.pushViewController(pickerVC, animated: true)
     }
     
-    func openImageLibrary(modalFor controller: UIViewController) {
-        let libraryVC = presentationAssembly.imageLibraryViewController()
+    func openImageLibrary(modalFor controller: UIViewController, delegate: UserAvatarPickerDelegate?) {
+        let libraryVC = presentationAssembly.imageLibraryViewController(delegate: delegate)
         let libraryNavController = UINavigationController(rootViewController: libraryVC)
         controller.present(libraryNavController, animated: true)
     }

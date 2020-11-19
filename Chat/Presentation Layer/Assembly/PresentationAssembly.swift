@@ -25,7 +25,7 @@ protocol PresentationAssemblyProtocol {
     func themePickerViewController(delegate: ThemePickerDelegate, router: Router) -> ThemesViewController
     
     /// экран выбора картинки для аватара
-    func imageLibraryViewController() -> ImageLibraryViewController
+    func imageLibraryViewController(delegate: UserAvatarPickerDelegate?) -> ImageLibraryViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -99,9 +99,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     }
     
     // MARK: - ImageLibrary
-    func imageLibraryViewController() -> ImageLibraryViewController {
+    func imageLibraryViewController(delegate: UserAvatarPickerDelegate?) -> ImageLibraryViewController {
         let model = imageLibraryModel()
         let libraryVC = ImageLibraryViewController(model: model)
+        libraryVC.delegate = delegate
         model.delegate = libraryVC
         return libraryVC
     }

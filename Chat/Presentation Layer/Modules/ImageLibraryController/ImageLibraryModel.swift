@@ -14,10 +14,6 @@ protocol ImageLibraryModelDelegate: class {
     func updateRow(at index: Int)
 }
 
-protocol ImageLibraryDelegate: class {
-    func imageDidPick(image: UIImage)
-}
-
 class ImageLibraryModel: ImageLibraryModelProtocol {
     private let libraryService: OnlineImageLibrary
     weak var delegate: ImageLibraryModelDelegate?
