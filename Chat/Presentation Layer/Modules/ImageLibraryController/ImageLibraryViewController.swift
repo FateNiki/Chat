@@ -37,6 +37,7 @@ class ImageLibraryViewController: UIViewController {
     // MARK: - Interface configuring
     private func setupView() {
         configCollectionView()
+        configNavigation()
         model.fetch()
     }
     
@@ -44,6 +45,16 @@ class ImageLibraryViewController: UIViewController {
         collectionView.register(UINib(nibName: imageCellIdentifier, bundle: nil), forCellWithReuseIdentifier: imageCellIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    private func configNavigation() {
+        navigationItem.title = "Выбор аватара"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
+    }
+    
+    // MARK: - Interface actions
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

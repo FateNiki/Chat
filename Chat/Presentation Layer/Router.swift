@@ -40,6 +40,7 @@ class Router {
     
     func openImageLibrary(modalFor controller: UIViewController) {
         let libraryVC = presentationAssembly.imageLibraryViewController()
-        controller.present(libraryVC, animated: true)
+        let libraryNavController = UINavigationController(rootViewController: libraryVC)
+        controller.present(libraryNavController, animated: true)
     }
 }
