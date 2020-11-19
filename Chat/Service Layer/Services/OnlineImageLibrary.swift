@@ -66,8 +66,8 @@ class PixabayImageLibrary: OnlineImageLibrary {
             case .failure(let error):
                 completion(error)
             case.success(let response):
-                completion(nil)
                 self.images = response.hits.compactMap { $0.toImage() }
+                completion(nil)
             }
         }
         task.resume()

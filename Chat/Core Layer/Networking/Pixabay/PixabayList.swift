@@ -48,7 +48,7 @@ struct PixabayListImages {
             components.queryItems = [
                 URLQueryItem(name: "key", value: apiKey),
                 URLQueryItem(name: "image_type", value: "photo"),
-                URLQueryItem(name: "per_page", value: "10")
+                URLQueryItem(name: "per_page", value: "100")
             ]
             return components
         }()
