@@ -92,6 +92,7 @@ extension ImageLibraryViewController: UICollectionViewDelegate {
         switch result {
         case let .success(image):
             delegate?.imageDidPick(image: image)
+            close()
         default:
             return
         }
