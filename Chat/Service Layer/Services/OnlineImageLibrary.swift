@@ -82,10 +82,12 @@ class PixabayImageLibrary: OnlineImageLibrary {
             return imageResult
         }
         
+        print("create task \(index)")
         let task = imageRequest.createRequestTask(for: images[index].previewUrl) {[weak self] result in
             switch result {
             case .success(let image):
                 self?.imageResults[index] = .success(image)
+                print("complete task \(index)")
                 completion(image, index)
             case .failure:
                 break
