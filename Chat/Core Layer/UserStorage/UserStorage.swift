@@ -97,12 +97,6 @@ extension UserStorageProtocol {
         if let avatar = try? Data(contentsOf: avatarFile) {
             user.avatar = avatar
         }
-        
-        // NOTES
-        // Слип для эмуляции долгого чтения из файла
-        // Пока идет первая загрузка пользователя - отображается UIActivityIndicatorView
-        // Можно закомментировать
-//        sleep(2)
         return user
     }
     
@@ -135,10 +129,6 @@ extension UserStorageProtocol {
 
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.description.rawValue)
         do {
-            // NOTES: Эти строка можно удалить
-            // sleep для эмуляции долгого сохраненеия
-            // Далее - рандомная ошибка
-            sleep(3)
             if Bool.random() {
                 throw ErrorWithMessage(message: "Test error \(Int.random(in: 0...10))")
             }
@@ -155,7 +145,6 @@ extension UserStorageProtocol {
         let url = getDocumentsDirectory().appendingPathComponent(FieldFileName.avatar.rawValue)
         if let avatarData = avatar {
             do {
-                sleep(5)
                 try avatarData.write(to: url)
                 user.avatar = avatarData
             } catch {
