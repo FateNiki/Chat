@@ -174,7 +174,7 @@ class UserViewController: UIViewController {
             editAvatarDialog.addAction(takePhotoAction)
         }
         
-        let imageLibraryAction = UIAlertAction(title: "Выбор фотографии из сети", style: .default, handler: { _ in
+        let imageLibraryAction = UIAlertAction(title: "Загрузить", style: .default, handler: { _ in
             self.router.openImageLibrary(modalFor: self, delegate: self)
         })
         editAvatarDialog.addAction(imageLibraryAction)
