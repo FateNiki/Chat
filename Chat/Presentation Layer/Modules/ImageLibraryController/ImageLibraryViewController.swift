@@ -15,6 +15,9 @@ class ImageLibraryViewController: UIViewController {
     // MARK: - UI Variables
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // MARK: - Delegate
+    weak var delegate: ImageLibraryDelegate?
+    
     // MARK: - Dependencies
     private let model: ImageLibraryModelProtocol
     
@@ -74,7 +77,25 @@ extension ImageLibraryViewController: UICollectionViewDataSource {
 }
 
 extension ImageLibraryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let result = model.getImageResult(for: indexPath.item)
+        switch result {
+        case .success:
+            return true
+        default:
+            return false
+        }
+    }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let result = model.getImageResult(for: indexPath.item)
+        switch result {
+        case let .success(image):
+            delegate?.imageDidPick(image: image)
+        default:
+            return
+        }
+    }
 }
 
 extension ImageLibraryViewController: UICollectionViewDelegateFlowLayout {

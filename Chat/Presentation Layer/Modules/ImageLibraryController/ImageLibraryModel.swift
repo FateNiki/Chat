@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 protocol ImageLibraryModelProtocol: class {
     var delegate: ImageLibraryModelDelegate? { get set }
@@ -12,6 +12,10 @@ protocol ImageLibraryModelDelegate: class {
     func imagesDidLoad()
     func imagesDidNotLoad(with errorMessage: String)
     func updateRow(at index: Int)
+}
+
+protocol ImageLibraryDelegate: class {
+    func imageDidPick(image: UIImage)
 }
 
 class ImageLibraryModel: ImageLibraryModelProtocol {
