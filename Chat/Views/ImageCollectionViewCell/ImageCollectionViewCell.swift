@@ -39,6 +39,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.cornerRadius = 8
+        imageResult = nil
     }
     
     override func prepareForReuse() {
