@@ -14,6 +14,7 @@ class ImageLibraryViewController: UIViewController {
     
     // MARK: - UI Variables
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Delegate
     weak var delegate: UserAvatarPickerDelegate?
@@ -34,7 +35,6 @@ class ImageLibraryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - Interface configuring
@@ -88,16 +88,21 @@ extension ImageLibraryViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        model.getFullImage(for: indexPath.item) {[weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(fullImage):
-                self.delegate?.userAvatarDidChange(avatar: fullImage.jpegData(compressionQuality: 1))
-            case let .failure(error):
-                self.openAlert(title: "Загрузка полного изображения", message: error.message)
+        activityIndicator.startAnimating()
+        UIView.animate(withDuration: 0.3, animations: {
+            collectionView.alpha = 0.5
+        }, completion: { _ in
+            self.model.getFullImage(for: indexPath.item) {[weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case let .success(fullImage):
+                    self.delegate?.userAvatarDidChange(avatar: fullImage.jpegData(compressionQuality: 1))
+                case let .failure(error):
+                    self.openAlert(title: "Загрузка полного изображения", message: error.message)
+                }
+                self.close()
             }
-            self.close()
-        }
+        })
     }
 }
 
@@ -116,6 +121,7 @@ extension ImageLibraryViewController: UICollectionViewDelegateFlowLayout {
 extension ImageLibraryViewController: ImageLibraryModelDelegate {
     func imagesDidLoad() {
         collectionView.reloadData()
+        activityIndicator.stopAnimating()
     }
     
     func imagesDidNotLoad(with errorMessage: String) {
