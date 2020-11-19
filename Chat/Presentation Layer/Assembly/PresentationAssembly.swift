@@ -19,7 +19,7 @@ class Router {
     lazy var rootController: RootNavigationViewController = presentationAssembly.rootController(router: self)
 
     func openUserView(modalFor controller: UIViewController) {
-        let userVC = presentationAssembly.userViewController()
+        let userVC = presentationAssembly.userViewController(router: self)
         let userNavController = UINavigationController(rootViewController: userVC)
         controller.present(userNavController, animated: true, completion: nil)
     }
@@ -38,6 +38,11 @@ class Router {
         let pickerVC = presentationAssembly.themePickerViewController(delegate: delegate, router: self)
         navigation.pushViewController(pickerVC, animated: true)
     }
+    
+    func openImageLibrary(modalFor controller: UIViewController) {
+        let libraryVC = presentationAssembly.imageLibraryViewController()
+        controller.present(libraryVC, animated: true)
+    }
 }
 
 protocol PresentationAssemblyProtocol {
@@ -45,7 +50,7 @@ protocol PresentationAssemblyProtocol {
     func rootController(router: Router) -> RootNavigationViewController
     
     /// Создает экран редактирования и просмотра пользователя
-    func userViewController() -> UserViewController
+    func userViewController(router: Router) -> UserViewController
     
     /// Создает экран списка диалогов
     func conversationsListViewController(router: Router) -> ConversationsListViewController
@@ -55,6 +60,9 @@ protocol PresentationAssemblyProtocol {
     
     /// Создает экран выбора темы
     func themePickerViewController(delegate: ThemePickerDelegate, router: Router) -> ThemesViewController
+    
+    /// экран выбора картинки для аватара
+    func imageLibraryViewController() -> ImageLibraryViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -77,9 +85,9 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     }
     
     // MARK: - UserViewController    
-    func userViewController() -> UserViewController {
+    func userViewController(router: Router) -> UserViewController {
         let model = userModel()
-        let userVC = UserViewController(model: model)
+        let userVC = UserViewController(model: model, router: router)
         model.delegate = userVC
         return userVC
     }
@@ -125,6 +133,11 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     private func themePickerModel() -> ThemePickerModelProtocol {
         return ThemePickerModel(themeService: serviceAssembly.getThemeService())
+    }
+    
+    // MARK: - ImageLibrary
+    func imageLibraryViewController() -> ImageLibraryViewController {
+        return ImageLibraryViewController()
     }
 
 }

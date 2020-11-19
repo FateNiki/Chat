@@ -88,6 +88,7 @@ class UserViewController: UIViewController {
     }()
     
     // MARK: - Dependencies
+    private let router: Router
     private let model: UserModelProtocol
     
     // MARK: - LocalService
@@ -95,8 +96,9 @@ class UserViewController: UIViewController {
     private lazy var libraryAvatarPicker = AvatarPicker(from: .photoLibrary, in: self, delegate: self)
         
     // MARK: - Lifecycle
-    init(model: UserModelProtocol) {
+    init(model: UserModelProtocol, router: Router) {
         self.model = model
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -171,6 +173,11 @@ class UserViewController: UIViewController {
             }
             editAvatarDialog.addAction(takePhotoAction)
         }
+        
+        let imageLibraryAction = UIAlertAction(title: "Выбор фотографии из сети", style: .default, handler: { _ in
+            self.router.openImageLibrary(modalFor: self)
+        })
+        editAvatarDialog.addAction(imageLibraryAction)
 
         guard editAvatarDialog.actions.count > 0 else {
             return
