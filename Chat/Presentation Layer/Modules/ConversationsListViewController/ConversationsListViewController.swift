@@ -110,7 +110,7 @@ class ConversationsListViewController: UIViewController {
     // MARK: - Interface Actions
     func openUserEdit() {
         guard currentUser != nil else { return }
-        router.openUserView(modalFor: self)
+        router.openUserView(modalFor: self, delegate: self)
     }
     
     func openChannel(_ channel: Channel) {

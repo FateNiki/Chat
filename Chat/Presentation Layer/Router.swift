@@ -17,8 +17,8 @@ class Router {
     
     lazy var rootController: RootNavigationViewController = presentationAssembly.rootController(router: self)
 
-    func openUserView(modalFor controller: UIViewController) {
-        let userVC = presentationAssembly.userViewController(router: self)
+    func openUserView(modalFor controller: UIViewController, delegate: UserViewDelegate?) {
+        let userVC = presentationAssembly.userViewController(router: self, delegate: delegate)
         let userNavController = UINavigationController(rootViewController: userVC)
         controller.present(userNavController, animated: true, completion: nil)
     }

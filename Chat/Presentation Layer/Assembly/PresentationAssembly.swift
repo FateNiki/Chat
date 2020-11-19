@@ -13,7 +13,7 @@ protocol PresentationAssemblyProtocol {
     func rootController(router: Router) -> RootNavigationViewController
     
     /// Создает экран редактирования и просмотра пользователя
-    func userViewController(router: Router) -> UserViewController
+    func userViewController(router: Router, delegate: UserViewDelegate?) -> UserViewController
     
     /// Создает экран списка диалогов
     func conversationsListViewController(router: Router) -> ConversationsListViewController
@@ -48,9 +48,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     }
     
     // MARK: - UserViewController    
-    func userViewController(router: Router) -> UserViewController {
+    func userViewController(router: Router, delegate: UserViewDelegate?) -> UserViewController {
         let model = userModel()
         let userVC = UserViewController(model: model, router: router)
+        userVC.delegate = delegate
         model.delegate = userVC
         return userVC
     }

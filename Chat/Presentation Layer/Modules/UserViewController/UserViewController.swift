@@ -87,6 +87,9 @@ class UserViewController: UIViewController {
         return indicator
     }()
     
+    // MARK: - Delegates
+    weak var delegate: UserViewDelegate?
+    
     // MARK: - Dependencies
     private let router: Router
     private let model: UserModelProtocol
@@ -268,6 +271,7 @@ extension UserViewController: UserModelDelegate {
             self.setup(user: user)
             self.openAlert(title: "Сохранено успешно", message: "")
             self.setEditing(false, animated: true)
+            self.delegate?.userDidChange(newUser: user)
         }
     }
 
