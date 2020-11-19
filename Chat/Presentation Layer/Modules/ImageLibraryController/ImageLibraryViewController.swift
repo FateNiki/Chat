@@ -15,8 +15,12 @@ class ImageLibraryViewController: UIViewController {
     // MARK: - UI Variables
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // MARK: - Dependencies
+    private let model: ImageLibraryModelProtocol
+    
     // MARK: - Lifecycle
-    init() {
+    init(model: ImageLibraryModelProtocol) {
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,6 +37,7 @@ class ImageLibraryViewController: UIViewController {
     // MARK: - Interface configuring
     private func setupView() {
         configCollectionView()
+        model.fetch()
     }
     
     private func configCollectionView() {
@@ -43,11 +48,17 @@ class ImageLibraryViewController: UIViewController {
 }
 
 extension ImageLibraryViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { 10 }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        model.getCount()
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellIdentifier, for: indexPath)
-        return cell
+        guard let imageCell = cell as? ImageCollectionViewCell else {
+            return cell
+        }
+        imageCell.configure(with: model.getImageResult(for: indexPath.item))
+        return imageCell
     }
 }
 
@@ -64,5 +75,19 @@ extension ImageLibraryViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
         return CGSize(width: width, height: width)
+    }
+}
+
+extension ImageLibraryViewController: ImageLibraryModelDelegate {
+    func imagesDidLoad() {
+        collectionView.reloadData()
+    }
+    
+    func imagesDidNotLoad(with errorMessage: String) {
+        openAlert(title: "Ошибка загрузки", message: errorMessage)
+    }
+    
+    func updateRow(at index: Int) {
+        collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
 }

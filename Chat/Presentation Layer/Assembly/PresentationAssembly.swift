@@ -137,7 +137,14 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     // MARK: - ImageLibrary
     func imageLibraryViewController() -> ImageLibraryViewController {
-        return ImageLibraryViewController()
+        let model = imageLibraryModel()
+        let libraryVC = ImageLibraryViewController(model: model)
+        model.delegate = libraryVC
+        return libraryVC
+    }
+    
+    private func imageLibraryModel() -> ImageLibraryModelProtocol {
+        return ImageLibraryModel(libraryService: serviceAssembly.getOnlineImageLibrary())
     }
 
 }

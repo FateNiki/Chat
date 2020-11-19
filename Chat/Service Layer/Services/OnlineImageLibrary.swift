@@ -31,6 +31,7 @@ extension PixabayListImages.Parser.Response.Hit {
 protocol OnlineImageLibrary {
     func getImagesList(_ completion: @escaping (ErrorWithMessage?) -> Void)
     func getImage(for index: Int, _ completion: @escaping (UIImage, Int) -> Void) -> ImageResult
+    var count: Int { get }
 }
 
 class PixabayImageLibrary: OnlineImageLibrary {
@@ -51,6 +52,8 @@ class PixabayImageLibrary: OnlineImageLibrary {
         }
     }
     private var imageResults: [ImageResult?] = []
+    
+    var count: Int { images.count }
 
     init(listRequest: PixabayListImages.PixabayRequestConfig, imageRequest: PixabayImage.PixabayRequestConfig) {
         self.listRequest = listRequest
