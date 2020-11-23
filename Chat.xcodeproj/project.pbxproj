@@ -20,17 +20,24 @@
 		5B23EFD52546CD87003A1BD6 /* ChannelsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B23EFD42546CD87003A1BD6 /* ChannelsCache.swift */; };
 		5B411CDA2535DBEC001859F0 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B411CD92535DBEC001859F0 /* SafeArray.swift */; };
 		5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */; };
+		5B4B7C372565AFE5006FDF89 /* OnlineImageLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */; };
+		5B4B7C3C2565BC0D006FDF89 /* ImageLibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C3B2565BC0D006FDF89 /* ImageLibraryModel.swift */; };
+		5B4B7C402565BC5D006FDF89 /* ImageLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4B7C3E2565BC5D006FDF89 /* ImageLibraryViewController.swift */; };
+		5B4B7C412565BC5D006FDF89 /* ImageLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4B7C3F2565BC5D006FDF89 /* ImageLibraryViewController.xib */; };
 		5B4F6CF2252B241E000811AD /* ThemePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */; };
 		5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */; };
 		5B5684CE254317ED00549998 /* ChannelDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5684CA254317ED00549998 /* ChannelDB.swift */; };
 		5B5684CF254317ED00549998 /* MessageDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5684CB254317ED00549998 /* MessageDB.swift */; };
 		5B586AE42559C7D4001BEB88 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B586AE32559C7D4001BEB88 /* ConversationModel.swift */; };
 		5B5A8CED251A524E000A541A /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A8CEC251A524E000A541A /* UIViewController+Alert.swift */; };
+		5B60C23725667113007ADB20 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60C23625667113007ADB20 /* Router.swift */; };
 		5B6C091A2517A3A2007F58E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C09192517A3A2007F58E3 /* User.swift */; };
 		5B6DAEF1255C711200FE52E6 /* ThemeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DAEF0255C711200FE52E6 /* ThemeStorage.swift */; };
 		5B6DAEF7255C732B00FE52E6 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DAEF6255C732B00FE52E6 /* ThemeService.swift */; };
 		5B6DAEFB255C74B700FE52E6 /* ThemePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DAEFA255C74B700FE52E6 /* ThemePickerModel.swift */; };
 		5B6FEF31255C7FCB003853B9 /* RootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6FEF30255C7FCB003853B9 /* RootModel.swift */; };
+		5B71FB1D256644AC007D1518 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B71FB1B256644AC007D1518 /* ImageCollectionViewCell.swift */; };
+		5B71FB1E256644AC007D1518 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B71FB1C256644AC007D1518 /* ImageCollectionViewCell.xib */; };
 		5B72E1442532246D004BECDA /* TurnedOffTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72E1432532246D004BECDA /* TurnedOffTextField.swift */; };
 		5B74D7A02530718D002C2363 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B74D79F2530718D002C2363 /* MessageView.swift */; };
 		5B798E2E25431B5900ABBADF /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B798E2D25431B5900ABBADF /* CoreDataStack.swift */; };
@@ -42,6 +49,9 @@
 		5BA7E9222559200F007B9F29 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E9212559200F007B9F29 /* UserService.swift */; };
 		5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */; };
 		5BA7E92C25592752007B9F29 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E92B25592752007B9F29 /* UserModel.swift */; };
+		5BB1275D2564423A00A917AF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB1275C2564423A00A917AF /* Protocols.swift */; };
+		5BB127622564494100A917AF /* PixabayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB127612564494100A917AF /* PixabayList.swift */; };
+		5BB1276525644A0B00A917AF /* PixabayImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB1276425644A0B00A917AF /* PixabayImage.swift */; };
 		5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6876C2539BCB30040F1AF /* Channel.swift */; };
 		5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB72CCB25593D330055341C /* RootAssembly.swift */; };
 		5BB911DD2559B28F00430B02 /* ConversationsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB911DC2559B28F00430B02 /* ConversationsListModel.swift */; };
@@ -54,6 +64,7 @@
 		5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE62942521E03C00107339 /* MessageTableViewCell.xib */; };
 		5BCE62A22521ED1E00107339 /* ConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */; };
 		5BDED39A2539972100B3A8EE /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5BDED3992539972100B3A8EE /* .swiftlint.yml */; };
+		5BE0571025630A2800CAA764 /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0570F25630A2800CAA764 /* UserAvatar.swift */; };
 		5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE20E072520B60700D73A63 /* UserViewController.swift */; };
 		5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E082520B60700D73A63 /* UserViewController.xib */; };
 		5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */; };
@@ -86,17 +97,24 @@
 		5B23EFD42546CD87003A1BD6 /* ChannelsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsCache.swift; sourceTree = "<group>"; };
 		5B411CD92535DBEC001859F0 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
 		5B454DC325238C6300DABC68 /* UserAvatarViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewDelegate.swift; sourceTree = "<group>"; };
+		5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineImageLibrary.swift; sourceTree = "<group>"; };
+		5B4B7C3B2565BC0D006FDF89 /* ImageLibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLibraryModel.swift; sourceTree = "<group>"; };
+		5B4B7C3E2565BC5D006FDF89 /* ImageLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLibraryViewController.swift; sourceTree = "<group>"; };
+		5B4B7C3F2565BC5D006FDF89 /* ImageLibraryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageLibraryViewController.xib; sourceTree = "<group>"; };
 		5B4F6CF1252B241E000811AD /* ThemePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholderView.swift; sourceTree = "<group>"; };
 		5B4F6CF5252B2436000811AD /* ThemePlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePlaceholderView.xib; sourceTree = "<group>"; };
 		5B5684CA254317ED00549998 /* ChannelDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDB.swift; sourceTree = "<group>"; };
 		5B5684CB254317ED00549998 /* MessageDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDB.swift; sourceTree = "<group>"; };
 		5B586AE32559C7D4001BEB88 /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
 		5B5A8CEC251A524E000A541A /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		5B60C23625667113007ADB20 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		5B6C09192517A3A2007F58E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5B6DAEF0255C711200FE52E6 /* ThemeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStorage.swift; sourceTree = "<group>"; };
 		5B6DAEF6255C732B00FE52E6 /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
 		5B6DAEFA255C74B700FE52E6 /* ThemePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerModel.swift; sourceTree = "<group>"; };
 		5B6FEF30255C7FCB003853B9 /* RootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootModel.swift; sourceTree = "<group>"; };
+		5B71FB1B256644AC007D1518 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		5B71FB1C256644AC007D1518 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B72E1432532246D004BECDA /* TurnedOffTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnedOffTextField.swift; sourceTree = "<group>"; };
 		5B74D79F2530718D002C2363 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5B798E2D25431B5900ABBADF /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -108,6 +126,9 @@
 		5BA7E9212559200F007B9F29 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5BA7E9272559265D007B9F29 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		5BA7E92B25592752007B9F29 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		5BB1275C2564423A00A917AF /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		5BB127612564494100A917AF /* PixabayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayList.swift; sourceTree = "<group>"; };
+		5BB1276425644A0B00A917AF /* PixabayImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImage.swift; sourceTree = "<group>"; };
 		5BB6876C2539BCB30040F1AF /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		5BB72CCB25593D330055341C /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		5BB911DC2559B28F00430B02 /* ConversationsListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListModel.swift; sourceTree = "<group>"; };
@@ -122,6 +143,7 @@
 		5BCE62942521E03C00107339 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationModel.swift; sourceTree = "<group>"; };
 		5BDED3992539972100B3A8EE /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		5BE0570F25630A2800CAA764 /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
 		5BE20E072520B60700D73A63 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5BE20E082520B60700D73A63 /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		5BE20E1C2520CCBF00D73A63 /* UserAvatarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
@@ -157,6 +179,16 @@
 				5B23EFD42546CD87003A1BD6 /* ChannelsCache.swift */,
 			);
 			path = Channels;
+			sourceTree = "<group>";
+		};
+		5B4B7C3A2565BBE4006FDF89 /* ImageLibraryController */ = {
+			isa = PBXGroup;
+			children = (
+				5B4B7C3B2565BC0D006FDF89 /* ImageLibraryModel.swift */,
+				5B4B7C3E2565BC5D006FDF89 /* ImageLibraryViewController.swift */,
+				5B4B7C3F2565BC5D006FDF89 /* ImageLibraryViewController.xib */,
+			);
+			path = ImageLibraryController;
 			sourceTree = "<group>";
 		};
 		5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */ = {
@@ -224,6 +256,15 @@
 			path = RootViewController;
 			sourceTree = "<group>";
 		};
+		5B71FB1A2566449C007D1518 /* ImageCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5B71FB1B256644AC007D1518 /* ImageCollectionViewCell.swift */,
+				5B71FB1C256644AC007D1518 /* ImageCollectionViewCell.xib */,
+			);
+			path = ImageCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		5B85865D2527BAE400DCCD63 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA7E90A255911DF007B9F29 /* Assembly */,
+				5BB1275B2564422100A917AF /* Networking */,
 				5B6DAEEF255C700600FE52E6 /* ThemeStorage */,
 				5BA7E90E25591274007B9F29 /* UserStorage */,
 				5B16E0B12546041F00E0DF86 /* Channels */,
@@ -286,6 +328,7 @@
 				5B16E0F225461E1200E0DF86 /* MessagesService.swift */,
 				5BA7E9212559200F007B9F29 /* UserService.swift */,
 				5B6DAEF6255C732B00FE52E6 /* ThemeService.swift */,
+				5B4B7C362565AFE5006FDF89 /* OnlineImageLibrary.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -295,6 +338,7 @@
 			children = (
 				5BA7E9262559263D007B9F29 /* Assembly */,
 				5BA7E92A25592717007B9F29 /* Modules */,
+				5B60C23625667113007ADB20 /* Router.swift */,
 			);
 			path = "Presentation Layer";
 			sourceTree = "<group>";
@@ -315,8 +359,27 @@
 				5B586AE02559C789001BEB88 /* ConversationViewController */,
 				5BB911DB2559B22E00430B02 /* ConversationsListViewController */,
 				5BE20E062520B5F000D73A63 /* UserViewController */,
+				5B4B7C3A2565BBE4006FDF89 /* ImageLibraryController */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		5BB1275B2564422100A917AF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				5BB127602564491000A917AF /* Pixabay */,
+				5BB1275C2564423A00A917AF /* Protocols.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		5BB127602564491000A917AF /* Pixabay */ = {
+			isa = PBXGroup;
+			children = (
+				5BB127612564494100A917AF /* PixabayList.swift */,
+				5BB1276425644A0B00A917AF /* PixabayImage.swift */,
+			);
+			path = Pixabay;
 			sourceTree = "<group>";
 		};
 		5BB911DB2559B22E00430B02 /* ConversationsListViewController */ = {
@@ -409,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA7E92B25592752007B9F29 /* UserModel.swift */,
+				5BE0570F25630A2800CAA764 /* UserAvatar.swift */,
 				5BE20E072520B60700D73A63 /* UserViewController.swift */,
 				5BE20E082520B60700D73A63 /* UserViewController.xib */,
 			);
@@ -428,6 +492,7 @@
 		5BECAD44251FAA9900141621 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B71FB1A2566449C007D1518 /* ImageCollectionViewCell */,
 				5B6DAEED255C6F0400FE52E6 /* SendMessageView */,
 				5B4F6CF0252B23EC000811AD /* ThemePlaceholderView */,
 				5BE20E1B2520CCB400D73A63 /* UserAvatarView */,
@@ -533,12 +598,14 @@
 				5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */,
 				5BE20E0A2520B60700D73A63 /* UserViewController.xib in Resources */,
 				5B4F6CF6252B2436000811AD /* ThemePlaceholderView.xib in Resources */,
+				5B4B7C412565BC5D006FDF89 /* ImageLibraryViewController.xib in Resources */,
 				5BCE62962521E03C00107339 /* MessageTableViewCell.xib in Resources */,
 				5BC2B74C250D4D7C0062C724 /* LaunchScreen.storyboard in Resources */,
 				5B06426B253ACBD10019AB80 /* GoogleService-Info.plist in Resources */,
 				5BEF6A1D2527B7FA00F88572 /* ThemesViewController.xib in Resources */,
 				5BC2B749250D4D7C0062C724 /* Assets.xcassets in Resources */,
 				5BE20E1D2520CCBF00D73A63 /* UserAvatarView.xib in Resources */,
+				5B71FB1E256644AC007D1518 /* ImageCollectionViewCell.xib in Resources */,
 				5BDED39A2539972100B3A8EE /* .swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,6 +678,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BB6876D2539BCB30040F1AF /* Channel.swift in Sources */,
+				5BB1275D2564423A00A917AF /* Protocols.swift in Sources */,
+				5BB1276525644A0B00A917AF /* PixabayImage.swift in Sources */,
+				5B4B7C3C2565BC0D006FDF89 /* ImageLibraryModel.swift in Sources */,
 				5BB72CCC25593D330055341C /* RootAssembly.swift in Sources */,
 				5BE20E092520B60700D73A63 /* UserViewController.swift in Sources */,
 				5B5A8CED251A524E000A541A /* UIViewController+Alert.swift in Sources */,
@@ -624,6 +694,7 @@
 				5BE20E202520CE9000D73A63 /* UserAvatarView.swift in Sources */,
 				5B6DAEF1255C711200FE52E6 /* ThemeStorage.swift in Sources */,
 				5B454DC425238C6300DABC68 /* UserAvatarViewDelegate.swift in Sources */,
+				5B60C23725667113007ADB20 /* Router.swift in Sources */,
 				5BA7E9282559265D007B9F29 /* PresentationAssembly.swift in Sources */,
 				5BA7E91025591289007B9F29 /* UserStorage.swift in Sources */,
 				5BA7E91E25591FC6007B9F29 /* ServicesAssembly.swift in Sources */,
@@ -631,6 +702,7 @@
 				5B5684CE254317ED00549998 /* ChannelDB.swift in Sources */,
 				5BCE62952521E03C00107339 /* MessageTableViewCell.swift in Sources */,
 				5B5684CF254317ED00549998 /* MessageDB.swift in Sources */,
+				5B4B7C372565AFE5006FDF89 /* OnlineImageLibrary.swift in Sources */,
 				5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */,
 				5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */,
 				5B72E1442532246D004BECDA /* TurnedOffTextField.swift in Sources */,
@@ -642,6 +714,7 @@
 				5BE8FA1C252B62A200B06809 /* ThemePlaceholderDelegate.swift in Sources */,
 				5B16E0F025461BAD00E0DF86 /* MessagesRepository.swift in Sources */,
 				5B16E0C7254605D300E0DF86 /* ChannelsRepository.swift in Sources */,
+				5B71FB1D256644AC007D1518 /* ImageCollectionViewCell.swift in Sources */,
 				5BBE67E32543081700545557 /* Chat.xcdatamodeld in Sources */,
 				5B23EFD52546CD87003A1BD6 /* ChannelsCache.swift in Sources */,
 				5BECAD52251FC5AB00141621 /* Message.swift in Sources */,
@@ -651,10 +724,13 @@
 				5B8586542527BA0800DCCD63 /* Theme.swift in Sources */,
 				5B6C091A2517A3A2007F58E3 /* User.swift in Sources */,
 				5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */,
+				5BE0571025630A2800CAA764 /* UserAvatar.swift in Sources */,
 				5B74D7A02530718D002C2363 /* MessageView.swift in Sources */,
 				5B16E0F325461E1200E0DF86 /* MessagesService.swift in Sources */,
+				5B4B7C402565BC5D006FDF89 /* ImageLibraryViewController.swift in Sources */,
 				5B6FEF31255C7FCB003853B9 /* RootModel.swift in Sources */,
 				5B173466254B17E000F8614D /* RootViewController.swift in Sources */,
+				5BB127622564494100A917AF /* PixabayList.swift in Sources */,
 				5B16A56A25507AC1005CB96B /* ChannelTitleView.swift in Sources */,
 				5BA7E9222559200F007B9F29 /* UserService.swift in Sources */,
 				5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */,

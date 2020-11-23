@@ -7,45 +7,13 @@
 //
 
 import Foundation
-import UIKit
-
-class Router {
-    private let presentationAssembly: PresentationAssemblyProtocol
-    
-    init(presentationAssembly: PresentationAssemblyProtocol) {
-        self.presentationAssembly = presentationAssembly
-    }
-    
-    lazy var rootController: RootNavigationViewController = presentationAssembly.rootController(router: self)
-
-    func openUserView(modalFor controller: UIViewController) {
-        let userVC = presentationAssembly.userViewController()
-        let userNavController = UINavigationController(rootViewController: userVC)
-        controller.present(userNavController, animated: true, completion: nil)
-    }
-    
-    func openConverationsList(in navigation: UINavigationController) {
-        let converationsVC = presentationAssembly.conversationsListViewController(router: self)
-        navigation.pushViewController(converationsVC, animated: true)
-    }
-    
-    func openConveration(for channel: Channel, user: User, in navigation: UINavigationController) {
-        let conversationVC = presentationAssembly.conversationViewController(channel: channel, user: user, router: self)
-        navigation.pushViewController(conversationVC, animated: true)
-    }
-    
-    func openThemePicker(in navigation: UINavigationController, delegate: ThemePickerDelegate) {
-        let pickerVC = presentationAssembly.themePickerViewController(delegate: delegate, router: self)
-        navigation.pushViewController(pickerVC, animated: true)
-    }
-}
 
 protocol PresentationAssemblyProtocol {
     /// Создает корневой экран
     func rootController(router: Router) -> RootNavigationViewController
     
     /// Создает экран редактирования и просмотра пользователя
-    func userViewController() -> UserViewController
+    func userViewController(router: Router, delegate: UserViewDelegate?) -> UserViewController
     
     /// Создает экран списка диалогов
     func conversationsListViewController(router: Router) -> ConversationsListViewController
@@ -55,6 +23,9 @@ protocol PresentationAssemblyProtocol {
     
     /// Создает экран выбора темы
     func themePickerViewController(delegate: ThemePickerDelegate, router: Router) -> ThemesViewController
+    
+    /// экран выбора картинки для аватара
+    func imageLibraryViewController(delegate: UserAvatarPickerDelegate?) -> ImageLibraryViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -77,9 +48,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     }
     
     // MARK: - UserViewController    
-    func userViewController() -> UserViewController {
+    func userViewController(router: Router, delegate: UserViewDelegate?) -> UserViewController {
         let model = userModel()
-        let userVC = UserViewController(model: model)
+        let userVC = UserViewController(model: model, router: router)
+        userVC.delegate = delegate
         model.delegate = userVC
         return userVC
     }
@@ -125,6 +97,19 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     
     private func themePickerModel() -> ThemePickerModelProtocol {
         return ThemePickerModel(themeService: serviceAssembly.getThemeService())
+    }
+    
+    // MARK: - ImageLibrary
+    func imageLibraryViewController(delegate: UserAvatarPickerDelegate?) -> ImageLibraryViewController {
+        let model = imageLibraryModel()
+        let libraryVC = ImageLibraryViewController(model: model)
+        libraryVC.delegate = delegate
+        model.delegate = libraryVC
+        return libraryVC
+    }
+    
+    private func imageLibraryModel() -> ImageLibraryModelProtocol {
+        return ImageLibraryModel(libraryService: serviceAssembly.getOnlineImageLibrary())
     }
 
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 private enum UserViewState {
     case viewing, editing, saving, loading
@@ -88,12 +87,21 @@ class UserViewController: UIViewController {
         return indicator
     }()
     
+    // MARK: - Delegates
+    weak var delegate: UserViewDelegate?
+    
     // MARK: - Dependencies
+    private let router: Router
     private let model: UserModelProtocol
     
+    // MARK: - LocalService
+    private lazy var cameraAvatarPicker = AvatarPicker(from: .camera, in: self, delegate: self)
+    private lazy var libraryAvatarPicker = AvatarPicker(from: .photoLibrary, in: self, delegate: self)
+        
     // MARK: - Lifecycle
-    init(model: UserModelProtocol) {
+    init(model: UserModelProtocol, router: Router) {
         self.model = model
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -157,17 +165,22 @@ class UserViewController: UIViewController {
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let photoLibraryAction = UIAlertAction(title: "Установить из галлереи", style: .default) { _ in
-                self.selectImageFrom(.photoLibrary)
+                self.libraryAvatarPicker.chooseImage()
             }
             editAvatarDialog.addAction(photoLibraryAction)
         }
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { _ in
-                self.selectImageFrom(.camera)
+                self.cameraAvatarPicker.chooseImage()
             }
             editAvatarDialog.addAction(takePhotoAction)
         }
+        
+        let imageLibraryAction = UIAlertAction(title: "Загрузить", style: .default, handler: { _ in
+            self.router.openImageLibrary(modalFor: self, delegate: self)
+        })
+        editAvatarDialog.addAction(imageLibraryAction)
 
         guard editAvatarDialog.actions.count > 0 else {
             return
@@ -258,6 +271,7 @@ extension UserViewController: UserModelDelegate {
             self.setup(user: user)
             self.openAlert(title: "Сохранено успешно", message: "")
             self.setEditing(false, animated: true)
+            self.delegate?.userDidChange(newUser: user)
         }
     }
 
@@ -294,55 +308,14 @@ extension UserViewController: UITextFieldDelegate, UITextViewDelegate {
     }
 }
 
-// MARK: - Work with ImagePicker
-extension UserViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    func selectImageFrom(_ source: UIImagePickerController.SourceType) {
-        imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        switch source {
-        case .camera:
-            imagePicker.sourceType = .camera
-            imagePicker.cameraCaptureMode = .photo
-            requestCameraPermission {
-                self.present(self.imagePicker, animated: true)
-            }
-        case .photoLibrary:
-            imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true)
-        default:
-            return
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        imagePicker.dismiss(animated: true, completion: nil)
-        guard let selectedImage = info[.originalImage] as? UIImage else {
-            openAlert(title: "Изображение", message: "Image not found!")
-            return
-        }
-        userAvatarView.configure(avatar: selectedImage.jpegData(compressionQuality: 1))
+// MARK: - Work with avatar
+extension UserViewController: UserAvatarPickerDelegate {
+    func userAvatarDidChange(avatar: Data?) {
+        userAvatarView.configure(avatar: avatar)
         updateSaveButtons()
     }
-        
-    private func requestCameraPermission(_ openImagePicker: @escaping () -> Void) {
-        let permission = AVCaptureDevice.authorizationStatus(for: .video)
-        switch permission {
-        case .authorized:
-            openImagePicker()
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                DispatchQueue.main.async {
-                    if granted {
-                        openImagePicker()
-                    } else {
-                        self.openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
-                    }
-                }
-            }
-        default:
-            openAlert(title: "Камера", message: "Доступ к камере не предоставлен")
-            return
-        }
+    
+    func userAvatarDontChoose(with error: String) {
+        openAlert(title: "Выбор изображения", message: error)
     }
 }
