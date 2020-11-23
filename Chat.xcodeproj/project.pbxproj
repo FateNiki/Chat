@@ -42,6 +42,7 @@
 		5B74D7A02530718D002C2363 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B74D79F2530718D002C2363 /* MessageView.swift */; };
 		5B798E2E25431B5900ABBADF /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B798E2D25431B5900ABBADF /* CoreDataStack.swift */; };
 		5B79C354251FA52D00963D06 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */; };
+		5B7D031A256C099500D51A7B /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D0319256C099500D51A7B /* Animation.swift */; };
 		5B8586542527BA0800DCCD63 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8586532527BA0800DCCD63 /* Theme.swift */; };
 		5BA7E90C25591207007B9F29 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E90B25591207007B9F29 /* CoreAssembly.swift */; };
 		5BA7E91025591289007B9F29 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA7E90F25591289007B9F29 /* UserStorage.swift */; };
@@ -119,6 +120,7 @@
 		5B74D79F2530718D002C2363 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5B798E2D25431B5900ABBADF /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		5B79C353251FA52D00963D06 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		5B7D0319256C099500D51A7B /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B8586532527BA0800DCCD63 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5BA7E90B25591207007B9F29 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		5BA7E90F25591289007B9F29 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				5BA7E9262559263D007B9F29 /* Assembly */,
 				5BA7E92A25592717007B9F29 /* Modules */,
 				5B60C23625667113007ADB20 /* Router.swift */,
+				5B7D0319256C099500D51A7B /* Animation.swift */,
 			);
 			path = "Presentation Layer";
 			sourceTree = "<group>";
@@ -735,6 +738,7 @@
 				5BA7E9222559200F007B9F29 /* UserService.swift in Sources */,
 				5B1014BC2549A97B000416B0 /* CustomErrors.swift in Sources */,
 				5B6DAEF7255C732B00FE52E6 /* ThemeService.swift in Sources */,
+				5B7D031A256C099500D51A7B /* Animation.swift in Sources */,
 				5BB911DD2559B28F00430B02 /* ConversationsListModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
