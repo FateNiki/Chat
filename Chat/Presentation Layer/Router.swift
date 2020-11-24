@@ -50,6 +50,10 @@ class Router: NSObject {
 
 extension Router: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        FadeTransition()
+        FadeTransition(dismissing: false)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        FadeTransition(dismissing: true)
     }
 }

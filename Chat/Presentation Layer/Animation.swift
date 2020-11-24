@@ -129,27 +129,58 @@ extension UIView {
 }
 
 class FadeTransition: NSObject, UIViewControllerAnimatedTransitioning {
+    private let dismissing: Bool
+    
+    init(dismissing: Bool) {
+        self.dismissing = dismissing
+    }
+    
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.3
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toVC = transitionContext.viewController(forKey: .to),
-              let fromVC = transitionContext.viewController(forKey: .from) else { return }
+        if dismissing {
+            dismiss(using: transitionContext)
+        } else {
+            present(using: transitionContext)
+        }
+    }
+    
+    private func dismiss(using context: UIViewControllerContextTransitioning) {
+        guard let fromVC = context.viewController(forKey: .from) else { return }
         
-        let containerView = transitionContext.containerView
+        let containerView = context.containerView
+        
+        containerView.addSubview(fromVC.view)
+        
+        UIView.animate(withDuration: transitionDuration(using: context),
+                       delay: 0,
+                       options: .curveEaseIn,
+                       animations: {
+                            fromVC.view.alpha = 0
+                       }, completion: { _ in
+                            context.completeTransition(true)
+                       })
+    }
+    
+    private func present(using context: UIViewControllerContextTransitioning) {
+        guard let toVC = context.viewController(forKey: .to),
+              let fromVC = context.viewController(forKey: .from) else { return }
+        
+        let containerView = context.containerView
         
         toVC.view.alpha = 0
         toVC.view.frame = fromVC.view.frame
         containerView.addSubview(toVC.view)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
+        UIView.animate(withDuration: transitionDuration(using: context),
                        delay: 0,
                        options: .curveEaseIn,
                        animations: {
                             toVC.view.alpha = 1
                        }, completion: { _ in
-                            transitionContext.completeTransition(true)
+                        context.completeTransition(true)
                        })
     }
 }
