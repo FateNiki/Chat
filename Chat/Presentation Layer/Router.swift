@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Router {
+class Router: NSObject {
     private let presentationAssembly: PresentationAssemblyProtocol
     
     init(presentationAssembly: PresentationAssemblyProtocol) {
@@ -35,12 +35,21 @@ class Router {
     
     func openThemePicker(in navigation: UINavigationController, delegate: ThemePickerDelegate) {
         let pickerVC = presentationAssembly.themePickerViewController(delegate: delegate, router: self)
-        navigation.pushViewController(pickerVC, animated: true)
+        let navVC = UINavigationController(rootViewController: pickerVC)
+        navVC.transitioningDelegate = self
+        navVC.modalPresentationStyle = .custom
+        navigation.present(navVC, animated: true)
     }
     
     func openImageLibrary(modalFor controller: UIViewController, delegate: UserAvatarPickerDelegate?) {
         let libraryVC = presentationAssembly.imageLibraryViewController(delegate: delegate)
         let libraryNavController = UINavigationController(rootViewController: libraryVC)
         controller.present(libraryNavController, animated: true)
+    }
+}
+
+extension Router: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        FadeTransition()
     }
 }

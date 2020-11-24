@@ -127,3 +127,29 @@ extension UIView {
         EmblemAnimations.remove()
     }
 }
+
+class FadeTransition: NSObject, UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.3
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let toVC = transitionContext.viewController(forKey: .to),
+              let fromVC = transitionContext.viewController(forKey: .from) else { return }
+        
+        let containerView = transitionContext.containerView
+        
+        toVC.view.alpha = 0
+        toVC.view.frame = fromVC.view.frame
+        containerView.addSubview(toVC.view)
+        
+        UIView.animate(withDuration: transitionDuration(using: transitionContext),
+                       delay: 0,
+                       options: .curveEaseIn,
+                       animations: {
+                            toVC.view.alpha = 1
+                       }, completion: { _ in
+                            transitionContext.completeTransition(true)
+                       })
+    }
+}
