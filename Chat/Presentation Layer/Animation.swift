@@ -68,13 +68,12 @@ class Animations {
 class EmblemAnimations {
     private static var emblemCell: CAEmitterCell = {
         let cell = CAEmitterCell()
-        cell.contents = UIImage(named: "AppIcon")?.cgImage
-        cell.scale = 0.2
-        cell.scaleRange = 1
+        cell.contents = UIImage(named: "emblem")?.cgImage
+        cell.scale = 0.1
         cell.lifetime = 3.0
-        cell.birthRate = 3
+        cell.birthRate = 1
         cell.velocity = CGFloat.random(in: -30...30)
-        cell.velocityRange = -20
+        cell.velocityRange = CGFloat.random(in: -30...30)
         cell.yAcceleration = CGFloat.random(in: -30...30)
         cell.xAcceleration = CGFloat.random(in: -30...30)
         return cell
