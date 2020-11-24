@@ -65,45 +65,66 @@ class Animations {
     }
 }
 
-class EmblemAnimations: NSObject {
-    private lazy var emblemCell: CAEmitterCell = {
+class EmblemAnimations {
+    private static var emblemCell: CAEmitterCell = {
         let cell = CAEmitterCell()
         cell.contents = UIImage(named: "AppIcon")?.cgImage
-        cell.scale = 0.6
-        cell.scaleRange = 0.3
-        cell.lifetime = 5.0
+        cell.scale = 0.2
+        cell.scaleRange = 1
+        cell.lifetime = 3.0
         cell.birthRate = 3
-        cell.velocity = -30
+        cell.velocity = CGFloat.random(in: -30...30)
         cell.velocityRange = -20
         cell.yAcceleration = CGFloat.random(in: -30...30)
         cell.xAcceleration = CGFloat.random(in: -30...30)
         return cell
     }()
     
-    private func showEmblem(into view: UIView, at position: CGPoint) {
+    private static var emblemLayer: CAEmitterLayer = {
         let emblemLayer = CAEmitterLayer()
-        emblemLayer.emitterPosition = position
         emblemLayer.emitterSize = CGSize(width: 10, height: 10)
         emblemLayer.emitterShape = .circle
         emblemLayer.beginTime = CACurrentMediaTime()
         emblemLayer.timeOffset = CFTimeInterval(1)
         emblemLayer.emitterCells = [emblemCell]
-        view.layer.addSublayer(emblemLayer)
+        return emblemLayer
+    }()
+    
+    static func addToLayer(_ layer: CALayer) {
+        layer.addSublayer(emblemLayer)
     }
     
-    @objc private func handleGesture(gesture: UIPanGestureRecognizer) {
-        guard let view = gesture.view else { return }
-        switch gesture.state {
-            case .began:
-                showEmblem(into: view, at: gesture.location(in: view))
-            default:
-                break
-        }
+    static func remove() {
+        emblemLayer.removeFromSuperlayer()
     }
     
-    public func createRecognizer(for view: UIView) {
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(gesture:)))
-        view.addGestureRecognizer(pan)
+    static func moveToPosition(_ position: CGPoint) {
+        emblemLayer.emitterPosition = position
     }
 
+}
+
+extension UIView {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        guard let touch = touches.first, let window = self.window else { return }
+        EmblemAnimations.moveToPosition(touch.location(in: window))
+        EmblemAnimations.addToLayer(window.layer)
+    }
+    
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        guard let touch = touches.first, let window = self.window else { return }
+        EmblemAnimations.moveToPosition(touch.location(in: window))
+    }
+    
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        EmblemAnimations.remove()
+    }
+    
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        EmblemAnimations.remove()
+    }
 }
