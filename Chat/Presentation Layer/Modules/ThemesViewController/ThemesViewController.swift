@@ -49,6 +49,7 @@ class ThemesViewController: UIViewController {
     private func setupView() {
         navigationItem.title = "Settings"
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
         currentTheme = model.currentTheme
     }
     
@@ -69,6 +70,10 @@ class ThemesViewController: UIViewController {
             placeholder.backgroundColor = theme.backgroundColor
             placeholder.themeNameLabel.textColor = theme.textColor
         }
+    }
+    
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
