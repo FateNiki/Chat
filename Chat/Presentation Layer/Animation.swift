@@ -23,7 +23,9 @@ class Animations {
 
         let rotate = CAKeyframeAnimation(keyPath: "transform.rotation.z")
         rotate.keyTimes = keyTimes
-        rotate.values = [0, CGFloat.pi / 10, 0, -CGFloat.pi / 10, 0].reversed()
+        rotate.values = [0, CGFloat.pi / 10, 0, -CGFloat.pi / 10, 0]
+        rotate.duration = 0.15
+        rotate.repeatCount = 2
         
         let group = CAAnimationGroup()
         group.animations = [
