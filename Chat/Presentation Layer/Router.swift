@@ -20,6 +20,8 @@ class Router: NSObject {
     func openUserView(modalFor controller: UIViewController, delegate: UserViewDelegate?) {
         let userVC = presentationAssembly.userViewController(router: self, delegate: delegate)
         let userNavController = UINavigationController(rootViewController: userVC)
+        userNavController.transitioningDelegate = self
+        userNavController.modalPresentationStyle = .custom
         controller.present(userNavController, animated: true, completion: nil)
     }
     
@@ -35,10 +37,7 @@ class Router: NSObject {
     
     func openThemePicker(in navigation: UINavigationController, delegate: ThemePickerDelegate) {
         let pickerVC = presentationAssembly.themePickerViewController(delegate: delegate, router: self)
-        let navVC = UINavigationController(rootViewController: pickerVC)
-        navVC.transitioningDelegate = self
-        navVC.modalPresentationStyle = .custom
-        navigation.present(navVC, animated: true)
+        navigation.pushViewController(pickerVC, animated: true)
     }
     
     func openImageLibrary(modalFor controller: UIViewController, delegate: UserAvatarPickerDelegate?) {
