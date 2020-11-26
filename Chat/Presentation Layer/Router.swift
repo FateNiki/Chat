@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Router {
+class Router: NSObject {
     private let presentationAssembly: PresentationAssemblyProtocol
     
     init(presentationAssembly: PresentationAssemblyProtocol) {
@@ -20,6 +20,8 @@ class Router {
     func openUserView(modalFor controller: UIViewController, delegate: UserViewDelegate?) {
         let userVC = presentationAssembly.userViewController(router: self, delegate: delegate)
         let userNavController = UINavigationController(rootViewController: userVC)
+        userNavController.transitioningDelegate = self
+        userNavController.modalPresentationStyle = .custom
         controller.present(userNavController, animated: true, completion: nil)
     }
     
@@ -42,5 +44,15 @@ class Router {
         let libraryVC = presentationAssembly.imageLibraryViewController(delegate: delegate)
         let libraryNavController = UINavigationController(rootViewController: libraryVC)
         controller.present(libraryNavController, animated: true)
+    }
+}
+
+extension Router: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        FadeTransition(dismissing: false)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        FadeTransition(dismissing: true)
     }
 }

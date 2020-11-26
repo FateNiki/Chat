@@ -136,7 +136,12 @@ class UserViewController: UIViewController {
     private func configNavigation() {
         navigationItem.title = "My profile"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeModal))
-        navigationItem.rightBarButtonItem = editButtonItem
+
+        let button = UIButton(type: .custom)
+        button.setTitle("Edit", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(toggleEditing), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
     private func addActivityIndicator() {
@@ -194,10 +199,18 @@ class UserViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        state = editing ? .editing : .viewing
+    @objc func toggleEditing() {
+        super.setEditing(!isEditing, animated: true)
+        state = isEditing ? .editing : .viewing
         model.resetUserChanges()
+        
+        guard let view = navigationItem.rightBarButtonItem?.customView else { return }
+        if isEditing {
+            Animations.shake(view)
+        } else {
+            Animations.stopShake(view)
+        }
+        
     }
     
     @IBAction func saveByGCD() {
