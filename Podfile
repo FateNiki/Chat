@@ -11,6 +11,14 @@ target 'Chat' do
   pod 'SwiftLint'
 end
 
+target 'ChatTests' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for ChatTests
+  pod 'Firebase/Firestore'
+end
+
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
