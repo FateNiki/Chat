@@ -41,6 +41,7 @@ class ConversationsListViewController: UIViewController {
         uaView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.heightAnchor.constraint(equalToConstant: 35).isActive = true
         uaView.delegate = self
+        uaView.accessibilityIdentifier = "userProfileButton"
         return uaView
     }()
     
