@@ -8,16 +8,26 @@
 @testable import Chat
 import XCTest
 
+extension ThemeName {
+    static func random() -> ThemeName? {
+        ThemeName.allCases.randomElement()
+    }
+}
+
 class ChatThemeTests: XCTestCase {
 
     func testLoadTheme() throws {
         // Arrange
+        let loadedTheme = ThemeName.random()!
         var result: ThemeName?
         var error: String?
         let themeStorageMock = ThemeStorageMock()
-        themeStorageMock.loadWithError = false
+        themeStorageMock.loadStub = { completion in
+            themeStorageMock.currentThemeName = loadedTheme
+            completion?(loadedTheme, nil)
+        }
         let themeService = ThemeService(storage: themeStorageMock)
-
+        
         // Act
         themeService.loadAndApply(completion: {
             result = $0
@@ -26,17 +36,21 @@ class ChatThemeTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(themeStorageMock.loadAndApplyCalls, 1)
-        XCTAssertEqual(themeStorageMock.currentThemeName, result)
         XCTAssertNotNil(result)
         XCTAssertNil(error)
+        XCTAssertEqual(loadedTheme, result)
+        XCTAssertEqual(themeStorageMock.currentThemeName, result)
     }
     
     func testLoadThemeWithError() throws {
         // Arrange
+        let errorString = "loadError"
         var result: ThemeName?
         var error: String?
         let themeStorageMock = ThemeStorageMock()
-        themeStorageMock.loadWithError = true
+        themeStorageMock.loadStub = { completion in
+            completion?(nil, errorString)
+        }
         let themeService = ThemeService(storage: themeStorageMock)
         
         // Act
@@ -49,7 +63,7 @@ class ChatThemeTests: XCTestCase {
         XCTAssertEqual(themeStorageMock.loadAndApplyCalls, 1)
         XCTAssertNil(result)
         XCTAssertNotNil(error)
-        XCTAssertEqual(error, "loadError")
+        XCTAssertEqual(error, errorString)
     }
     
     func testSaveTheme() throws {

@@ -8,36 +8,26 @@
 @testable import Chat
 import Foundation
 
-extension ThemeName {
-    static func random() -> ThemeName? {
-        ThemeName.allCases.randomElement()        
-    }
-}
-
 class ThemeStorageMock: ThemeStorageProtocol {
     // MARK: - Test variable
     private(set) var loadAndApplyCalls = 0
     private(set) var saveAndApplyCalls = 0
     
     // MARK: - Test configure
-    public var loadWithError: Bool = false
+    public var loadStub: ((((ThemeName?, String?) -> Void)?) -> Void)?
     public var saveWithError: Bool = false
     
     // MARK: - Public variable
-    private(set) var currentThemeName: ThemeName
+    var currentThemeName: ThemeName
     
     init() {
         currentThemeName = .classic
     }
     
     func loadAndApply(completion: ((ThemeName?, String?) -> Void)?) {
+        guard let loadStub = loadStub else { return }
         loadAndApplyCalls += 1
-        if loadWithError {
-            completion?(nil, "loadError")
-        } else if let randomTheme = ThemeName.random() {
-            currentThemeName = randomTheme
-            completion?(currentThemeName, nil)
-        }
+        loadStub(completion)
     }
     
     func saveAndApply(theme: ThemeName, completion: ((ThemeName?, String?) -> Void)?) {
