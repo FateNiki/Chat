@@ -15,8 +15,7 @@ class ThemeStorageMock: ThemeStorageProtocol {
     
     // MARK: - Test configure
     public var loadStub: ((((ThemeName?, String?) -> Void)?) -> Void)?
-    public var saveWithError: Bool = false
-    
+    public var saveStub: ((((ThemeName?, String?) -> Void)?) -> Void)?
     // MARK: - Public variable
     var currentThemeName: ThemeName
     
@@ -31,12 +30,10 @@ class ThemeStorageMock: ThemeStorageProtocol {
     }
     
     func saveAndApply(theme: ThemeName, completion: ((ThemeName?, String?) -> Void)?) {
+        guard let saveStub = saveStub else { return }
         saveAndApplyCalls += 1
-        if saveWithError {
-            completion?(nil, "saveError")
-        } else {
-            currentThemeName = theme
-            completion?(theme, nil)
-        }
+        
+        currentThemeName = theme
+        saveStub(completion)
     }
 }

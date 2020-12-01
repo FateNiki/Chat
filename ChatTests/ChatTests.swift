@@ -68,17 +68,17 @@ class ChatThemeTests: XCTestCase {
     
     func testSaveTheme() throws {
         // Arrange
+        let savedTheme = ThemeName.random()!
         var error: String?
         var result: ThemeName?
         let themeStorageMock = ThemeStorageMock()
-        themeStorageMock.saveWithError = false
+        themeStorageMock.saveStub = { completion in
+            completion?(themeStorageMock.currentThemeName, nil)
+        }
         let themeService = ThemeService(storage: themeStorageMock)
         
         // Act
-        guard let randomTheme = ThemeName.random() else {
-            fatalError("theme doesn't returned")
-        }
-        themeService.saveAndApply(theme: randomTheme) {
+        themeService.saveAndApply(theme: savedTheme) {
             result = $0
             error = $1
         }
@@ -87,23 +87,23 @@ class ChatThemeTests: XCTestCase {
         XCTAssertEqual(themeStorageMock.saveAndApplyCalls, 1)
         XCTAssertNotNil(result)
         XCTAssertNil(error)
-        XCTAssertEqual(randomTheme, result)
-        XCTAssertEqual(randomTheme, themeStorageMock.currentThemeName)
+        XCTAssertEqual(savedTheme, result)
+        XCTAssertEqual(savedTheme, themeStorageMock.currentThemeName)
     }
     
     func testSaveThemeWithError() throws {
         // Arrange
+        let errorString = "saveError"
         var result: ThemeName?
         var error: String?
         let themeStorageMock = ThemeStorageMock()
-        themeStorageMock.saveWithError = true
+        themeStorageMock.saveStub = { completion in
+            completion?(nil, errorString)
+        }
         let themeService = ThemeService(storage: themeStorageMock)
         
         // Act
-        guard let randomTheme = ThemeName.random() else {
-            fatalError("theme doesn't returned")
-        }
-        themeService.saveAndApply(theme: randomTheme) {
+        themeService.saveAndApply(theme: ThemeName.random()!) {
             result = $0
             error = $1
         }
@@ -112,6 +112,6 @@ class ChatThemeTests: XCTestCase {
         XCTAssertEqual(themeStorageMock.saveAndApplyCalls, 1)
         XCTAssertNil(result)
         XCTAssertNotNil(error)
-        XCTAssertEqual(error, "saveError")
+        XCTAssertEqual(error, errorString)
     }
 }
