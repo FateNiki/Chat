@@ -115,3 +115,24 @@ class ChatThemeTests: XCTestCase {
         XCTAssertEqual(error, errorString)
     }
 }
+
+class ChatChannelsTests: XCTestCase {
+    func testLoadChannelsList() throws {
+        // Arrange
+        let cache = ChannelsCacheMock()
+        let repo = ChannelsRepoMock()
+        let channels = [Channel(id: UUID().uuidString, name: "Channel 1"),
+                        Channel(id: UUID().uuidString, name: "Channel 2")]
+        repo.loadedChannelsStub = { channels }
+
+        // Act
+        _ = ChannelsService(cache: cache, repo: repo)
+
+        // Assert
+        XCTAssertEqual(repo.countLoadAllChannelsCalls, cache.countReloadChannelsCalls)
+        XCTAssertEqual(repo.countLoadAllChannelsCalls, 1)
+        
+        XCTAssertEqual(repo.loadedChannels, cache.loadedChannels)
+        XCTAssertEqual(repo.loadedChannels, channels)
+    }
+}

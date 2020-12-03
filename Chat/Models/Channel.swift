@@ -32,3 +32,9 @@ struct ChannelsChanges {
     let event: Event
     let channel: Channel
 }
+
+extension Channel: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}

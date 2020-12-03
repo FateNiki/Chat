@@ -80,6 +80,7 @@
 		5BECAD48251FAACB00141621 /* ConversationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */; };
 		5BECAD4C251FB96A00141621 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD4B251FB96A00141621 /* ConfigurableView.swift */; };
 		5BECAD52251FC5AB00141621 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BECAD51251FC5AB00141621 /* Message.swift */; };
+		5BEE93E22579023800A9E86E /* ChannelsServicesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEE93E12579023800A9E86E /* ChannelsServicesMock.swift */; };
 		5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF6A1A2527B7FA00F88572 /* ThemesViewController.swift */; };
 		5BEF6A1D2527B7FA00F88572 /* ThemesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEF6A1B2527B7FA00F88572 /* ThemesViewController.xib */; };
 		DF96199F5E593EB1B7D6AAEE /* Pods_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 406C76B15354F07F93B9FA21 /* Pods_Chat.framework */; };
@@ -186,6 +187,7 @@
 		5BECAD46251FAACB00141621 /* ConversationsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsTableViewCell.xib; sourceTree = "<group>"; };
 		5BECAD4B251FB96A00141621 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		5BECAD51251FC5AB00141621 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		5BEE93E12579023800A9E86E /* ChannelsServicesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsServicesMock.swift; sourceTree = "<group>"; };
 		5BEF6A1A2527B7FA00F88572 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		5BEF6A1B2527B7FA00F88572 /* ThemesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesViewController.xib; sourceTree = "<group>"; };
 		6B406A5D0AD8AC836808CD07 /* Pods-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.release.xcconfig"; path = "Target Support Files/Pods-Chat/Pods-Chat.release.xcconfig"; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 				5BC5332B25752D2D007A3A02 /* ChatTests.swift */,
 				5BC5332D25752D2D007A3A02 /* Info.plist */,
 				5BC5333525752DEC007A3A02 /* ThemeStorageMock.swift */,
+				5BEE93E12579023800A9E86E /* ChannelsServicesMock.swift */,
 			);
 			path = ChatTests;
 			sourceTree = "<group>";
@@ -928,6 +931,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BEE93E22579023800A9E86E /* ChannelsServicesMock.swift in Sources */,
 				5BC5332C25752D2D007A3A02 /* ChatTests.swift in Sources */,
 				5BC5333625752DEC007A3A02 /* ThemeStorageMock.swift in Sources */,
 			);
