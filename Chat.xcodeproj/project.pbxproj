@@ -171,6 +171,7 @@
 		5BC5332D25752D2D007A3A02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BC5333525752DEC007A3A02 /* ThemeStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStorageMock.swift; sourceTree = "<group>"; };
 		5BC729C12547335B00A05B88 /* MessagesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCache.swift; sourceTree = "<group>"; };
+		5BC8A474257E92B700F74331 /* SecureData.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SecureData.xcconfig; sourceTree = "<group>"; };
 		5BCE62932521E03C00107339 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		5BCE62942521E03C00107339 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		5BCE62A12521ED1E00107339 /* ConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationModel.swift; sourceTree = "<group>"; };
@@ -501,6 +502,7 @@
 				5B06426A253ACBD10019AB80 /* GoogleService-Info.plist */,
 				5BC2B74D250D4D7C0062C724 /* Info.plist */,
 				5BB72CCB25593D330055341C /* RootAssembly.swift */,
+				5BC8A474257E92B700F74331 /* SecureData.xcconfig */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1004,6 +1006,7 @@
 		};
 		5BC2B74E250D4D7C0062C724 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BC8A474257E92B700F74331 /* SecureData.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1065,6 +1068,7 @@
 		};
 		5BC2B74F250D4D7C0062C724 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BC8A474257E92B700F74331 /* SecureData.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

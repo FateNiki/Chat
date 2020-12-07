@@ -47,6 +47,12 @@ class CoreAssembly: CoreAssemblyProtocol {
     var themeStorage: ThemeStorageProtocol = ThemeFileStorage.shared
     
     // MARK: Images
-    lazy var imagesListNetwork = PixabayListImages.PixabayRequestConfig(apiKey: "19155312-87cdfcaf15293d9b1c086517b")
+    lazy var imagesListNetwork = PixabayListImages.PixabayRequestConfig(apiKey: pixabayApiKey)
     lazy var imageNetwork = PixabayImage.PixabayRequestConfig()
+    private var pixabayApiKey: String {
+        guard let apiKey = Bundle.main.infoDictionary?["PIXABAY_API_KEY"] as? String else {
+            return ""
+        }
+        return apiKey
+    }
 }
