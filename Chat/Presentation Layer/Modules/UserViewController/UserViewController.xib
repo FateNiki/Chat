@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -57,6 +57,7 @@
                                 </button>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ach-Rm-0yT" userLabel="Full Name Text Field" customClass="TurnedOffTextField" customModule="Chat" customModuleProvider="target">
                                     <rect key="frame" x="32" y="354.5" width="394" height="38.5"/>
+                                    <accessibility key="accessibilityConfiguration" identifier="userNameField"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -66,6 +67,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r0x-1M-5mL">
                                     <rect key="frame" x="32" y="425" width="394" height="120"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <accessibility key="accessibilityConfiguration" identifier="userDescriptionView"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="120" id="qxx-tY-VkU"/>
                                     </constraints>
