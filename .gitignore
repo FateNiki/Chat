@@ -135,3 +135,7 @@ iOSInjectionProject/
 
 ## CONFIGURATES
 *.xcconfig
+
+## GEM
+.bundle/
+vendor/
