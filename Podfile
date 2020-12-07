@@ -19,6 +19,11 @@ target 'ChatTests' do
   pod 'Firebase/Firestore'
 end
 
+target 'ChatUITests' do 
+    # Pods for ChatTests
+    pod 'Firebase/Firestore'
+end
+
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

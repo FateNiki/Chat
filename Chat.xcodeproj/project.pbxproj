@@ -83,6 +83,7 @@
 		5BEE93E22579023800A9E86E /* ChannelsServicesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEE93E12579023800A9E86E /* ChannelsServicesMock.swift */; };
 		5BEF6A1C2527B7FA00F88572 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF6A1A2527B7FA00F88572 /* ThemesViewController.swift */; };
 		5BEF6A1D2527B7FA00F88572 /* ThemesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEF6A1B2527B7FA00F88572 /* ThemesViewController.xib */; };
+		6FFB816AF91D3F82BC255B4B /* libPods-ChatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0D5AB753AD4B4C984E9B30 /* libPods-ChatUITests.a */; };
 		DF96199F5E593EB1B7D6AAEE /* Pods_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 406C76B15354F07F93B9FA21 /* Pods_Chat.framework */; };
 		EFF1AB9B474778DB368AAFF7 /* Pods_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D2DE115095911E914511EB5 /* Pods_ChatTests.framework */; };
 /* End PBXBuildFile section */
@@ -191,9 +192,12 @@
 		5BEE93E12579023800A9E86E /* ChannelsServicesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsServicesMock.swift; sourceTree = "<group>"; };
 		5BEF6A1A2527B7FA00F88572 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		5BEF6A1B2527B7FA00F88572 /* ThemesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesViewController.xib; sourceTree = "<group>"; };
+		5F0D5AB753AD4B4C984E9B30 /* libPods-ChatUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B406A5D0AD8AC836808CD07 /* Pods-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.release.xcconfig"; path = "Target Support Files/Pods-Chat/Pods-Chat.release.xcconfig"; sourceTree = "<group>"; };
+		71ECCA3CA14B7154BF4A25B7 /* Pods-ChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatUITests/Pods-ChatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BFFE0FA04F171F9A892E0D59 /* Pods-ChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatTests.release.xcconfig"; path = "Target Support Files/Pods-ChatTests/Pods-ChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		E22E25C0C98728022A625BB1 /* Pods-ChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatTests/Pods-ChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB7C1551DBDDBC3E57F063EA /* Pods-ChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatUITests.debug.xcconfig"; path = "Target Support Files/Pods-ChatUITests/Pods-ChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FFB816AF91D3F82BC255B4B /* libPods-ChatUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +604,7 @@
 			children = (
 				406C76B15354F07F93B9FA21 /* Pods_Chat.framework */,
 				2D2DE115095911E914511EB5 /* Pods_ChatTests.framework */,
+				5F0D5AB753AD4B4C984E9B30 /* libPods-ChatUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -610,6 +616,8 @@
 				6B406A5D0AD8AC836808CD07 /* Pods-Chat.release.xcconfig */,
 				E22E25C0C98728022A625BB1 /* Pods-ChatTests.debug.xcconfig */,
 				BFFE0FA04F171F9A892E0D59 /* Pods-ChatTests.release.xcconfig */,
+				EB7C1551DBDDBC3E57F063EA /* Pods-ChatUITests.debug.xcconfig */,
+				71ECCA3CA14B7154BF4A25B7 /* Pods-ChatUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -621,9 +629,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B37C9E62576302B001F5D60 /* Build configuration list for PBXNativeTarget "ChatUITests" */;
 			buildPhases = (
+				E1DD81A7FB219A0380A180A0 /* [CP] Check Pods Manifest.lock */,
 				5B37C9D92576302B001F5D60 /* Sources */,
 				5B37C9DA2576302B001F5D60 /* Frameworks */,
 				5B37C9DB2576302B001F5D60 /* Resources */,
+				FA0EC858E62544F44D86341C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -851,6 +861,45 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chat/Pods-Chat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E1DD81A7FB219A0380A180A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChatUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA0EC858E62544F44D86341C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatUITests/Pods-ChatUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatUITests/Pods-ChatUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatUITests/Pods-ChatUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -968,10 +1017,11 @@
 /* Begin XCBuildConfiguration section */
 		5B37C9E42576302B001F5D60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB7C1551DBDDBC3E57F063EA /* Pods-ChatUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ChatUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -987,10 +1037,11 @@
 		};
 		5B37C9E52576302B001F5D60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71ECCA3CA14B7154BF4A25B7 /* Pods-ChatUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ChatUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1167,7 +1218,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ChatTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1188,7 +1239,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ChatTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
