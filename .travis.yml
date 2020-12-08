@@ -1,0 +1,4 @@
+language: swift
+xcode_workspace: Chat.xcworkspace
+xcode_scheme: MyNewProjectTests
+xcode_destination: platform=iOS Simulator,OS=13.6,name=iPhone 8
