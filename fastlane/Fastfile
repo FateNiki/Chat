@@ -1,17 +1,4 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+setup_travis
 
 default_platform(:ios)
 
@@ -20,14 +7,14 @@ platform :ios do
       cocoapods
   end
 
-  desc "Description of what the lane does"
+  desc "Build and test all app"
   lane :build_and_test do
     scan(
       device: "iPhone 8"
     )
   end
 
-  desc "Description of what the lane does"
+  desc "Build app without testing"
   lane :build_for_testing do
     scan(
       build_for_testing: true,
@@ -35,8 +22,8 @@ platform :ios do
     )
   end
 
-  desc "Description of what the lane does"
-  lane :run_tests do
+  desc "Run tests without building"
+  lane :run_all_tests do
     scan(
       skip_build: true,
       device: "iPhone 8"
