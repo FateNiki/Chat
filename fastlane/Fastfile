@@ -18,6 +18,8 @@ default_platform(:ios)
 platform :ios do
   desc "Description of what the lane does"
   lane :build_and_test do
-    scan()
+    scan(
+      device: "iPhone 8"
+    )
   end
 end
