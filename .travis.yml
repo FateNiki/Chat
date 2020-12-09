@@ -1,4 +1,5 @@
 language: swift
+os: osx
 osx_image: xcode11.6
 xcode_workspace: Chat.xcworkspace
 xcode_scheme: Chat
@@ -8,5 +9,5 @@ cache:
   cocoapods: true
 install:
   - bundle install
-scripts:
+script:
   - fastlane build_and_test 
