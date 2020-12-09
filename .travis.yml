@@ -9,4 +9,4 @@ cache:
 install:
   - bundle install
 scripts:
-  - fastlane run_all_tests 
+  - fastlane build_and_test 
