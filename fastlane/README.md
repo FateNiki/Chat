@@ -15,6 +15,14 @@ Install _fastlane_ using
 or alternatively using `brew install fastlane`
 
 # Available Actions
+### run_discord
+```
+fastlane run_discord
+```
+Run run_discord
+
+----
+
 ## iOS
 ### ios build_and_test
 ```
