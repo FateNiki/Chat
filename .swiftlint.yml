@@ -1,6 +1,8 @@
 excluded:
   - Pods
   - .git
+  - vendor
+  - .bundle
 
 disabled_rules:
   - trailing_whitespace

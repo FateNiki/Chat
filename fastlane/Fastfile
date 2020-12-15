@@ -1,0 +1,63 @@
+setup_travis
+
+success = true
+build_message = "Build succeded"
+commitAuthor = "–"
+
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+      cocoapods
+  end
+
+  desc "Build and test all app"
+  lane :build_and_test do
+    scan(
+      device: "iPhone 8"
+    )
+    run_discord
+  rescue => ex
+    build_message = "Build failed"
+    success = false
+    run_discord
+  end
+
+  desc "Build app without testing"
+  lane :build_for_testing do
+    scan(
+      build_for_testing: true,
+      device: "iPhone 8"
+    )
+  end
+
+  desc "Run tests without building"
+  lane :run_all_tests do
+    scan(
+      skip_build: true,
+      clean: false,
+      device: "iPhone 8"
+    )
+  end
+end
+
+desc "Run run_discord"
+lane :run_discord do
+  webhook = ENV['DISCORD_WEBHOOK_URL']
+  commit = last_git_commit
+  commitAuthor = commit[:author]
+  discord_notifier(
+    webhook_url: webhook,
+    title: "Chat",
+    success: success,
+    description: build_message,
+    thumbnail_url: "https://acdn.tinkoff.ru/static/documents/80f3f5f9-eabc-4b45-9c5f-30c048a8a756.png",
+    fields: [
+      {
+        name: "Created by:", 
+        value: commitAuthor,
+        inline: false
+      }
+    ]  
+  )
+end

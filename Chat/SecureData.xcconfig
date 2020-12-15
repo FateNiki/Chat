@@ -1,0 +1,12 @@
+//
+//  SecureData.xcconfig
+//  Chat
+//
+//  Created by Алексей Никитин on 07.12.2020.
+//  Copyright © 2020 Алексей Никитин. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+PIXABAY_API_KEY = 19155312-87cdfcaf15293d9b1c086517b
